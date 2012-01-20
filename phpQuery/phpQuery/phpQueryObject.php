@@ -349,9 +349,12 @@ class phpQueryObject
 			// IDs
 			} else if ( $c == '#') {
 				$i++;
-				while( isset($query[$i]) && ($this->isChar($query[$i]) || $query[$i] == '-')) {
-					$tmp .= $query[$i];
-					$i++;
+				while( isset($query[$i]) && ($this->isChar($query[$i]) || $query[$i] == '-') || $query[$i] == '\\' ||  $query[$i-1] == '\\')) {
+					// Do not include escape char
+					if ($query[$i] == '\\'){
+						$tmp .= $query[$i];
+						$i++;
+					}					
 				}
 				$return[] = '#'.$tmp;
 			// SPECIAL CHARS
@@ -1742,7 +1745,7 @@ class phpQueryObject
 	public function remove($selector = null) {
 		$loop = $selector
 			? $this->filter($selector)->elements
-			: $this->elements;
+			: $this->elements ?: phpQuery::pq($selector, $this->getDocumentID());
 		foreach($loop as $node) {
 			if (! $node->parentNode )
 				continue;
