@@ -75,6 +75,17 @@ class phpQueryObject
 	 * @access private
 	 */
 	protected $current = null;
+	
+	/**
+	 * Indicates whether CSS has been parsed or not. We only parse CSS if needed.
+	 * @access private
+	 */
+  protected $cssIsParsed = array();
+  /**
+   * A collection of complete CSS selector strings.
+   * @access private;
+   */
+  protected $cssString = array();
 	/**
 	 * Enter description here...
 	 *
@@ -1366,10 +1377,123 @@ class phpQueryObject
 	 * @return phpQuery|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
 	 * @todo
 	 */
-	public function css() {
-		// TODO
-		return $this;
+	public function css($property_name, $value = FALSE) {
+		if(!isset($this->cssIsParsed[$this->getDocumentID()])) {
+		  $this->parseCSS();
+		}
+		$data = phpQuery::data($this->get(0), 'phpquery_css', null, $this->getDocumentID());
+		if(!$value) {
+		  return $data[$property_name]['value'];
+		}
+		$data[$property_name]['value'] = $value;
+		phpQuery::data($this->get(0), 'phpquery_css', $data, $this->getDocumentID());
 	}
+	
+	protected function parseCSS() {
+	  if(!isset($this->cssString[$this->getDocumentID()])) {
+	   $this->cssString[$this->getDocumentID()] = '';
+	  }
+	  foreach(phpQuery::pq('style', $this->getDocumentID()) as $style) {
+	    $this->cssString[$this->getDocumentID()] .= phpQuery::pq($style)->text();
+	  }
+	  $str = preg_replace("/\/\*(.*)?\*\//Usi", "", $this->cssString[$this->getDocumentID()]);
+		
+		$parts = explode("}",$str);
+		if(count($parts) > 0) {
+			foreach($parts as $part) {
+				if(strpos($part, '{') !== false) {
+					list($keystr,$codestr) = explode("{", $part);
+					$keys = explode(",",trim($keystr));
+					if(count($keys) > 0) {
+						foreach($keys as $key) {
+							if(strlen($key) > 0) {
+								$key = str_replace("\n", "", $key);
+								$key = str_replace("\\", "", $key);
+								$this->addCSSSelector($key, trim($codestr));
+							}
+						}
+					}
+				}
+			}
+		}
+		$this->addStyleOverrides();
+	}
+	
+	protected function addStyleOverrides() {
+	 $specificity = 1000;
+	 foreach(phpQuery::pq('*[style]', $this->getDocumentID()) as $el) {
+	   $existing = pq($el)->data('phpquery_css');
+	   $codes = explode(";", phpQuery::pq($el)->attr('style'));
+	   foreach($codes as $code) {
+	     $explode = explode(":",$code,2);
+	     if(count($explode) > 1) {
+  				list($code_key, $code_value) = $explode;
+  				if(strlen($code_key) > 0) {
+  					if(!isset($existing[$code_key]) || $specificity >= $existing[$code_key]['specificity']) {
+  					  $existing[trim(strtolower($code_key))] = array('specificity' => $specificity,
+  					                              'value' => trim(strtolower($code_value)));
+  					}
+  				}
+  			}
+  		 phpQuery::pq($el)->data('phpquery_css', $existing);
+	   }
+	 }
+	}
+	
+	protected function addCSSSelector($key, $code) {
+    foreach(phpQuery::pq($key, $this->getDocumentID()) as $el) {
+  	  $existing = pq($el)->data('phpquery_css');
+  	  $specificity = $this->getSpecificity($key);
+  		$codes = explode(";",$code);
+  		if(count($codes) > 0) {
+  			foreach($codes as $code) {
+  				$code = trim($code);
+  				$explode = explode(":",$code,2);
+  				if(count($explode) > 1) {
+  					list($code_key, $code_value) = $explode;
+  					if(strlen($code_key) > 0) {
+  						if(!isset($existing[$code_key]) || $specificity >= $existing[$code_key]['specificity']) {
+  						  $existing[trim(strtolower($code_key))] = array('specificity' => $specificity,
+  						                              'value' => trim(strtolower($code_value)));
+  						}
+  					}
+  				}
+  			}
+  		}
+  		phpQuery::pq($el)->data('phpquery_css', $existing);
+    }
+	}
+	
+	/**
+	*	Returns a specificity count to the given selector. 
+	*	Higher specificity means it overrides other styles.
+	*	@param string selector The CSS Selector
+	*/
+	public function getSpecificity($selector) {
+		$selector = $this->parseSelector($selector);
+		if($selector[0][0] == ' ') {
+			unset($selector[0][0]);
+		}
+		$selector = $selector[0];
+		$specificity = 0;
+		foreach($selector as $part) {
+			switch(substr(str_replace('*', '', $part), 0, 1)) {
+				case '.':
+					$specificity += 10;
+				case '#':
+					$specificity += 100;
+				case ':':
+					$specificity++;
+				default:
+					$specificity++;
+			}
+			if(strpos($part, '[id=') != false) {
+				$specificity += 100;
+			}
+		}
+		return $specificity;
+	}
+	
 	/**
 	 * @todo
 	 *
