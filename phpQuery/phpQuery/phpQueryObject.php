@@ -91,6 +91,12 @@ class phpQueryObject
 	 *
 	 * @return phpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
 	 */
+  
+  protected $attribute_css_mapping = array(
+    'bgcolor' => 'background-color',
+    'text' => 'color',
+  );
+  
 	public function __construct($documentID) {
 //		if ($documentID instanceof self)
 //			var_dump($documentID->getDocumentID());
@@ -1441,25 +1447,34 @@ class phpQueryObject
 		    }
 		  }
 		}
-		foreach(phpQuery::pq('*[style]', $this->getDocumentID()) as $el) {
+		foreach(phpQuery::pq('*', $this->getDocumentID()) as $el) {
 		  $existing = pq($el)->data('phpquery_css');
-		  $CssParser = new CSSParser('#ruleset {'. pq($el)->attr('style') .'}');
-	    $CssDocument = $CssParser->parse();
-		  $ruleset = $CssDocument->getAllRulesets();
-		  $ruleset = reset($ruleset);
-      $ruleset->expandShorthands();
-      foreach($ruleset->getRules() as $rule => $value) {
-        if(!isset($existing[$rule]) || 1000 > $existing[$rule]['specificity']) {
-          $value = $value->getValue();
-          $value = (is_object($value))
-                    ? $value->__toString()
-                    : $value;
-          $existing[$rule] = array('specificity' => 1000,
-                                   'value' => $value);
+		  $style =  pq($el)->attr('style');
+		  $attribute_style = '';
+		  foreach($this->attribute_css_mapping as $map => $css_equivalent) {
+		    if($el->hasAttribute($map)) {
+		      $attribute_style .= $css_equivalent .':'. pq($el)->attr($map) .';';
+		    }
+		  }
+		  if(strlen($style) || strlen($attribute_style)) {
+  		  $CssParser = new CSSParser('#ruleset {'. ltrim($style .';'. $attribute_style, ';') .'}');
+  	    $CssDocument = $CssParser->parse();
+  		  $ruleset = $CssDocument->getAllRulesets();
+  		  $ruleset = reset($ruleset);
+        $ruleset->expandShorthands();
+        foreach($ruleset->getRules() as $rule => $value) {
+          if(!isset($existing[$rule]) || 1000 > $existing[$rule]['specificity']) {
+            $value = $value->getValue();
+            $value = (is_object($value))
+                      ? $value->__toString()
+                      : $value;
+            $existing[$rule] = array('specificity' => 1000,
+                                     'value' => $value);
+          }
         }
+        phpQuery::pq($el)->data('phpquery_css', $existing);
+        $this->bubbleCSS(phpQuery::pq($el));
       }
-      phpQuery::pq($el)->data('phpquery_css', $existing);
-      $this->bubbleCSS(phpQuery::pq($el));
 		}
 	}
 	
