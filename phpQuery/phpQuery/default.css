@@ -21,7 +21,7 @@ td, th          { display: table-cell }
 caption         { display: table-caption }
 th              { font-weight: bolder; text-align: center }
 caption         { text-align: center }
-body            { margin: 8px; color: #000; background-color: #fff;}
+body            { margin: 8px; color: #000; background-color: #fff; font-size: 16px;}
 h1              { font-size: 2em; margin: .67em 0 }
 h2              { font-size: 1.5em; margin: .75em 0 }
 h3              { font-size: 1.17em; margin: .83em 0 }
