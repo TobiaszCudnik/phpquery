@@ -1412,7 +1412,7 @@ class phpQueryObject
 	
 	protected function parseCSS() {
 	  if(!isset($this->cssString[$this->getDocumentID()])) {
-	   $this->cssString[$this->getDocumentID()] = '';
+	   $this->cssString[$this->getDocumentID()] = file_get_contents(dirname(__FILE__) .'/default.css');
 	  }
 	  foreach(phpQuery::pq('style', $this->getDocumentID()) as $style) {
 	    $this->cssString[$this->getDocumentID()] .= phpQuery::pq($style)->text();
