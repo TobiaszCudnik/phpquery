@@ -1371,14 +1371,28 @@ class phpQueryObject
 				->markup($html);
 		}
 	}
+	
 	/**
-	 * Enter description here...
+	 * Allows users to enter strings of CSS selectors. Useful
+	 * when the CSS is loaded via style or @imports that phpQuery can't load
+	 * because it doesn't know the URL context of the request.
+	 */
+	public function addCSS($string) {
+	  if(!isset($this->cssString[$this->getDocumentID()])) {
+	   $this->cssString[$this->getDocumentID()] = '';
+	  }
+	  $this->cssString[$this->getDocumentID()] .= $string;
+	  $this->parseCSS();
+	}
+	/**
+	 * Either sets the CSS property of an object or retrieves the
+	 * CSS property of a proejct.
 	 *
-	 * @return phpQuery|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
+	 * @return string of css property value
 	 * @todo
 	 */
 	public function css($property_name, $value = FALSE) {
-		if(!isset($this->cssIsParsed[$this->getDocumentID()])) {
+		if(!isset($this->cssIsParsed[$this->getDocumentID()]) || $this->cssIsParsed[$this->getDocumentID()] = false) {
 		  $this->parseCSS();
 		}
 		$data = phpQuery::data($this->get(0), 'phpquery_css', null, $this->getDocumentID());
@@ -1390,6 +1404,7 @@ class phpQueryObject
 	}
 	
 	protected function parseCSS() {
+	  var_dump($this->cssString[$this->getDocumentID()]);
 	  if(!isset($this->cssString[$this->getDocumentID()])) {
 	   $this->cssString[$this->getDocumentID()] = '';
 	  }
