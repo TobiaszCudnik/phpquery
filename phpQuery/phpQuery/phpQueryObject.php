@@ -1397,10 +1397,17 @@ class phpQueryObject
 		}
 		$data = phpQuery::data($this->get(0), 'phpquery_css', null, $this->getDocumentID());
 		if(!$value) {
-		  return $data[$property_name]['value'];
+		  if(isset($data[$property_name])) {
+		    return $data[$property_name]['value'];
+		  }
+		  return null;
 		}
-		$data[$property_name]['value'] = $value;
+		$specificity = (isset($data[$property_name]))
+		               ? $data[$property_name]['specificity'] + 1
+		               : 1000;
+		$data[$property_name] = array('specificity' => $specificity, 'value' => $value);
 		phpQuery::data($this->get(0), 'phpquery_css', $data, $this->getDocumentID());
+		$this->bubbleCSS(phpQuery::pq($this->get(0), $this->getDocumentID()));
 	}
 	
 	protected function parseCSS() {
@@ -1442,7 +1449,7 @@ class phpQueryObject
 		  $ruleset = reset($ruleset);
       $ruleset->expandShorthands();
       foreach($ruleset->getRules() as $rule => $value) {
-        if(!isset($existing[$rule]) || $existing[$rule]['specificity'] < $specificity) {
+        if(!isset($existing[$rule]) || 1000 > $existing[$rule]['specificity']) {
           $value = $value->getValue();
           $value = (is_object($value))
                     ? $value->__toString()
@@ -1477,7 +1484,10 @@ class phpQueryObject
 	 *
 	 */
 	public function show(){
-		// TODO
+	  $display = ($this->data('phpquery_display_state'))
+	             ? $this->data('phpquery_display_state')
+	             : 'block';
+		$this->css('display', $display);
 		return $this;
 	}
 	/**
@@ -1485,7 +1495,8 @@ class phpQueryObject
 	 *
 	 */
 	public function hide(){
-		// TODO
+	  $this->data('phpquery_display_state', $this->css('display'));
+		$this->css('display', 'none');
 		return $this;
 	}
 	/**
