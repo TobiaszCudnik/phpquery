@@ -1456,7 +1456,7 @@ class phpQueryObject
 		      $style[] = $css_equivalent .':'. pq($el)->attr($map) .';';
 		    }
 		  }
-		  if(count($style) || count($attribute_style)) {
+		  if(count($style)) {
   		  $CssParser = new CSSParser('#ruleset {'. implode(';', $style) .'}');
   	    $CssDocument = $CssParser->parse();
   		  $ruleset = $CssDocument->getAllRulesets();
