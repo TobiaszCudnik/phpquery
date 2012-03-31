@@ -1450,14 +1450,14 @@ class phpQueryObject
 		foreach(phpQuery::pq('*', $this->getDocumentID()) as $el) {
 		  $existing = pq($el)->data('phpquery_css');
 		  $style =  pq($el)->attr('style');
-		  $attribute_style = '';
+		  $style = strlen($style) ? explode(';', $style) : array();
 		  foreach($this->attribute_css_mapping as $map => $css_equivalent) {
 		    if($el->hasAttribute($map)) {
-		      $attribute_style .= $css_equivalent .':'. pq($el)->attr($map) .';';
+		      $style[] = $css_equivalent .':'. pq($el)->attr($map) .';';
 		    }
 		  }
-		  if(strlen($style) || strlen($attribute_style)) {
-  		  $CssParser = new CSSParser('#ruleset {'. ltrim($style .';'. $attribute_style, ';') .'}');
+		  if(count($style) || count($attribute_style)) {
+  		  $CssParser = new CSSParser('#ruleset {'. implode(';', $style) .'}');
   	    $CssDocument = $CssParser->parse();
   		  $ruleset = $CssDocument->getAllRulesets();
   		  $ruleset = reset($ruleset);
