@@ -1416,7 +1416,7 @@ class phpQueryObject
 		$this->bubbleCSS(phpQuery::pq($this->get(0), $this->getDocumentID()));
 	}
 	
-	protected function parseCSS() {
+	public function parseCSS() {
 	  if(!isset($this->cssString[$this->getDocumentID()])) {
 	   $this->cssString[$this->getDocumentID()] = file_get_contents(dirname(__FILE__) .'/default.css');
 	  }
