@@ -1433,7 +1433,7 @@ class phpQueryObject
 		      $existing = pq($el)->data('phpquery_css');
 		      $ruleset->expandShorthands();
 		      foreach($ruleset->getRules() as $rule => $value) {
-		        if(!isset($existing[$rule]) || $existing[$rule]['specificity'] < $specificity) {
+		        if(!isset($existing[$rule]) || $existing[$rule]['specificity'] <= $specificity) {
 		          $value = $value->getValue();
 		          $value = (is_object($value))
 		                    ? $value->__toString()
@@ -1453,7 +1453,7 @@ class phpQueryObject
 		  $style = strlen($style) ? explode(';', $style) : array();
 		  foreach($this->attribute_css_mapping as $map => $css_equivalent) {
 		    if($el->hasAttribute($map)) {
-		      $style[] = $css_equivalent .':'. pq($el)->attr($map) .';';
+		      $style[] = $css_equivalent .':'. pq($el)->attr($map);
 		    }
 		  }
 		  if(count($style)) {
@@ -1463,7 +1463,7 @@ class phpQueryObject
   		  $ruleset = reset($ruleset);
         $ruleset->expandShorthands();
         foreach($ruleset->getRules() as $rule => $value) {
-          if(!isset($existing[$rule]) || 1000 > $existing[$rule]['specificity']) {
+          if(!isset($existing[$rule]) || 1000 >= $existing[$rule]['specificity']) {
             $value = $value->getValue();
             $value = (is_object($value))
                       ? $value->__toString()
