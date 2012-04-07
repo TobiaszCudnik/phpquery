@@ -95,6 +95,8 @@ class phpQueryObject
   protected $attribute_css_mapping = array(
     'bgcolor' => 'background-color',
     'text' => 'color',
+    'width' => 'width',
+    'height' => 'height'
   );
   
 	public function __construct($documentID) {
