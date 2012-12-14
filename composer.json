@@ -1,0 +1,16 @@
+{
+    "name": "stamina/phpquery",
+    "type": "library",
+    "description": "phpQuery is a server-side, chainable, CSS3 selector driven Document Object Model (DOM) API based on jQuery JavaScript Library",
+    "keywords": [],
+    "homepage": "http://code.google.com/p/phpquery/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tobiasz Cudnik"
+        }
+    ],
+    "autoload": {
+        "classmap": ["phpQuery/"]
+    }
+}
