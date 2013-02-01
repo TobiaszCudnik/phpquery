@@ -2631,6 +2631,21 @@ class phpQueryObject
 		return is_null($value)
 			? '' : $this;
 	}
+	
+	/**
+	 * @return The same attribute of each matching element, like
+	 * attr() but returns an array with one entry per matched element.
+	 * Read only.
+	 */
+	public function attrs($attr = null) {
+		$results = array();
+		foreach($this->stack(1) as $node) {
+			$results[] = $node->hasAttribute($attr)
+				? $node->getAttribute($attr)
+				: null;
+		}
+		return $results;
+	}
 	/**
 	 * @access private
 	 */
