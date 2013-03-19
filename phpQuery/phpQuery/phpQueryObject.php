@@ -2264,6 +2264,20 @@ class phpQueryObject
 		}
 		return $return;
 	}
+	
+	/**
+	 * @return The text content of each matching element, like
+	 * text() but returns an array with one entry per matched element.
+	 * Read only.
+	 */
+	public function texts($attr = null) {
+		$results = array();
+		foreach($this->elements as $node) {
+			$results[] = $node->textContent;
+		}
+		return $results;
+	}
+	
 	/**
 	 * Enter description here...
 	 *
@@ -2646,6 +2660,7 @@ class phpQueryObject
 		}
 		return $results;
 	}
+
 	/**
 	 * @access private
 	 */
