@@ -2264,6 +2264,20 @@ class phpQueryObject
 		}
 		return $return;
 	}
+	
+	/**
+	 * @return The text content of each matching element, like
+	 * text() but returns an array with one entry per matched element.
+	 * Read only.
+	 */
+	public function texts($attr = null) {
+		$results = array();
+		foreach($this->elements as $node) {
+			$results[] = $node->textContent;
+		}
+		return $results;
+	}
+	
 	/**
 	 * Enter description here...
 	 *
@@ -2631,6 +2645,22 @@ class phpQueryObject
 		return is_null($value)
 			? '' : $this;
 	}
+	
+	/**
+	 * @return The same attribute of each matching element, like
+	 * attr() but returns an array with one entry per matched element.
+	 * Read only.
+	 */
+	public function attrs($attr = null) {
+		$results = array();
+		foreach($this->stack(1) as $node) {
+			$results[] = $node->hasAttribute($attr)
+				? $node->getAttribute($attr)
+				: null;
+		}
+		return $results;
+	}
+
 	/**
 	 * @access private
 	 */
