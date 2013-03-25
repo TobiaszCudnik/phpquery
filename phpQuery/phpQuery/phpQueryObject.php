@@ -583,11 +583,12 @@ class phpQueryObject
 	 * @access private
 	 */
 	protected function matchClasses($class, $node) {
+		$nodeClasses = preg_split('/\s+/', $node->getAttribute('class') );
+		
 		// multi-class
 		if ( mb_strpos($class, '.', 1)) {
 			$classes = explode('.', substr($class, 1));
 			$classesCount = count( $classes );
-			$nodeClasses = explode(' ', $node->getAttribute('class') );
 			$nodeClassesCount = count( $nodeClasses );
 			if ( $classesCount > $nodeClassesCount )
 				return false;
@@ -604,8 +605,7 @@ class phpQueryObject
 			return in_array(
 				// strip leading dot from class name
 				substr($class, 1),
-				// get classes for element as array
-				explode(' ', $node->getAttribute('class') )
+				$nodeClasses
 			);
 		}
 	}
