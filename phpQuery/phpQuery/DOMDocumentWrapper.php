@@ -194,9 +194,26 @@ class DOMDocumentWrapper {
 			}
 			phpQuery::debug("Full markup load (HTML), documentCreate('$charset')");
 			$this->documentCreate($charset);
+			if ($charset === 'utf-8') {
+				// Hack to load HTML as UTF-8
+				$html = $markup;
+				$markup = '<?xml encoding="UTF-8">' . $markup;
+			}
 			$return = phpQuery::$debug === 2
 				? $this->document->loadHTML($markup)
 				: @$this->document->loadHTML($markup);
+			if ($charset === 'utf-8') {
+				// Remove hack
+				foreach ($this->document->childNodes as $item) {
+					if ($item->nodeType == XML_PI_NODE) {
+						// remove hack
+						$this->document->removeChild($item);
+					}
+				}
+				// insert proper
+				$this->document->encoding = 'UTF-8';
+				// End hack
+			}
 			if ($return)
 				$this->root = $this->document;
 		}
