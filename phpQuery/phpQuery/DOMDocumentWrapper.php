@@ -196,7 +196,6 @@ class DOMDocumentWrapper {
 			$this->documentCreate($charset);
 			if ($charset === 'utf-8') {
 				// Hack to load HTML as UTF-8
-				$html = $markup;
 				$markup = '<?xml encoding="UTF-8">' . $markup;
 			}
 			$return = phpQuery::$debug === 2
