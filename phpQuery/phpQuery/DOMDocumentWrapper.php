@@ -164,7 +164,7 @@ class DOMDocumentWrapper {
 			// Document Encoding Conversion
 			// http://code.google.com/p/phpquery/issues/detail?id=86
 			if (function_exists('mb_detect_encoding')) {
-				$possibleCharsets = array($documentCharset, $requestedCharset, 'AUTO');
+				$possibleCharsets = array($requestedCharset, $documentCharset, 'AUTO');
 				$docEncoding = mb_detect_encoding($markup, implode(', ', $possibleCharsets));
 				if (! $docEncoding)
 					$docEncoding = $documentCharset; // ok trust the document
