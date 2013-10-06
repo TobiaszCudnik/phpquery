@@ -1052,18 +1052,20 @@ class phpQueryObject
 								return null;'),
 						new CallbackParam(), $param
 					);
-				else if (mb_strlen($param) > 1 && $param{1} == 'n')
+				else if (mb_strlen($param) > 1 && preg_match('/^(\d*)n([-+]?)(\d*)/', $param) === 1)
 					// an+b
 					$mapped = $this->map(
 						create_function('$node, $param',
 							'$prevs = pq($node)->prevAll()->size();
 							$index = 1+$prevs;
-							$b = mb_strlen($param) > 3
-								? $param{3}
-								: 0;
-							$a = $param{0};
-							if ($b && $param{2} == "-")
-								$b = -$b;
+
+							preg_match("/^(\d*)n([-+]?)(\d*)/", $param, $matches);
+							$a = intval($matches[1]);
+							$b = intval($matches[3]);
+							if( $matches[2] === "-" ) {
+							    $b = -$b;
+							}
+
 							if ($a > 0) {
 								return ($index-$b)%$a == 0
 									? $node
