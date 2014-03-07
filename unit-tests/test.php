@@ -7,7 +7,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
     function provider() {
         // TODO change filename
         return array( array(
-                phpQuery::newDocumentFile('test.html')
+                phpQuery::newDocumentFile(__DIR__ . '/test.html')
         ));
     }
 
