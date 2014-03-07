@@ -5,6 +5,7 @@ if (!isset($argv[1]) || $argv[1] == 'help' || $argv[1] == '--help' || $argv[1] =
   phpquery URL --method1 arg1 arg2 argN --method2 arg1 arg2 argN ...
 Example: 
   phpquery 'http://localhost' --find 'div > p' --contents
+  phpquery 'http://example.com/' --find 'a' --attrs 'href'
 Pipe: 
   cat index.html | phpquery --find 'div > p' --contents
 Docs: 
