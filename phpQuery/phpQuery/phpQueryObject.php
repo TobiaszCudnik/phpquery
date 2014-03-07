@@ -1,4 +1,5 @@
 <?php
+use Sabberworm\CSS\Parser as CssParser;
 /**
  * Class representing phpQuery objects.
  *
@@ -75,7 +76,7 @@ class phpQueryObject
 	 * @access private
 	 */
 	protected $current = null;
-	
+
 	/**
 	 * Indicates whether CSS has been parsed or not. We only parse CSS if needed.
 	 * @access private
@@ -91,14 +92,14 @@ class phpQueryObject
 	 *
 	 * @return phpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
 	 */
-  
+
   protected $attribute_css_mapping = array(
     'bgcolor' => 'background-color',
     'text' => 'color',
     'width' => 'width',
     'height' => 'height'
   );
-  
+
 	public function __construct($documentID) {
 //		if ($documentID instanceof self)
 //			var_dump($documentID->getDocumentID());
@@ -1381,7 +1382,7 @@ class phpQueryObject
 				->markup($html);
 		}
 	}
-	
+
 	/**
 	 * Allows users to enter strings of CSS selectors. Useful
 	 * when the CSS is loaded via style or @imports that phpQuery can't load
@@ -1401,87 +1402,122 @@ class phpQueryObject
 	 * @return string of css property value
 	 * @todo
 	 */
-	public function css($property_name, $value = FALSE) {
-		if(!isset($this->cssIsParsed[$this->getDocumentID()]) || $this->cssIsParsed[$this->getDocumentID()] = false) {
-		  $this->parseCSS();
-		}
-		$data = phpQuery::data($this->get(0), 'phpquery_css', null, $this->getDocumentID());
-		if(!$value) {
-		  if(isset($data[$property_name])) {
-		    return $data[$property_name]['value'];
-		  }
-		  return null;
-		}
-		$specificity = (isset($data[$property_name]))
-		               ? $data[$property_name]['specificity'] + 1
-		               : 1000;
-		$data[$property_name] = array('specificity' => $specificity, 'value' => $value);
-		phpQuery::data($this->get(0), 'phpquery_css', $data, $this->getDocumentID());
-		$this->bubbleCSS(phpQuery::pq($this->get(0), $this->getDocumentID()));
-	}
-	
-	public function parseCSS() {
-	  if(!isset($this->cssString[$this->getDocumentID()])) {
-	   $this->cssString[$this->getDocumentID()] = file_get_contents(dirname(__FILE__) .'/default.css');
-	  }
-	  foreach(phpQuery::pq('style', $this->getDocumentID()) as $style) {
-	    $this->cssString[$this->getDocumentID()] .= phpQuery::pq($style)->text();
-	  }
-	  
-	  $CssParser = new CSSParser($this->cssString[$this->getDocumentID()]);
-	  $CssDocument = $CssParser->parse();
-		foreach($CssDocument->getAllRuleSets() as $ruleset) {
-		  foreach($ruleset->getSelector() as $selector) {
-		    $specificity = $selector->getSpecificity();
-		    foreach(phpQuery::pq($selector->getSelector(), $this->getDocumentID()) as $el) {
-		      $existing = pq($el)->data('phpquery_css');
-		      $ruleset->expandShorthands();
-		      foreach($ruleset->getRules() as $rule => $value) {
-		        if(!isset($existing[$rule]) || $existing[$rule]['specificity'] <= $specificity) {
-		          $value = $value->getValue();
-		          $value = (is_object($value))
-		                    ? $value->__toString()
-		                    : $value;
-		          $existing[$rule] = array('specificity' => $specificity,
-		                                   'value' => $value);
-		        }
-		      }
-		      phpQuery::pq($el)->data('phpquery_css', $existing);
+  public function css($property_name, $value = FALSE) {
+    if (!isset($this->cssIsParsed[$this->getDocumentID()])
+      || $this->cssIsParsed[$this->getDocumentID()] = false) {
+      $this->parseCSS();
+    }
+    $data = phpQuery::data($this->get(0), 'phpquery_css', null, $this->getDocumentID());
+    if (!$value) {
+      if (isset($data[$property_name])) {
+        return $data[$property_name]['value'];
+      }
+      return null;
+    }
+    $specificity = (isset($data[$property_name])) ? $data[$property_name]['specificity']
+        + 1 : 1000;
+    $data[$property_name] = array(
+      'specificity' => $specificity,
+      'value' => $value
+    );
+    phpQuery::data($this->get(0), 'phpquery_css', $data, $this->getDocumentID());
+    $this->bubbleCSS(phpQuery::pq($this->get(0), $this->getDocumentID()));
+
+    if ($specificity >= 1000) {
+      $styles = array();
+      foreach ($this->data('phpquery_css') as $k => $v) {
+        if ($v['specificity'] >= 1000) {
+          $styles[$k] = trim($k) . ':' . trim($v['value']);
+        }
+      }
+      ksort($styles);
+      if (empty($styles)) {
+        $this->removeAttr('style');
+      }
+      elseif (phpQuery::$enableCssShorthand) {
+        $parser = new Sabberworm\CSS\Parser('{' . join(';', $styles) . '}');
+        $doc = $parser->parse();
+        $doc->createShorthands();
+        $style = trim($doc->__toString(), "\n\r\t {}");
+      }
+      else {
+        $style = join(';', $styles);
+      }
+      $this->attr('style', $style);
+    }
+  }
+
+  public function parseCSS() {
+    if (!isset($this->cssString[$this->getDocumentID()])) {
+      $this->cssString[$this->getDocumentID()] = file_get_contents(dirname(__FILE__)
+        . '/default.css');
+    }
+    foreach (phpQuery::pq('style', $this->getDocumentID()) as $style) {
+      $this->cssString[$this->getDocumentID()] .= phpQuery::pq($style)->text();
+    }
+
+    $CssParser = new CssParser($this->cssString[$this->getDocumentID()]);
+    $CssDocument = $CssParser->parse();
+    foreach ($CssDocument->getAllRuleSets() as $ruleset) {
+      foreach ($ruleset->getSelector() as $selector) {
+        $specificity = $selector->getSpecificity();
+        foreach (phpQuery::pq($selector->getSelector(), $this->getDocumentID()) as $el) {
+          $existing = pq($el)->data('phpquery_css');
+          if (phpQuery::$enableCssShorthand) {
+            $ruleset->expandShorthands();
+          }
+          foreach ($ruleset->getRules() as $value) {
+            $rule = $value->getRule();
+            if (!isset($existing[$rule])
+              || $existing[$rule]['specificity'] <= $specificity) {
+              $value = $value->getValue();
+              $value = (is_object($value)) ? $value->__toString() : $value;
+              $existing[$rule] = array(
+                'specificity' => $specificity,
+                'value' => $value
+              );
+            }
+          }
+          phpQuery::pq($el)->data('phpquery_css', $existing);
           $this->bubbleCSS(phpQuery::pq($el));
-		    }
-		  }
-		}
-		foreach(phpQuery::pq('*', $this->getDocumentID()) as $el) {
-		  $existing = pq($el)->data('phpquery_css');
-		  $style =  pq($el)->attr('style');
-		  $style = strlen($style) ? explode(';', $style) : array();
-		  foreach($this->attribute_css_mapping as $map => $css_equivalent) {
-		    if($el->hasAttribute($map)) {
-		      $style[] = $css_equivalent .':'. pq($el)->attr($map);
-		    }
-		  }
-		  if(count($style)) {
-  		  $CssParser = new CSSParser('#ruleset {'. implode(';', $style) .'}');
-  	    $CssDocument = $CssParser->parse();
-  		  $ruleset = $CssDocument->getAllRulesets();
-  		  $ruleset = reset($ruleset);
-        $ruleset->expandShorthands();
-        foreach($ruleset->getRules() as $rule => $value) {
-          if(!isset($existing[$rule]) || 1000 >= $existing[$rule]['specificity']) {
+        }
+      }
+    }
+    foreach (phpQuery::pq('*', $this->getDocumentID()) as $el) {
+      $existing = pq($el)->data('phpquery_css');
+      $style = pq($el)->attr('style');
+      $style = strlen($style) ? explode(';', $style) : array();
+      foreach ($this->attribute_css_mapping as $map => $css_equivalent) {
+        if ($el->hasAttribute($map)) {
+          $style[] = $css_equivalent . ':' . pq($el)->attr($map);
+        }
+      }
+      if (count($style)) {
+        $CssParser = new CssParser('#ruleset {' . implode(';', $style) . '}');
+        $CssDocument = $CssParser->parse();
+        $ruleset = $CssDocument->getAllRulesets();
+        $ruleset = reset($ruleset);
+        if (phpQuery::$enableCssShorthand) {
+          $ruleset->expandShorthands();
+        }
+        foreach ($ruleset->getRules() as $value) {
+          $rule = $value->getRule();
+          if (!isset($existing[$rule])
+            || 1000 >= $existing[$rule]['specificity']) {
             $value = $value->getValue();
-            $value = (is_object($value))
-                      ? $value->__toString()
-                      : $value;
-            $existing[$rule] = array('specificity' => 1000,
-                                     'value' => $value);
+            $value = (is_object($value)) ? $value->__toString() : $value;
+            $existing[$rule] = array(
+              'specificity' => 1000,
+              'value' => $value
+            );
           }
         }
         phpQuery::pq($el)->data('phpquery_css', $existing);
         $this->bubbleCSS(phpQuery::pq($el));
       }
-		}
-	}
-	
+    }
+  }
+
 	protected function bubbleCSS($element) {
 	  $style = $element->data('phpquery_css');
 	  foreach($element->children() as $element_child) {
@@ -1497,7 +1533,7 @@ class phpQueryObject
   	  }
 	  }
 	}
-	
+
 	/**
 	 * @todo
 	 *
@@ -2010,7 +2046,7 @@ class phpQueryObject
 	}
 	/**
 	 * Enter description here...
-	 * 
+	 *
 	 * @param $code
 	 * @return unknown_type
 	 */
@@ -2021,7 +2057,7 @@ class phpQueryObject
 	}
 	/**
 	 * Enter description here...
-	 * 
+	 *
 	 * @param $code
 	 * @return unknown_type
 	 */
@@ -2396,7 +2432,7 @@ class phpQueryObject
 		}
 		return $return;
 	}
-	
+
 	/**
 	 * @return The text content of each matching element, like
 	 * text() but returns an array with one entry per matched element.
@@ -2409,7 +2445,7 @@ class phpQueryObject
 		}
 		return $results;
 	}
-	
+
 	/**
 	 * Enter description here...
 	 *
@@ -2777,7 +2813,7 @@ class phpQueryObject
 		return is_null($value)
 			? '' : $this;
 	}
-	
+
 	/**
 	 * @return The same attribute of each matching element, like
 	 * attr() but returns an array with one entry per matched element.
@@ -3081,7 +3117,7 @@ class phpQueryObject
 	}
 	/**
 	 * Enter description here...
-	 * 
+	 *
 	 * @param <type> $key
 	 * @param <type> $value
 	 */
@@ -3098,7 +3134,7 @@ class phpQueryObject
 	}
 	/**
 	 * Enter description here...
-	 * 
+	 *
 	 * @param <type> $key
 	 */
 	public function removeData($key) {

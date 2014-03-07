@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/phpQuery/phpQuery.php';
+require_once dirname(__DIR__) . '/autoload.php.dist';
 //phpQuery::$debug = true;
 
 class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
@@ -199,6 +200,26 @@ EOF;
 //         print htmlspecialchars("<pre>{$result}</pre>").'<br />';
 
         $this->assertEqualXMLStructure(DOMDocument::loadHTML($testResult)->documentElement, DOMDocument::loadHTML($result)->documentElement);
+    }
+
+    /**
+     * @param phpQueryObject $pq
+     * @dataProvider provider
+     * @return void
+     */
+    public function testCssParser() {
+      phpQuery::$enableCssShorthand = FALSE;
+
+      $expected_html = '<div style="color:red;display:none;margin:20px;padding:10px"><span>Hello World!</span></div>';
+      $expected_pq = phpQuery::newDocumentHTML($expected_html);
+
+      $test_pq = phpQuery::newDocumentHTML('<div style="margin:10px; padding:10px">');
+      $test = pq('div');
+      $test->append('<span>Hello World!</span>');
+      $test->hide();
+      $test->css('color', 'red');
+      $test->css('margin', '20px');
+      $this->assertEqualXMLStructure($expected_pq->find('div')->elements[0], $test->elements[0]);
     }
 }
 

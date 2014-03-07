@@ -33,8 +33,8 @@ require_once(dirname(__FILE__).'/CSSParser/CSSParser.php');
  */
 abstract class phpQuery {
 	/**
-	 * XXX: Workaround for mbstring problems 
-	 * 
+	 * XXX: Workaround for mbstring problems
+	 *
 	 * @var bool
 	 */
 	public static $mbstringSupport = true;
@@ -109,6 +109,9 @@ abstract class phpQuery {
 	public static $lastModified = null;
 	public static $active = 0;
 	public static $dumpCount = 0;
+	public static $enableCssShorthand = FALSE;
+
+
 	/**
 	 * Multi-purpose function.
 	 * Use pq() as shortcut.
