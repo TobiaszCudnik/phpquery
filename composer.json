@@ -27,6 +27,10 @@
             "role":"Packager"
         }
     ],
+    "require":{
+        "php":">=5.3.3",
+        "sabberworm/php-css-parser":"5.1.*"
+    },
     "autoload":{
         "classmap":[
             "phpQuery/"
