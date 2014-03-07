@@ -24,7 +24,6 @@ require_once(dirname(__FILE__).'/phpQuery/phpQueryEvents.php');
 require_once(dirname(__FILE__).'/phpQuery/Callback.php');
 require_once(dirname(__FILE__).'/phpQuery/phpQueryObject.php');
 require_once(dirname(__FILE__).'/phpQuery/compat/mbstring.php');
-require_once(dirname(__FILE__).'/CSSParser/CSSParser.php');
 /**
  * Static namespace for phpQuery functions.
  *
