@@ -1,6 +1,5 @@
 <?php
-require_once 'PHPUnit/Autoload.php';
-require_once '../phpQuery/phpQuery.php';
+require_once dirname(__DIR__) . '/phpQuery/phpQuery.php';
 //phpQuery::$debug = true;
 
 class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
@@ -42,7 +41,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
         );
         $pq = $pq->find('li')
             ->slice(1, 2);
-        
+
         $this->assertTrue( $pq->whois() == $testResult );
     }
 
@@ -62,7 +61,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
 
         $pq = $pq->find('li')
             ->slice(1, -1);
-        
+
         $this->assertTrue( $pq->whois() == $testResult );
     }
 
@@ -107,7 +106,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
         $document = null;
         $pq = $pq->toReference($document)
             ->find('p:first');
-        
+
         foreach(array(0,1,2) as $i) {
             $pq->clone()
                 ->addClass("clone-test")
@@ -166,7 +165,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
                 <p class="body">News 3 body</p>
             </li>
 </ul>
-<p>paragraph after UL</p>
+<p class="after">paragraph after UL</p>
     </div>
 EOF;
         $rows = array(
@@ -197,18 +196,10 @@ EOF;
             $row->appendTo($articles);
         }
         $result = $pq->find('.articles')->htmlOuter();
-        //print htmlspecialchars("<pre>{$result}</pre>").'<br />';
-        $similarity = 0.0;
-        similar_text($testResult, $result, $similarity);
+//         print htmlspecialchars("<pre>{$result}</pre>").'<br />';
 
-        $this->assertGreaterThan( 90, $similarity);
+        $this->assertEqualXMLStructure(DOMDocument::loadHTML($testResult)->documentElement, DOMDocument::loadHTML($result)->documentElement);
     }
-
-
-//    function __construct() {
-//        xdebug_break();
-//        parent::__construct();
-//    }
 }
 
 $test = new phpQueryBasicTest();
