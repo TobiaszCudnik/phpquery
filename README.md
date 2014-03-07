@@ -1,3 +1,14 @@
+# Revisiting PhpQuery
+
+[![Build Status](https://travis-ci.org/wittiws/phonarc.png?branch=master)](https://travis-ci.org/wittiws/phonarc)
+
+I am using this fork to modernize phpQuery. I am going to adjust folder structures, add namespaces and expand the unit tests. Prior to making those sweeping changes, the code came from a combination of:
+
+1. https://github.com/electrolinux/phpquery
+2. https://github.com/kevee/phpquery/tree/phpquery-css
+
+# Original README from electrolinux
+
 ## phpQuery, one more fork!
 
 My intent is to have it easily integrated in differents projects, so available on packagist.
