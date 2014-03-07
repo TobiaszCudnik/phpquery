@@ -169,6 +169,7 @@ class phpQueryBasicTest extends PHPUnit_Framework_TestCase {
 <p class="after">paragraph after UL</p>
     </div>
 EOF;
+        $expected_pq = phpQuery::newDocumentHTML($testResult);
         $rows = array(
             array(
                 'title' => 'News 1 title',
@@ -199,7 +200,8 @@ EOF;
         $result = $pq->find('.articles')->htmlOuter();
 //         print htmlspecialchars("<pre>{$result}</pre>").'<br />';
 
-        $this->assertEqualXMLStructure(DOMDocument::loadHTML($testResult)->documentElement, DOMDocument::loadHTML($result)->documentElement);
+        $this->assertEqualXMLStructure($expected_pq->find('.articles')->elements[0], $pq->find('.articles')->elements[0]);
+//         $this->assertEqualXMLStructure(DOMDocument::loadHTML($testResult)->documentElement, DOMDocument::loadHTML($result)->documentElement);
     }
 
     /**
