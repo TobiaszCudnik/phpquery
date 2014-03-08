@@ -17,7 +17,7 @@ class CallbackTest extends UnitTestCase {
 			'newMethod1' => array($this, 'callback1'),
 			'newMethod2' => array($this, 'callback2'),
 		);
-		phpQuery::extend('phpQueryObject', $newMethods);
+		phpQuery::extend('PhpQueryObject', $newMethods);
 		$doc = phpQuery::newDocumentXML("<div/>");
 		$this->assertTrue($doc->newMethod1() == $doc,
 			'$doc->newMethod1 == $doc');

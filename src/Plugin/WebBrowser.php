@@ -3,7 +3,7 @@
  * WebBrowser plugin.
  *
  */
-class phpQueryObjectPlugin_WebBrowser {
+class \PhpQuery\Plugin\WebBrowser {
 	/**
 	 * Limit binded methods to specified ones.
 	 *
@@ -13,7 +13,7 @@ class phpQueryObjectPlugin_WebBrowser {
 	/**
 	 * Enter description here...
 	 *
-	 * @param phpQueryObject $self
+	 * @param PhpQueryObject $self
 	 * @todo support 'reset' event
 	 */
 	public static function WebBrowser($self, $callback = null, $location = null) {
@@ -27,8 +27,8 @@ class phpQueryObjectPlugin_WebBrowser {
 		if (! $location)
 			throw new Exception('Location needed to activate WebBrowser plugin !');
 		else {
-			$self->bind('click', array($location, $callback), array('phpQueryPlugin_WebBrowser', 'hadleClick'));
-			$self->bind('submit', array($location, $callback), array('phpQueryPlugin_WebBrowser', 'handleSubmit'));
+			$self->bind('click', array($location, $callback), array('\PhpQuery\Plugin\UtilWebBrowser', 'hadleClick'));
+			$self->bind('submit', array($location, $callback), array('\PhpQuery\Plugin\UtilWebBrowser', 'handleSubmit'));
 		}
 	}
 	public static function browser($self, $callback = null, $location = null) {
@@ -75,7 +75,7 @@ class phpQueryObjectPlugin_WebBrowser {
 		), $xhr);
 		$return = false;
 		if ($xhr->getLastResponse()->isSuccessful()) {
-			$return = phpQueryPlugin_WebBrowser::browserReceive($xhr);
+			$return = \PhpQuery\Plugin\UtilWebBrowser::browserReceive($xhr);
 			if (isset($self->document->WebBrowserCallback))
 				phpQuery::callbackRun(
 					$self->document->WebBrowserCallback,
@@ -95,7 +95,7 @@ class phpQueryObjectPlugin_WebBrowser {
 		), $xhr);
 		$return = false;
 		if ($xhr->getLastResponse()->isSuccessful()) {
-			$return = phpQueryPlugin_WebBrowser::browserDownload($xhr);
+			$return = \PhpQuery\Plugin\UtilWebBrowser::browserDownload($xhr);
 			if (isset($self->document->WebBrowserCallback))
 				phpQuery::callbackRun(
 					$self->document->WebBrowserCallback,
@@ -105,7 +105,7 @@ class phpQueryObjectPlugin_WebBrowser {
 		return $return;
         }
 }
-class phpQueryPlugin_WebBrowser {
+class \PhpQuery\Plugin\UtilWebBrowser {
 	/**
 	 *
 	 * @param $url
@@ -260,7 +260,7 @@ class phpQueryPlugin_WebBrowser {
 			if ($xhr->getLastResponse()->isSuccessful()) {
 				// if all is ok, repeat this method...
 				return call_user_func_array(
-					array('phpQueryPlugin_WebBrowser', 'browserReceive'), array($xhr)
+					array('\PhpQuery\Plugin\UtilWebBrowser', 'browserReceive'), array($xhr)
 				);
 			}
 		} else

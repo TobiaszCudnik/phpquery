@@ -19,7 +19,7 @@
 
     <testsuites>
         <testsuite name="FileConverter">
-            <file>./unit-tests/test.php</file>
+            <directory>./src/Tests/</directory>
         </testsuite>
     </testsuites>
 

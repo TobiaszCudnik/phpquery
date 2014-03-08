@@ -14,7 +14,7 @@ if (0) {
 	phpQuery::$plugins->browserGet('http://google.com/', 'success1');
 	/**
 	*
-	* @param $pq phpQueryObject
+	* @param $pq PhpQueryObject
 	* @return unknown_type
 	*/
 	function success1($pq) {
@@ -29,7 +29,7 @@ if (0) {
 	}
 	/**
 	*
-	* @param $html phpQueryObject
+	* @param $html PhpQueryObject
 	* @return unknown_type
 	*/
 	function success2($pq) {

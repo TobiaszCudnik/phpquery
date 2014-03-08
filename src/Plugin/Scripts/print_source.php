@@ -4,6 +4,6 @@
  *
  * @author Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
  */
-/** @var phpQueryObject */
+/** @var PhpQueryObject */
 $self = $self;
 $return = htmlspecialchars($self);

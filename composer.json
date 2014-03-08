@@ -32,8 +32,8 @@
         "sabberworm/php-css-parser":"5.1.*"
     },
     "autoload":{
-        "classmap":[
-            "phpQuery/"
-        ]
+        "psr-4":{
+            "PhpQuery\\": "src/"
+        }
     }
 }

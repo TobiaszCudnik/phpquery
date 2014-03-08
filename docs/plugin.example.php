@@ -18,9 +18,9 @@
  * phpQuery plugin class extending phpQuery object.
  * Methods from this class are callable on every phpQuery object.
  *
- * Class name prefix 'phpQueryObjectPlugin_' must be preserved.
+ * Class name prefix '\PhpQuery\Plugin\' must be preserved.
  */
-abstract class phpQueryObjectPlugin_example {
+abstract class \PhpQuery\Plugin\example {
 	/**
 	 * Limit binded methods.
 	 *
@@ -33,7 +33,7 @@ abstract class phpQueryObjectPlugin_example {
 	/**
 	 * Enter description here...
 	 *
-	 * @param phpQueryObject $self
+	 * @param PhpQueryObject $self
 	 */
 	public static function example($self, $arg1) {
 		// this method can be called on any phpQuery object, like this:

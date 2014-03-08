@@ -3,9 +3,9 @@
  * phpQuery plugin class extending phpQuery object.
  * Methods from this class are callable on every phpQuery object.
  *
- * Class name prefix 'phpQueryObjectPlugin_' must be preserved.
+ * Class name prefix '\PhpQuery\Plugin\' must be preserved.
  */
-abstract class phpQueryObjectPlugin_Scripts {
+abstract class \PhpQuery\Plugin\Scripts {
 	/**
 	 * Limit binded methods.
 	 *
@@ -19,16 +19,16 @@ abstract class phpQueryObjectPlugin_Scripts {
 	/**
 	 * Enter description here...
 	 *
-	 * @param phpQueryObject $self
+	 * @param PhpQueryObject $self
 	 */
 	public static function script($self, $arg1) {
 		$params = func_get_args();
 		$params = array_slice($params, 2);
 		$return = null;
 		$config = self::$config;
-		if (phpQueryPlugin_Scripts::$scriptMethods[$arg1]) {
+		if (\PhpQuery\Plugin\UtilScripts::$scriptMethods[$arg1]) {
 			phpQuery::callbackRun(
-				phpQueryPlugin_Scripts::$scriptMethods[$arg1],
+				\PhpQuery\Plugin\UtilScripts::$scriptMethods[$arg1],
 				array($self, $params, &$return, $config)
 			);
 		} else if ($arg1 != '__config' && file_exists(dirname(__FILE__)."/Scripts/$arg1.php")) {
@@ -42,12 +42,12 @@ abstract class phpQueryObjectPlugin_Scripts {
 			: $self;
 	}
 }
-abstract class phpQueryPlugin_Scripts {
+abstract class \PhpQuery\Plugin\UtilScripts {
 	public static $scriptMethods = array();
 	public static function __initialize() {
 		if (file_exists(dirname(__FILE__)."/Scripts/__config.php")) {
 			include dirname(__FILE__)."/Scripts/__config.php";
-			phpQueryObjectPlugin_Scripts::$config = $config;
+			\PhpQuery\Plugin\Scripts::$config = $config;
 		}
 	}
 	/**
@@ -64,9 +64,9 @@ abstract class phpQueryPlugin_Scripts {
 	 * @return bool
 	 */
 	public static function script($name, $callback) {
-		if (phpQueryPlugin_Scripts::$scriptMethods[$name])
+		if (\PhpQuery\Plugin\UtilScripts::$scriptMethods[$name])
 			throw new Exception("Script name conflict - '$name'");
-		phpQueryPlugin_Scripts::$scriptMethods[$name] = $callback;
+		\PhpQuery\Plugin\UtilScripts::$scriptMethods[$name] = $callback;
 	}
 }
 ?>
