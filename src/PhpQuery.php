@@ -17,6 +17,19 @@ use PhpQuery\Dom\DomDocumentWrapper as DOMDocumentWrapper;
 require_once __DIR__ . '/bootstrap.php';
 
 /**
+ * Shortcut to phpQuery::pq($arg1, $context)
+ * Chainable.
+ *
+ * @see phpQuery::pq()
+ * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
+ * @author Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
+ * @package phpQuery
+ */
+function pq($arg1, $context = NULL) {
+  return PhpQuery::pq($arg1, $context);
+}
+
+/**
  * Static namespace for phpQuery functions.
  *
  * @author Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
@@ -102,6 +115,22 @@ abstract class phpQuery {
   public static $active = 0;
   public static $dumpCount = 0;
   public static $enableCssShorthand = FALSE;
+
+  public static function use_function($ns = '\\', $func = 'pq') {
+    if ($ns{0} !== '\\') {
+      $ns = '\\' . $ns;
+    }
+    if (!function_exists($ns . '\\' . $func)) {
+      if ($ns === '\\') {
+        eval("function $func(\$a, \$b = '') { return \\PhpQuery\\PhpQuery::pq(\$a, \$b); }");
+      }
+      else {
+        $ns = substr($ns, 1);
+        eval("namespace $ns { function $func(\$a, \$b = '') { return \\PhpQuery\\PhpQuery::pq(\$a, \$b); } }");
+      }
+    }
+  }
+
 
   /**
    * Multi-purpose function.

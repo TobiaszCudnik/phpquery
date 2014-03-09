@@ -1,6 +1,7 @@
 <?php
 namespace PhpQuery\Tests;
 use PhpQuery\PhpQuery as phpQuery;
+PhpQuery::use_function(__NAMESPACE__);
 
 class BasicTest extends \PHPUnit_Framework_TestCase {
   function provider() {
