@@ -14,7 +14,8 @@ Table of Contents
 -   [Text](#Text)
 -   [Value](#Value)
 
-==Attr==
+Attr
+----
 
 -   **[attr](http://docs.jquery.com/Attributes/attr)**[(\$name)](http://docs.jquery.com/Attributes/attr)
     Access a property on the first matched element. This method makes it
@@ -32,7 +33,8 @@ Table of Contents
 -   **[removeAttr](http://docs.jquery.com/Attributes/removeAttr)**[(\$name)](http://docs.jquery.com/Attributes/removeAttr)
     Remove an attribute from each of the matched elements.
 
-==Class==
+Class
+-----
 
 -   **[addClass](http://docs.jquery.com/Attributes/addClass)**[(\$class)](http://docs.jquery.com/Attributes/addClass)
     Adds the specified class(es) to each of the set of matched elements.
@@ -46,7 +48,8 @@ Table of Contents
     Adds the specified class if it is not present, removes the specified
     class if it is present.
 
-==HTML==
+HTML
+----
 
 -   **[html](http://docs.jquery.com/Attributes/html)**[()](http://docs.jquery.com/Attributes/html)
     Get the html contents (innerHTML) of the first matched element. This
@@ -57,14 +60,16 @@ Table of Contents
     available on XML documents (although it will work for XHTML
     documents).
 
-==Text==
+Text
+----
 
 -   **[text](http://docs.jquery.com/Attributes/text)**[()](http://docs.jquery.com/Attributes/text)
     Get the combined text contents of all matched elements.
 -   **[text](http://docs.jquery.com/Attributes/text)**[(\$val)](http://docs.jquery.com/Attributes/text)
     Set the text contents of all matched elements.
 
-==Value==
+Value
+-----
 
 -   **[val](http://docs.jquery.com/Attributes/val)**[()](http://docs.jquery.com/Attributes/val)
     Get the content of the value attribute of the first matched element.

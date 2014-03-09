@@ -33,7 +33,10 @@ Loading documents
     about it on [PHPSupport
     page](http://code.google.com/p/phpquery/wiki/PHPSupport)
 
-==pq function== **`pq($param, $context = null);`**
+pq function
+-----------
+
+**`pq($param, $context = null);`**
 
 **pq();** function is equivalent of jQuery's **\$();**. It's used for 3
 type of things:

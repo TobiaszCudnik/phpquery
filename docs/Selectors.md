@@ -22,7 +22,8 @@ Table of Contents
 -   [Forms](#Forms)
 -   [Form Filters](#Form_Filters)
 
-==Basics==
+Basics
+------
 
 -   **[\#id](http://docs.jquery.com/Selectors/id)** Matches a single
     element with the given id attribute.
@@ -37,7 +38,8 @@ Table of Contents
     selectorN](http://docs.jquery.com/Selectors/multiple)** Matches the
     combined results of all the specified selectors.
 
-==Hierarchy==
+Hierarchy
+---------
 
 -   **[ancestor
     descendant](http://docs.jquery.com/Selectors/descendant)** Matches
@@ -53,7 +55,8 @@ Table of Contents
     Matches all sibling elements after the "prev" element that match the
     filtering "siblings" selector.
 
-==Basic Filters==
+Basic Filters
+-------------
 
 -   **[:first](http://docs.jquery.com/Selectors/first)** Matches the
     first selected element.
@@ -76,7 +79,8 @@ Table of Contents
 -   **[:animated](http://docs.jquery.com/Selectors/animated)** Matches
     all elements that are currently being animated.
 
-==Content Filters==
+Content Filters
+---------------
 
 -   **[:contains(text)](http://docs.jquery.com/Selectors/contains)**
     Matches elements which contain the given text.
@@ -89,7 +93,10 @@ Table of Contents
     elements that are parents - they have child elements, including
     text.
 
-==Visibility Filters== *none*
+Visibility Filters
+------------------
+
+*none*
 
 Attribute Filters
 -----------------
@@ -116,7 +123,8 @@ Attribute Filters
     Matches elements that have the specified attribute and it contains a
     certain value.
 
-==Child Filters==
+Child Filters
+-------------
 
 -   **[:nth-child(index/even/odd/equation)](http://docs.jquery.com/Selectors/nthChild)**
     Matches all elements that are the nth-child of their parent or that
@@ -128,7 +136,8 @@ Attribute Filters
 -   **[:only-child](http://docs.jquery.com/Selectors/onlyChild)**
     Matches all elements that are the only child of their parent.
 
-==Forms==
+Forms
+-----
 
 -   **[:input](http://docs.jquery.com/Selectors/input)** Matches all
     input, textarea, select and button elements.
@@ -153,7 +162,8 @@ Attribute Filters
 -   **[:hidden](http://docs.jquery.com/Selectors/hidden)** Matches all
     elements that are hidden, or input elements of type "hidden".
 
-==Form Filters==
+Form Filters
+------------
 
 -   **[:enabled](http://docs.jquery.com/Selectors/enabled)** Matches all
     elements that are enabled.

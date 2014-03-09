@@ -16,7 +16,8 @@ Table of Contents
 -   [Removing](#Removing)
 -   [Copying](#Copying)
 
-==Changing Contents==
+Changing Contents
+-----------------
 
 -   **[html](http://docs.jquery.com/Manipulation/html)**[()](http://docs.jquery.com/Manipulation/html)
     Get the html contents (innerHTML) of the first matched element. This
@@ -31,7 +32,8 @@ Table of Contents
 -   **[text](http://docs.jquery.com/Manipulation/text)**[(\$val)](http://docs.jquery.com/Manipulation/text)
     Set the text contents of all matched elements.
 
-==Inserting Inside==
+Inserting Inside
+----------------
 
 -   **[append](http://docs.jquery.com/Manipulation/append)**[(\$content)](http://docs.jquery.com/Manipulation/append)
     Append content to the inside of every matched element.
@@ -44,7 +46,8 @@ Table of Contents
     Prepend all of the matched elements to another, specified, set of
     elements.
 
-==Inserting Outside==
+Inserting Outside
+-----------------
 
 -   **[after](http://docs.jquery.com/Manipulation/after)**[(\$content)](http://docs.jquery.com/Manipulation/after)
     Insert content after each of the matched elements.
@@ -57,7 +60,8 @@ Table of Contents
     Insert all of the matched elements before another, specified, set of
     elements.
 
-==Inserting Around==
+Inserting Around
+----------------
 
 -   **[wrap](http://docs.jquery.com/Manipulation/wrap)**[(\$html)](http://docs.jquery.com/Manipulation/wrap)
     Wrap each matched element with the specified HTML content.
@@ -76,7 +80,8 @@ Table of Contents
     Wrap the inner child contents of each matched element (including
     text nodes) with a DOM element.
 
-==Replacing==
+Replacing
+---------
 
 -   **[replaceWith](http://docs.jquery.com/Manipulation/replaceWith)**[(\$content)](http://docs.jquery.com/Manipulation/replaceWith)
     Replaces all matched elements with the specified HTML or DOM
@@ -85,14 +90,16 @@ Table of Contents
     Replaces the elements matched by the specified selector with the
     matched elements.
 
-==Removing==
+Removing
+--------
 
 -   **[empty](http://docs.jquery.com/Manipulation/empty)**[()](http://docs.jquery.com/Manipulation/empty)
     Remove all child nodes from the set of matched elements.
 -   **[remove](http://docs.jquery.com/Manipulation/remove)**[(\$expr)](http://docs.jquery.com/Manipulation/remove)
     Removes all matched elements from the DOM.
 
-==Copying==
+Copying
+-------
 
 -   **[clone](http://docs.jquery.com/Manipulation/clone)**[()](http://docs.jquery.com/Manipulation/clone)
     Clone matched DOM Elements and select the clones.

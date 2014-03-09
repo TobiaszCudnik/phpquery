@@ -12,7 +12,8 @@ Table of Contents
 -   [Finding](#Finding)
 -   [Chaining](#Chaining)
 
-==Filtering==
+Filtering
+---------
 
 -   **[eq](http://docs.jquery.com/Traversing/eq)**[(\$index)](http://docs.jquery.com/Traversing/eq)
     Reduce the set of matched elements to a single element.
@@ -38,7 +39,8 @@ Table of Contents
     \$end)](http://docs.jquery.com/Traversing/slice) Selects a subset of
     the matched elements.
 
-==Finding==
+Finding
+-------
 
 -   **[add](http://docs.jquery.com/Traversing/add)**[(\$expr)](http://docs.jquery.com/Traversing/add)
     Adds more elements, matched by the given expression, to the set of
@@ -75,7 +77,8 @@ Table of Contents
     of the matched set of elements. Can be filtered with an optional
     expressions.
 
-==Chaining==
+Chaining
+--------
 
 -   **[andSelf](http://docs.jquery.com/Traversing/andSelf)**[()](http://docs.jquery.com/Traversing/andSelf)
     Add the previous selection to the current selection.

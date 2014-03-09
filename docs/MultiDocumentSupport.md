@@ -15,7 +15,8 @@ pointing document thought
 
 last created (or selected) document is assumed to be default in pq();
 
-==What MultiDocumentSupport is NOT==
+What MultiDocumentSupport is NOT
+--------------------------------
 
 -   it's **not possible** to fetch nodes from several document in one
     query
@@ -67,7 +68,8 @@ Static Methods
 -   phpQuery::**getDOMDocument**(\$source) Get DOMDocument object
     related to \$source
 
-==Object Methods==
+Object Methods
+--------------
 
 -   \$pq-\>**getDocument**() Returns object with stack set to document
     root

@@ -91,8 +91,10 @@ where:
 -   PHP tags inside attributes are HTML entities
 -   PHP tags between DOM element's attributes are **not yet supported**
 
-====Inputting PHP code==== Additional methods allows placing PHP code
-inside DOM. Below each method visible is it's logic equivalent.
+#### Inputting PHP code
+
+Additional methods allows placing PHP code inside DOM. Below each method
+visible is it's logic equivalent.
 
 **attrPHP**(\$attr, \$code)
 
@@ -149,9 +151,11 @@ inside DOM. Below each method visible is it's logic equivalent.
 -   [replaceWith](http://docs.jquery.com/Manipulation/replaceWith)("\<?php
     \$code ?\>")
 
-====Outputting PHP code==== Code inserted with methods above won't be
-returned as valid (runnable) using classic output methods such as
-**html()**. To make it work, **php()** method without parameter have to
-be used. Optionaly **phpQuery::markupToPHP(\$markup)** can activate tags
-in string outputed before. **REMEMBER** Outputing runnable code and
-placing it on webserver is always dangerous !
+#### Outputting PHP code
+
+Code inserted with methods above won't be returned as valid (runnable)
+using classic output methods such as **html()**. To make it work,
+**php()** method without parameter have to be used. Optionaly
+**phpQuery::markupToPHP(\$markup)** can activate tags in string outputed
+before. **REMEMBER** Outputing runnable code and placing it on webserver
+is always dangerous !

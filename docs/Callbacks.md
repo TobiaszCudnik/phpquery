@@ -11,9 +11,12 @@ Table of Contents
 
 [Scope Pseudo-Inheritance](#Scope_Pseudo_Inheritance)
 
-==What are callbacks== Callbacks are functions *called back* by other
-functions in proper moment (eg on
-[Ajax](http://code.google.com/p/phpquery/wiki/Ajax) request error).
+What are callbacks
+------------------
+
+Callbacks are functions *called back* by other functions in proper
+moment (eg on [Ajax](http://code.google.com/p/phpquery/wiki/Ajax)
+request error).
 
 In **JavaScript** this pattern can be very flexible due to
 [Closures](http://en.wikipedia.org/wiki/Closure_(computer_science))
@@ -81,11 +84,12 @@ Methods supporting CallbackParam **without** using Callback class:
 -   `pq()->each()`
 -   `pq()->map()`
 
-===CallbackReference=== Finally, CallbackReference can be used when we
-don't really want a callback, only parameter passed to it.
-CallbackReference takes first parameter's value and passes it to
-reference. Thanks to that, we can use **if statement** instead of
-**callback function**.
+### CallbackReference
+
+Finally, CallbackReference can be used when we don't really want a
+callback, only parameter passed to it. CallbackReference takes first
+parameter's value and passes it to reference. Thanks to that, we can use
+**if statement** instead of **callback function**.
 
 #### Example 3
 

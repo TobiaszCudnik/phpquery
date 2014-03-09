@@ -6,7 +6,10 @@ Table of Contents
 -   [Test operations](#Test_operations)
 -   [String operations](#String_operations)
 
-==User Agent== *none*
+User Agent
+----------
+
+*none*
 
 Array and Object operations
 ---------------------------
@@ -29,12 +32,14 @@ Array and Object operations
 -   **[phpQuery::unique](http://docs.jquery.com/Utilities/jQuery.unique)**[(\$array)](http://docs.jquery.com/Utilities/jQuery.unique)
     Remove all duplicate elements from an array of elements.
 
-==Test operations==
+Test operations
+---------------
 
 -   **[phpQuery::isFunction](http://docs.jquery.com/Utilities/jQuery.isFunction)**[(\$obj)](http://docs.jquery.com/Utilities/jQuery.isFunction)
     Determine if the parameter passed is a function.
 
-==String operations==
+String operations
+-----------------
 
 -   **[phpQuery::trim](http://docs.jquery.com/Utilities/jQuery.trim)**[(\$str)](http://docs.jquery.com/Utilities/jQuery.trim)
     Remove the whitespace from the beginning and end of a string.

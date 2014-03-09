@@ -14,9 +14,12 @@ Table of Contents
 -   [Ajax Events](#Ajax_Events)
 -   [Misc](#Misc)
 
-==Server Side Ajax== Ajax, standing for *Asynchronous JavaScript and
-XML* is combination of HTTP Client and XML parser which doesn't lock
-program's thread (doing request in asynchronous way).
+Server Side Ajax
+----------------
+
+Ajax, standing for *Asynchronous JavaScript and XML* is combination of
+HTTP Client and XML parser which doesn't lock program's thread (doing
+request in asynchronous way).
 
 **phpQuery** also offers such functionality, making use of solid quality
 [Zend\_Http\_Client](http://framework.zend.com/manual/en/zend.http.html).
@@ -71,7 +74,8 @@ Ajax Requests
     \$type)](http://docs.jquery.com/Ajax/jQuery.post) Load a remote page
     using an HTTP POST request.
 
-==Ajax Events==
+Ajax Events
+-----------
 
 -   **[ajaxComplete](http://docs.jquery.com/Ajax/ajaxComplete)**[(\$callback)](http://docs.jquery.com/Ajax/ajaxComplete)
     Attach a function to be executed whenever an AJAX request completes.
@@ -92,7 +96,8 @@ Ajax Requests
     Attach a function to be executed whenever an AJAX request completes
     successfully. This is an Ajax Event.
 
-==Misc==
+Misc
+----
 
 -   **[phpQuery::ajaxSetup](http://docs.jquery.com/Ajax/jQuery.ajaxSetup)**[(\$options)](http://docs.jquery.com/Ajax/jQuery.ajaxSetup)
     Setup global settings for AJAX requests.
@@ -103,8 +108,11 @@ Ajax Requests
     Serializes all forms and form elements (like the .serialize()
     method) but returns a JSON data structure for you to work with.
 
-==Options== Detailed options description in available at [jQuery
-Documentation Site](http://docs.jquery.com/Ajax/jQuery.ajax#toptions).
+Options
+-------
+
+Detailed options description in available at [jQuery Documentation
+Site](http://docs.jquery.com/Ajax/jQuery.ajax#toptions).
 
 -   **`async`** `Boolean`
 -   **`beforeSend`** `Function`
