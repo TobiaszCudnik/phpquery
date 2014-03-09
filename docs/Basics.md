@@ -15,21 +15,21 @@ Table of Contents
 Loading documents
 -----------------
 
--   phpQuery::**newDocument**(\$html, \$contentType = null) Creates new
-    document from markup. If no \$contentType, autodetection is made
+-   phpQuery::**newDocument**($html, $contentType = null) Creates new
+    document from markup. If no $contentType, autodetection is made
     (based on markup). If it fails, text/html in utf-8 is used.
--   phpQuery::**newDocumentFile**(\$file, \$contentType = null) Creates
+-   phpQuery::**newDocumentFile**($file, $contentType = null) Creates
     new document from file. Works like newDocument()
--   phpQuery::**newDocumentHTML**(\$html, \$charset = 'utf-8')
--   phpQuery::**newDocumentXHTML**(\$html, \$charset = 'utf-8')
--   phpQuery::**newDocumentXML**(\$html, \$charset = 'utf-8')
--   phpQuery::**newDocumentPHP**(\$html, \$contentType = null) Read more
+-   phpQuery::**newDocumentHTML**($html, $charset = 'utf-8')
+-   phpQuery::**newDocumentXHTML**($html, $charset = 'utf-8')
+-   phpQuery::**newDocumentXML**($html, $charset = 'utf-8')
+-   phpQuery::**newDocumentPHP**($html, $contentType = null) Read more
     about it on [PHPSupport
     page](http://code.google.com/p/phpquery/wiki/PHPSupport)
--   phpQuery::**newDocumentFileHTML**(\$file, \$charset = 'utf-8')
--   phpQuery::**newDocumentFileXHTML**(\$file, \$charset = 'utf-8')
--   phpQuery::**newDocumentFileXML**(\$file, \$charset = 'utf-8')
--   phpQuery::**newDocumentFilePHP**(\$file, \$contentType) Read more
+-   phpQuery::**newDocumentFileHTML**($file, $charset = 'utf-8')
+-   phpQuery::**newDocumentFileXHTML**($file, $charset = 'utf-8')
+-   phpQuery::**newDocumentFileXML**($file, $charset = 'utf-8')
+-   phpQuery::**newDocumentFilePHP**($file, $contentType) Read more
     about it on [PHPSupport
     page](http://code.google.com/p/phpquery/wiki/PHPSupport)
 
@@ -38,7 +38,7 @@ pq function
 
 **`pq($param, $context = null);`**
 
-**pq();** function is equivalent of jQuery's **\$();**. It's used for 3
+**pq();** function is equivalent of jQuery's **$();**. It's used for 3
 type of things:
 
 1.  Importing markup

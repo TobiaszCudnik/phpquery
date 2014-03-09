@@ -32,12 +32,12 @@ will be handled properly - eg submitting form with inputs' data to
 action URL via new [Ajax](http://code.google.com/p/phpquery/wiki/Ajax)
 request.
 
-\$this (`this` in JS) context for handler scope **isn't available**. You
+$this (`this` in JS) context for handler scope **isn't available**. You
 have to use one of following manually:
 
--   \$event-\>**target**
--   \$event-\>**currentTarget**
--   \$event-\>**relatedTarget**
+-   $event-\>**target**
+-   $event-\>**currentTarget**
+-   $event-\>**relatedTarget**
 
 Page Load
 ---------
@@ -47,22 +47,22 @@ Page Load
 Event Handling
 --------------
 
--   **[bind](http://docs.jquery.com/Events/bind)**[(\$type, \$data,
-    \$fn)](http://docs.jquery.com/Events/bind) Binds a handler to one or
+-   **[bind](http://docs.jquery.com/Events/bind)**[($type, $data,
+    $fn)](http://docs.jquery.com/Events/bind) Binds a handler to one or
     more events (like click) for each matched element. Can also bind
     custom events.
--   **[one](http://docs.jquery.com/Events/one)**[(\$type, \$data,
-    \$fn)](http://docs.jquery.com/Events/one) Binds a handler to one or
+-   **[one](http://docs.jquery.com/Events/one)**[($type, $data,
+    $fn)](http://docs.jquery.com/Events/one) Binds a handler to one or
     more events to be executed once for each matched element.
--   **[trigger](http://docs.jquery.com/Events/trigger)**[(\$type ,
-    \$data )](http://docs.jquery.com/Events/trigger) Trigger a type of
+-   **[trigger](http://docs.jquery.com/Events/trigger)**[($type ,
+    $data )](http://docs.jquery.com/Events/trigger) Trigger a type of
     event on every matched element.
--   **[triggerHandler](http://docs.jquery.com/Events/triggerHandler)**[(\$type
-    , \$data )](http://docs.jquery.com/Events/triggerHandler) This
+-   **[triggerHandler](http://docs.jquery.com/Events/triggerHandler)**[($type
+    , $data )](http://docs.jquery.com/Events/triggerHandler) This
     particular method triggers all bound event handlers on an element
     (for a specific event type) WITHOUT executing the browsers default
     actions.
--   **[unbind](http://docs.jquery.com/Events/unbind)**[(\$type , \$data
+-   **[unbind](http://docs.jquery.com/Events/unbind)**[($type , $data
     )](http://docs.jquery.com/Events/unbind) This does the opposite of
     bind, it removes bound events from each of the matched elements.
 
@@ -76,11 +76,11 @@ Event Helpers
 
 -   **[change](http://docs.jquery.com/Events/change)**[()](http://docs.jquery.com/Events/change)
     Triggers the change event of each matched element.
--   **[change](http://docs.jquery.com/Events/change)**[(\$fn)](http://docs.jquery.com/Events/change)
+-   **[change](http://docs.jquery.com/Events/change)**[($fn)](http://docs.jquery.com/Events/change)
     Binds a function to the change event of each matched element.
 -   **[submit](http://docs.jquery.com/Events/submit)**[()](http://docs.jquery.com/Events/submit)
     Trigger the submit event of each matched element.
--   **[submit](http://docs.jquery.com/Events/submit)**[(\$fn)](http://docs.jquery.com/Events/submit)
+-   **[submit](http://docs.jquery.com/Events/submit)**[($fn)](http://docs.jquery.com/Events/submit)
     Bind a function to the submit event of each matched element.
 
 Read more at [Events](http://docs.jquery.com/Events) section on [jQuery

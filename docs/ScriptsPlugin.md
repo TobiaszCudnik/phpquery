@@ -25,13 +25,13 @@ Writing scripts
 Scripts are placed in **/phpQuery/plugins/Scripts**. Each script has
 it's own file. Each file has access to 4 variables:
 
--   **\$self** Represents \$this
--   **\$params** Represents parameters passed to script() method
+-   **$self** Represents $this
+-   **$params** Represents parameters passed to script() method
     (without script name)
--   **\$return** If not null, will be used as method result
--   **\$config** Content of **config.php file
+-   **$return** If not null, will be used as method result
+-   **$config** Content of **config.php file
 
-By default each script returns \$self aka \$this.
+By default each script returns $self aka $this.
 
 ##### Example script
 

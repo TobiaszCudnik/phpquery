@@ -39,8 +39,8 @@ grant rights to other hosts before making an
 
 There are 2 methods for allowing other hosts
 
--   phpQuery::**ajaxAllowURL**(\$url)
--   phpQuery::**ajaxAllowHost**(\$host)
+-   phpQuery::**ajaxAllowURL**($url)
+-   phpQuery::**ajaxAllowHost**($host)
 
 ``` php
 // connect to google.com
@@ -55,51 +55,51 @@ phpQuery::get($url);
 Ajax Requests
 -------------
 
--   **[phpQuery::ajax](http://docs.jquery.com/Ajax/jQuery.ajax)**[(\$options)](http://docs.jquery.com/Ajax/jQuery.ajax)
+-   **[phpQuery::ajax](http://docs.jquery.com/Ajax/jQuery.ajax)**[($options)](http://docs.jquery.com/Ajax/jQuery.ajax)
     Load a remote page using an HTTP request.
--   **[load](http://docs.jquery.com/Ajax/load)**[(\$url, \$data,
-    \$callback)](http://docs.jquery.com/Ajax/load) Load HTML from a
+-   **[load](http://docs.jquery.com/Ajax/load)**[($url, $data,
+    $callback)](http://docs.jquery.com/Ajax/load) Load HTML from a
     remote file and inject it into the DOM.
--   **[phpQuery::get](http://docs.jquery.com/Ajax/jQuery.get)**[(\$url,
-    \$data, \$callback)](http://docs.jquery.com/Ajax/jQuery.get) Load a
+-   **[phpQuery::get](http://docs.jquery.com/Ajax/jQuery.get)**[($url,
+    $data, $callback)](http://docs.jquery.com/Ajax/jQuery.get) Load a
     remote page using an HTTP GET request.
--   **[phpQuery::getJSON](http://docs.jquery.com/Ajax/jQuery.getJSON)**[(\$url,
-    \$data, \$callback)](http://docs.jquery.com/Ajax/jQuery.getJSON)
+-   **[phpQuery::getJSON](http://docs.jquery.com/Ajax/jQuery.getJSON)**[($url,
+    $data, $callback)](http://docs.jquery.com/Ajax/jQuery.getJSON)
     Load JSON data using an HTTP GET request.
--   **[phpQuery::getScript](http://docs.jquery.com/Ajax/jQuery.getScript)**[(\$url,
-    \$callback)](http://docs.jquery.com/Ajax/jQuery.getScript) Loads,
+-   **[phpQuery::getScript](http://docs.jquery.com/Ajax/jQuery.getScript)**[($url,
+    $callback)](http://docs.jquery.com/Ajax/jQuery.getScript) Loads,
     and executes, a local JavaScript file using an HTTP GET request.
--   **[phpQuery::post](http://docs.jquery.com/Ajax/jQuery.post)**[(\$url,
-    \$data, \$callback,
-    \$type)](http://docs.jquery.com/Ajax/jQuery.post) Load a remote page
+-   **[phpQuery::post](http://docs.jquery.com/Ajax/jQuery.post)**[($url,
+    $data, $callback,
+    $type)](http://docs.jquery.com/Ajax/jQuery.post) Load a remote page
     using an HTTP POST request.
 
 Ajax Events
 -----------
 
--   **[ajaxComplete](http://docs.jquery.com/Ajax/ajaxComplete)**[(\$callback)](http://docs.jquery.com/Ajax/ajaxComplete)
+-   **[ajaxComplete](http://docs.jquery.com/Ajax/ajaxComplete)**[($callback)](http://docs.jquery.com/Ajax/ajaxComplete)
     Attach a function to be executed whenever an AJAX request completes.
     This is an Ajax Event.
--   **[ajaxError](http://docs.jquery.com/Ajax/ajaxError)**[(\$callback)](http://docs.jquery.com/Ajax/ajaxError)
+-   **[ajaxError](http://docs.jquery.com/Ajax/ajaxError)**[($callback)](http://docs.jquery.com/Ajax/ajaxError)
     Attach a function to be executed whenever an AJAX request fails.
     This is an Ajax Event.
--   **[ajaxSend](http://docs.jquery.com/Ajax/ajaxSend)**[(\$callback)](http://docs.jquery.com/Ajax/ajaxSend)
+-   **[ajaxSend](http://docs.jquery.com/Ajax/ajaxSend)**[($callback)](http://docs.jquery.com/Ajax/ajaxSend)
     Attach a function to be executed before an AJAX request is sent.
     This is an Ajax Event.
--   **[ajaxStart](http://docs.jquery.com/Ajax/ajaxStart)**[(\$callback)](http://docs.jquery.com/Ajax/ajaxStart)
+-   **[ajaxStart](http://docs.jquery.com/Ajax/ajaxStart)**[($callback)](http://docs.jquery.com/Ajax/ajaxStart)
     Attach a function to be executed whenever an AJAX request begins and
     there is none already active. This is an Ajax Event.
--   **[ajaxStop](http://docs.jquery.com/Ajax/ajaxStop)**[(\$callback)](http://docs.jquery.com/Ajax/ajaxStop)
+-   **[ajaxStop](http://docs.jquery.com/Ajax/ajaxStop)**[($callback)](http://docs.jquery.com/Ajax/ajaxStop)
     Attach a function to be executed whenever all AJAX requests have
     ended. This is an Ajax Event.
--   **[ajaxSuccess](http://docs.jquery.com/Ajax/ajaxSuccess)**[(\$callback)](http://docs.jquery.com/Ajax/ajaxSuccess)
+-   **[ajaxSuccess](http://docs.jquery.com/Ajax/ajaxSuccess)**[($callback)](http://docs.jquery.com/Ajax/ajaxSuccess)
     Attach a function to be executed whenever an AJAX request completes
     successfully. This is an Ajax Event.
 
 Misc
 ----
 
--   **[phpQuery::ajaxSetup](http://docs.jquery.com/Ajax/jQuery.ajaxSetup)**[(\$options)](http://docs.jquery.com/Ajax/jQuery.ajaxSetup)
+-   **[phpQuery::ajaxSetup](http://docs.jquery.com/Ajax/jQuery.ajaxSetup)**[($options)](http://docs.jquery.com/Ajax/jQuery.ajaxSetup)
     Setup global settings for AJAX requests.
 -   **[serialize](http://docs.jquery.com/Ajax/serialize)**[()](http://docs.jquery.com/Ajax/serialize)
     Serializes a set of input elements into a string of data. This will

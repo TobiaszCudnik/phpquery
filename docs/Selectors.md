@@ -112,7 +112,7 @@ Attribute Filters
 -   **[[attribute\^=value](http://docs.jquery.com/Selectors/attributeStartsWith)]**
     Matches elements that have the specified attribute and it starts
     with a certain value.
--   **[[attribute\$=value](http://docs.jquery.com/Selectors/attributeEndsWith)]**
+-   **[[attribute$=value](http://docs.jquery.com/Selectors/attributeEndsWith)]**
     Matches elements that have the specified attribute and it ends with
     a certain value.
 -   **http://docs.jquery.com/Selectors/attributeContains [attributeWIKI

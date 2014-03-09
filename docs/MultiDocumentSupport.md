@@ -56,25 +56,25 @@ pq('li', $doc4);
 Static Methods
 --------------
 
--   phpQuery::**newDocument**(\$html) Creates new document from markup
--   phpQuery::**newDocumentFile**(\$file) Creates new document from file
--   phpQuery::**getDocument**(\$id = null) Returns phpQueryObject
-    containing document with id \$id or default document (last
+-   phpQuery::**newDocument**($html) Creates new document from markup
+-   phpQuery::**newDocumentFile**($file) Creates new document from file
+-   phpQuery::**getDocument**($id = null) Returns phpQueryObject
+    containing document with id $id or default document (last
     created/selected)
--   phpQuery::**selectDocument**(\$id) Sets default document to \$id
--   phpQuery::**unloadDocuments**(\$id = null) Unloades all or specified
+-   phpQuery::**selectDocument**($id) Sets default document to $id
+-   phpQuery::**unloadDocuments**($id = null) Unloades all or specified
     document from memory
--   phpQuery::**getDocumentID**(\$source) Returns \$source's document ID
--   phpQuery::**getDOMDocument**(\$source) Get DOMDocument object
-    related to \$source
+-   phpQuery::**getDocumentID**($source) Returns $source's document ID
+-   phpQuery::**getDOMDocument**($source) Get DOMDocument object
+    related to $source
 
 Object Methods
 --------------
 
--   \$pq-\>**getDocument**() Returns object with stack set to document
+-   $pq-\>**getDocument**() Returns object with stack set to document
     root
--   \$pq-\>**getDocumentID**() Get object's Document ID
--   \$pq-\>**getDocumentIDRef**(&\$documentID) Saves object's DocumentID
-    to \$var by reference
--   \$pq-\>**unloadDocument**() Unloads whole document from memory
+-   $pq-\>**getDocumentID**() Get object's Document ID
+-   $pq-\>**getDocumentIDRef**(&$documentID) Saves object's DocumentID
+    to $var by reference
+-   $pq-\>**unloadDocument**() Unloads whole document from memory
 

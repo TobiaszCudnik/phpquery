@@ -20,7 +20,7 @@ Writing plugins
 
 Plugin consist from 2 classes - first extending **phpQueryObjects**
 (result of pq(); function) and second, extending static
-**phpQuery::\$plugins** namespace. Plugin classes are never intialized,
+**phpQuery::$plugins** namespace. Plugin classes are never intialized,
 just method calls are forwarded in static way from phpQuery.
 
 #### Extending phpQueryObject

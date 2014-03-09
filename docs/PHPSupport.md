@@ -82,8 +82,8 @@ PHP Code Support
 
 #### Opening PHP files as DOM
 
-PHP files can be opened using **phpQuery::newDocumentPHP(\$markup)** or
-**phpQuery::newDocumentFilePHP(\$file)**. Such files are visible as DOM,
+PHP files can be opened using **phpQuery::newDocumentPHP($markup)** or
+**phpQuery::newDocumentFilePHP($file)**. Such files are visible as DOM,
 where:
 
 -   PHP tags beetween DOM elements are available (queryable) as
@@ -96,66 +96,66 @@ where:
 Additional methods allows placing PHP code inside DOM. Below each method
 visible is it's logic equivalent.
 
-**attrPHP**(\$attr, \$code)
+**attrPHP**($attr, $code)
 
--   [attr](http://docs.jquery.com/Attributes/attr)(\$attr, "\<?php
-    \$code ?\>")
+-   [attr](http://docs.jquery.com/Attributes/attr)($attr, "\<?php
+    $code ?\>")
 
-**addClassPHP**(\$code)
+**addClassPHP**($code)
 
 -   [addClass](http://docs.jquery.com/Attributes/addClass)("\<?php
-    \$code ?\>")
+    $code ?\>")
 
-**beforePHP**(\$code)
+**beforePHP**($code)
 
--   [before](http://docs.jquery.com/Manipulation/before)("\<?php \$code
+-   [before](http://docs.jquery.com/Manipulation/before)("\<?php $code
     ?\>")
 
-**afterPHP**(\$code)
+**afterPHP**($code)
 
--   [after](http://docs.jquery.com/Manipulation/after)("\<?php \$code
+-   [after](http://docs.jquery.com/Manipulation/after)("\<?php $code
     ?\>")
 
-**prependPHP**(\$code)
+**prependPHP**($code)
 
 -   [prepend](http://docs.jquery.com/Manipulation/prepend)("\<?php
-    \$code ?\>")
+    $code ?\>")
 
-**appendPHP**(\$code)
+**appendPHP**($code)
 
--   [append](http://docs.jquery.com/Manipulation/append)("\<?php \$code
+-   [append](http://docs.jquery.com/Manipulation/append)("\<?php $code
     ?\>")
 
-**php**(\$code)
+**php**($code)
 
--   [html](http://docs.jquery.com/Manipulation/html)("\<?php \$code
+-   [html](http://docs.jquery.com/Manipulation/html)("\<?php $code
     ?\>")
 
-**wrapAllPHP**(\$codeBefore, \$codeAfter)
+**wrapAllPHP**($codeBefore, $codeAfter)
 
 -   [wrapAll](http://docs.jquery.com/Manipulation/wrapAll)("\<?php
-    \$codeBefore?\>\<?php \$codeAfter ?\>")
+    $codeBefore?\>\<?php $codeAfter ?\>")
 
-**wrapPHP**(\$codeBefore, \$codeAfter)
+**wrapPHP**($codeBefore, $codeAfter)
 
 -   [wrap](http://docs.jquery.com/Manipulation/wrap)("\<?php
-    \$codeBefore?\>\<?php \$codeAfter ?\>")
+    $codeBefore?\>\<?php $codeAfter ?\>")
 
-**wrapInnerPHP**(\$codeBefore, \$codeAfter)
+**wrapInnerPHP**($codeBefore, $codeAfter)
 
 -   [wrapInner](http://docs.jquery.com/Manipulation/wrapInner)("\<?php
-    \$codeBefore?\>\<?php \$codeAfter ?\>")
+    $codeBefore?\>\<?php $codeAfter ?\>")
 
-**replaceWithPHP**(\$code)
+**replaceWithPHP**($code)
 
 -   [replaceWith](http://docs.jquery.com/Manipulation/replaceWith)("\<?php
-    \$code ?\>")
+    $code ?\>")
 
 #### Outputting PHP code
 
 Code inserted with methods above won't be returned as valid (runnable)
 using classic output methods such as **html()**. To make it work,
 **php()** method without parameter have to be used. Optionaly
-**phpQuery::markupToPHP(\$markup)** can activate tags in string outputed
+**phpQuery::markupToPHP($markup)** can activate tags in string outputed
 before. **REMEMBER** Outputing runnable code and placing it on webserver
 is always dangerous !
