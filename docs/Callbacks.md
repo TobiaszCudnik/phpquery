@@ -15,8 +15,7 @@ What are callbacks
 ------------------
 
 Callbacks are functions *called back* by other functions in proper
-moment (eg on [Ajax](http://code.google.com/p/phpquery/wiki/Ajax)
-request error).
+moment (eg on [Ajax](Ajax.md) request error).
 
 In **JavaScript** this pattern can be very flexible due to
 [Closures](http://en.wikipedia.org/wiki/Closure_(computer_science))

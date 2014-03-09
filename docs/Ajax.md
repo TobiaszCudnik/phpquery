@@ -34,8 +34,7 @@ Cross Domain Ajax
 
 For security reasons, by default **phpQuery** doesn't allow connections
 to hosts other than actual `$_SERVER['HTTP_HOST']`. Developer needs to
-grant rights to other hosts before making an
-[Ajax](http://code.google.com/p/phpquery/wiki/Ajax) request.
+grant rights to other hosts before making an [Ajax](Ajax.md) request.
 
 There are 2 methods for allowing other hosts
 

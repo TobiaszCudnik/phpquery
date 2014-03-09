@@ -1,8 +1,7 @@
 **Labels:**Featured,Phase-Implementation,Plugin **WebBrowser** is a
-phpQuery
-[plugin](http://code.google.com/p/phpquery/wiki/PluginsServerSide) that
-mimics behaviors of web browser. Thanks to that developer can simulate
-user's behavior inside a PHP script.
+phpQuery [plugin](PluginsServerSide.md) that mimics behaviors of web
+browser. Thanks to that developer can simulate user's behavior inside a
+PHP script.
 
 Supported
 ---------

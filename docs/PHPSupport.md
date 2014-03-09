@@ -1,7 +1,6 @@
 **Labels:**Featured,Phase-Implementation Although **phpQuery** is a
-[jQuery
-port](http://code.google.com/p/phpquery/wiki/jQueryPortingState), there
-is extensive PHP-specific support.
+[jQuery port](jQueryPortingState.md), there is extensive PHP-specific
+support.
 
 Table of Contents
 =================
@@ -12,7 +11,7 @@ Table of Contents
 -   [ArrayAccess](#Array_Access)
 -   [Countable Interface](#Countable)
 
-[Callbacks](http://code.google.com/p/phpquery/wiki/Callbacks)
+[Callbacks](Callbacks.md)
 
 [PHP Code Support](#PHP_Code_Support)
 
@@ -73,9 +72,8 @@ print count(pq('ul:first > li'));
 Callbacks
 ---------
 
-There is a special
-[Callbacks](http://code.google.com/p/phpquery/wiki/Callbacks) wiki
-section, to which you should refer to.
+There is a special [Callbacks](Callbacks.md) wiki section, to which you
+should refer to.
 
 PHP Code Support
 ----------------

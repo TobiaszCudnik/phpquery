@@ -29,8 +29,7 @@ client-side ones. On server there isn't, of course, events such as
 By default, phpQuery automatically fires up only **change** event for
 form elements. If you load WebBrowser plugin, **submit** and **click**
 will be handled properly - eg submitting form with inputs' data to
-action URL via new [Ajax](http://code.google.com/p/phpquery/wiki/Ajax)
-request.
+action URL via new [Ajax](Ajax.md) request.
 
 $this (`this` in JS) context for handler scope **isn't available**. You
 have to use one of following manually:

@@ -24,14 +24,12 @@ Loading documents
 -   phpQuery::**newDocumentXHTML**($html, $charset = 'utf-8')
 -   phpQuery::**newDocumentXML**($html, $charset = 'utf-8')
 -   phpQuery::**newDocumentPHP**($html, $contentType = null) Read more
-    about it on [PHPSupport
-    page](http://code.google.com/p/phpquery/wiki/PHPSupport)
+    about it on [PHPSupport page](PHPSupport.md)
 -   phpQuery::**newDocumentFileHTML**($file, $charset = 'utf-8')
 -   phpQuery::**newDocumentFileXHTML**($file, $charset = 'utf-8')
 -   phpQuery::**newDocumentFileXML**($file, $charset = 'utf-8')
 -   phpQuery::**newDocumentFilePHP**($file, $contentType) Read more
-    about it on [PHPSupport
-    page](http://code.google.com/p/phpquery/wiki/PHPSupport)
+    about it on [PHPSupport page](PHPSupport.md)
 
 pq function
 -----------
