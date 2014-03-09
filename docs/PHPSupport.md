@@ -31,7 +31,7 @@ phpQuery implements some of [Standard PHP Library
 Iterator interface allows looping objects thou native PHP **foreach
 loop**. Example:
 
-``` {.prettyprint}
+``` php
 // get all direct LI elements from UL list of class 'im-the-list'
 $LIs = pq('ul.im-the-list > li');
 foreach($LIs as $li) {
@@ -49,7 +49,7 @@ nodes.
 If you like writing arrays, with phpQuery you can still do it, thanks to
 the ArrayAccess interface.
 
-``` {.prettyprint}
+``` php
 $pq = phpQuery::newDocumentFile('somefile.html');
 // print first list outer HTML
 print $pq['ul:first'];
@@ -65,7 +65,7 @@ print $pq['ul:first > li:eq(1)'];
 If used to do `count($something)` you can still do this that way,
 instead of eg `pq('p')->size()`.
 
-``` {.prettyprint}
+``` php
 // count all direct LIs in first list
 print count(pq('ul:first > li'));
 ```

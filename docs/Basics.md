@@ -1,7 +1,7 @@
 Example
 -------
 
-``` {.prettyprint}
+``` php
 phpQuery::newDocumentFileXHTML('my-xhtml.html')->find('p');
 $ul = pq('ul');
 ```
@@ -43,7 +43,7 @@ type of things:
 
 1.  Importing markup
 
-``` {.prettyprint}
+``` php
 // Import into selected document:
 // doesn't accept text nodes at beginning of input string
 pq('<div/>')
@@ -57,7 +57,7 @@ pq('<div/>', $pq)
 
 1.  Running queries
 
-``` {.prettyprint}
+``` php
 // Run query on last selected document:
 pq('div.myClass')
 // Run query on document with ID from $pq->getDocumentID():
@@ -71,7 +71,7 @@ pq('div.myClass', $pq)
 
 1.  Wrapping DOMNodes with phpQuery objects
 
-``` {.prettyprint}
+``` php
 foreach(pq('li') as $li)
   // $li is pure DOMNode, change it to phpQuery object
   pq($li);

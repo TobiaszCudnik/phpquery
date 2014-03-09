@@ -7,7 +7,7 @@ Using scripts
 
 Before using any script, you need to load **Scripts** plugin, like so:
 
-``` {.prettyprint}
+``` php
 phpQuery::plugin('Scripts');
 // or inside a chain
 pq('li')->plugin('Scripts');
@@ -15,7 +15,7 @@ pq('li')->plugin('Scripts');
 
 After that, any available script can be used thou **script** method.
 
-``` {.prettyprint}
+``` php
 print pq('div')->script('safe_print');
 ```
 
@@ -35,7 +35,7 @@ By default each script returns \$self aka \$this.
 
 ##### Example script
 
-``` {.prettyprint}
+``` php
 $return = $self->find($params[0]);
 ```
 

@@ -11,7 +11,7 @@ Table of Contents
 Example
 -------
 
-``` {.prettyprint}
+``` php
 pq('form')->bind('submit', 'submitHandler')->trigger('submit')->...
 function submitHandler($e) {
   print 'Target: '.$e->target->tagName;

@@ -26,7 +26,7 @@ What MultiDocumentSupport is NOT
 Example
 -------
 
-``` {.prettyprint}
+``` php
 // first three documents are wrapped inside phpQuery
 $doc1 = phpQuery::newDocumentFile('my-file.html');
 $doc2 = phpQuery::newDocumentFile('my-file.html');

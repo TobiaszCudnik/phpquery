@@ -27,7 +27,7 @@ Example 1
 Adding web browser functionality to existing phpQuery object and
 submiting the form.
 
-``` {.prettyprint}
+``` php
 ->WebBrowser('callback')->find('form')->submit()->...
 ```
 
@@ -36,7 +36,7 @@ Example 2
 
 Querying Google against "search phrase":
 
-``` {.prettyprint}
+``` php
 require_once('phpQuery/phpQuery.php');
 phpQuery::browserGet('http://www.google.com/', 'success1');
 function success1($browser) {

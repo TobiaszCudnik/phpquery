@@ -7,7 +7,7 @@ JSON
 
 Port of [JSON](http://jollytoad.googlepages.com/json.js) plugin.
 
-``` {.prettyprint}
+``` php
 $jsonString = phpQuery::toJSON( pq('form')->serializeArray() );
 $array = phpQuery::parseJSON('{"foo": "bar"}');
 ```

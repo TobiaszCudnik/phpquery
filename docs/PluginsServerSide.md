@@ -7,7 +7,7 @@ Using plugins
 Plugins are loaded using **plugin** method from phpQueryObject or
 phpQuery static namespace.
 
-``` {.prettyprint}
+``` php
 // all calls to plugin below are equal
 phpQuery::plugin('example')
 phpQuery::plugin('example', 'example.php')
@@ -25,7 +25,7 @@ just method calls are forwarded in static way from phpQuery.
 
 #### Extending phpQueryObject
 
-``` {.prettyprint}
+``` php
 /**
  * phpQuery plugin class extending phpQuery object.
  * Methods from this class are callable on every phpQuery object.
@@ -65,7 +65,7 @@ abstract class phpQueryObjectPlugin_example {
 
 #### Extending phpQuery
 
-``` {.prettyprint}
+``` php
 /**
  * phpQuery plugin class extending phpQuery static namespace.
  * Methods from this class are callable as follows:

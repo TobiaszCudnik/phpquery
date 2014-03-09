@@ -1,7 +1,7 @@
 Example
 -------
 
-``` {.prettyprint}
+``` php
 pq('a')->attr('href', 'newVal')->removeClass('className')->html('newHtml')->...
 ```
 

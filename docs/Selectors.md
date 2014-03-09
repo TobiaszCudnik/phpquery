@@ -5,7 +5,7 @@ implemented (in state same as in jQuery).
 Example
 -------
 
-``` {.prettyprint}
+``` php
 pq(".class ul > li[rel='foo']:first:has(a)")->appendTo('.append-target-wrapper div')->...
 ```
 

@@ -1,7 +1,7 @@
 Example
 -------
 
-``` {.prettyprint}
+``` php
 pq('div.old')->replaceWith( pq('div.new')->clone() )->appendTo('.trash')->prepend('Deleted')->...
 ```
 

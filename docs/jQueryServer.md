@@ -16,7 +16,7 @@ Example scenario
 Example code
 ------------
 
-``` {.prettyprint}
+``` php
 $.server({url: 'http://somesite.com'})
   .find('.my-class')
     .client(function(response){

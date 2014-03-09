@@ -40,7 +40,7 @@ Callback class is used for wrapping valid callbacks with params.
 
 #### Example 1
 
-``` {.prettyprint}
+``` php
 function myCallback($param1, $param2) {
   var_dump($param1);
   var_dump($param2);
@@ -62,7 +62,7 @@ Callback class for some methods.
 
 #### Example 2
 
-``` {.prettyprint}
+``` php
 phpQuery::each(
   // first param is array which will be iterated
   array(1,2,3),
@@ -93,7 +93,7 @@ parameter's value and passes it to reference. Thanks to that, we can use
 
 #### Example 3
 
-``` {.prettyprint}
+``` php
 $html;
 phpQuery::get($url, new CallbackReference($html));
 if ($html) {
@@ -120,7 +120,7 @@ means *any variable you can use*). It's achieved using
 Look at this modified [example 2](#Example_2). Previous comments were
 removed.
 
-``` {.prettyprint}
+``` php
 $a = 'foo';
 $b = 'bar';
 phpQuery::each(

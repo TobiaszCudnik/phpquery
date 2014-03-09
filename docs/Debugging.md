@@ -1,7 +1,7 @@
 Enabling debugging
 ------------------
 
-``` {.prettyprint}
+``` php
 // enable debugging messages
 phpQuery::$debug = 1;
 // enable extensive debugging messages
@@ -12,7 +12,7 @@ phpQuery::$debug = 2;
 Debugging methods
 -----------------
 
-``` {.prettyprint}
+``` php
 // debug inside chain
 pq('.foo')->dump()->...;
 pq('.foo')->dumpWhois()->...;

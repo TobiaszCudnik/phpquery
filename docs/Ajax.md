@@ -1,7 +1,7 @@
 Example
 -------
 
-``` {.prettyprint}
+``` php
 pq('#element')->load('http://somesite.com/page .inline-selector')->...
 ```
 
@@ -42,7 +42,7 @@ There are 2 methods for allowing other hosts
 -   phpQuery::**ajaxAllowURL**(\$url)
 -   phpQuery::**ajaxAllowHost**(\$host)
 
-``` {.prettyprint}
+``` php
 // connect to google.com
 phpQuery::ajaxAllowHost('google.com');
 phpQuery::get('http://google.com/ig');

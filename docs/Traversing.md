@@ -1,7 +1,7 @@
 Example
 -------
 
-``` {.prettyprint}
+``` php
 pq('div > p')->add('div > ul')->filter(':has(a)')->find('p:first')->nextAll()->andSelf()->...
 ```
 

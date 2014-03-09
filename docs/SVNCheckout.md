@@ -1,12 +1,12 @@
 #### Checkout latest release
 
-``` {.prettyprint}
+``` php
 svn checkout http://phpquery.googlecode.com/svn/trunk/ phpQuery
 ```
 
 #### Checkout developer branch
 
-``` {.prettyprint}
+``` php
 svn checkout http://phpquery.googlecode.com/svn/branches/dev/ phpQuery-dev
 ```
 
