@@ -2,19 +2,22 @@
 
 [![Build Status](https://travis-ci.org/wittiws/phonarc.png?branch=master)](https://travis-ci.org/wittiws/phonarc)
 
-I am using this fork to modernize phpQuery. I am going to adjust folder structures, add namespaces and expand the unit tests. Prior to making those sweeping changes, the code came from a combination of:
+## Basic usage of this fork
 
-1. https://github.com/electrolinux/phpquery
-2. https://github.com/kevee/phpquery/tree/phpquery-css
+```` php
+// This gives you the phpQuery object as normally used.
+use PhpQuery\PhpQuery as phpQuery;
 
-# Original README from electrolinux
+// This creates the pq() function in your namespace.
+PhpQuery::use_function(__NAMESPACE__);
 
-## phpQuery, one more fork!
+// This creates the pq() function in the global namespace.
+PhpQuery::use_function();
+````
 
-My intent is to have it easily integrated in differents projects, so available on packagist.
-I've gathered some fix and new features here and there, as will keep looking for new stuff on github about phpQuery
+## About this fork
 
-### github repos i've integrated:
+This fork includes several modernizations:
 
 * https://github.com/ralph-tice/phpquery (one commit: added WebBrowser->browserDownload)
 * https://github.com/aptivate/phpquery (three commits)
@@ -88,4 +91,12 @@ Source for test.html:
 </body>
 </html>
 ```
+=======
+1. Merged https://github.com/kevee/phpquery/tree/phpquery-css with https://github.com/electrolinux/phpquery
+2. Removed CSSParser from this repository and included it via composer
+3. Added PhpQuery\ namespace
+4. Adjusted the folder structure to reflect usage of PSR-4
+5. Corrected the unit tests and integrated with travis-ci
+>>>>>>> Updated README with project status.
 
+Beyond these adjustments, this project will be minimally maintained. For more phpQuery usage information and fork history, I highly recommend you review the https://github.com/electrolinux/phpquery README.
