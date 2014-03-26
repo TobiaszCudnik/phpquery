@@ -100,3 +100,11 @@ Source for test.html:
 >>>>>>> Updated README with project status.
 
 Beyond these adjustments, this project will be minimally maintained. For more phpQuery usage information and fork history, I highly recommend you review the https://github.com/electrolinux/phpquery README.
+
+## My Preferred Alternative
+
+There are several alternatives to phpQuery out there. While several have a healthy adoption rate, I was
+looking for a library that leveraged SimpleXML and focused on the PHP use case rather than building all
+of the functionality from scratch and adding unnecessarily methods and selectors simply for jQuery
+semantic completeness. In the end, I selected to launch a project that attempts to a be a PHP-centric 
+lightweight wrapper for SimpleXML. [Learn more about QuipXml.](https://github.com/wittiws/quipxml)
