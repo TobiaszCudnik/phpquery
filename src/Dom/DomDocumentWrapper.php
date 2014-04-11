@@ -311,7 +311,7 @@ class DOMDocumentWrapper {
       return $return;
     }
     else {
-      throw new Exception("Error loading XML markup");
+      throw new \Exception("Error loading XML markup");
     }
   }
   protected function isXHTML($markup = null) {
@@ -451,7 +451,7 @@ class DOMDocumentWrapper {
     //					// string markup
     //					$fake = $this->documentFragmentCreate($node, $sourceCharset);
     //					if ($fake === false)
-    //						throw new Exception("Error loading documentFragment markup");
+    //						throw new \Exception("Error loading documentFragment markup");
     //					else
     //						$return = array_merge($return,
     //							$this->import($fake->root->childNodes)
@@ -465,7 +465,7 @@ class DOMDocumentWrapper {
     //			// string markup
     //			$fake = $this->documentFragmentCreate($source, $sourceCharset);
     //			if ($fake === false)
-    //				throw new Exception("Error loading documentFragment markup");
+    //				throw new \Exception("Error loading documentFragment markup");
     //			else
     //				return $this->import($fake->root->childNodes);
     //		}
@@ -479,7 +479,7 @@ class DOMDocumentWrapper {
       // string markup
       $fake = $this->documentFragmentCreate($source, $sourceCharset);
       if ($fake === false)
-        throw new Exception("Error loading documentFragment markup");
+        throw new \Exception("Error loading documentFragment markup");
       else
         return $this->import($fake->root->childNodes);
     }

@@ -41,7 +41,7 @@ class jQueryServer {
       $authorized = $referer
         && in_array($referer, $this->config['allowedRefererHosts']);
       if (!$authorized) {
-        throw new Exception("Host '{$_SERVER['HTTP_REFERER']}' not authorized to make requests.");
+        throw new \Exception("Host '{$_SERVER['HTTP_REFERER']}' not authorized to make requests.");
         return;
       }
     }
@@ -64,7 +64,7 @@ class jQueryServer {
       phpQuery::ajax($ajax);
     }
     else {
-      throw new Exception("URL needed to download content");
+      throw new \Exception("URL needed to download content");
     }
   }
   public function success($response) {
@@ -72,7 +72,7 @@ class jQueryServer {
     foreach ($this->calls as $k => $r) {
       // check if method exists
       if (!method_exists(get_class($pq), $r['method'])) {
-        throw new Exception("Method '{$r['method']}' not implemented in phpQuery, sorry...");
+        throw new \Exception("Method '{$r['method']}' not implemented in phpQuery, sorry...");
         // execute method
       }
       else {

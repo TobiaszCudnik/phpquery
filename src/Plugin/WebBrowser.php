@@ -25,7 +25,7 @@ class \PhpQuery\Plugin\WebBrowser {
 		// FIXME tmp
 		$self->document->WebBrowserCallback = $callback;
 		if (! $location)
-			throw new Exception('Location needed to activate WebBrowser plugin !');
+			throw new \Exception('Location needed to activate WebBrowser plugin !');
 		else {
 			$self->bind('click', array($location, $callback), array('\PhpQuery\Plugin\UtilWebBrowser', 'hadleClick'));
 			$self->bind('submit', array($location, $callback), array('\PhpQuery\Plugin\UtilWebBrowser', 'handleSubmit'));
@@ -139,7 +139,7 @@ class \PhpQuery\Plugin\UtilWebBrowser {
 //			));
 			return $xhr;
 		} else {
-			throw new Exception("[WebBrowser] GET request failed; url: $url");
+			throw new \Exception("[WebBrowser] GET request failed; url: $url");
 			return false;
 		}
 	}

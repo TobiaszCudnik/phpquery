@@ -65,7 +65,7 @@ abstract class \PhpQuery\Plugin\UtilScripts {
 	 */
 	public static function script($name, $callback) {
 		if (\PhpQuery\Plugin\UtilScripts::$scriptMethods[$name])
-			throw new Exception("Script name conflict - '$name'");
+			throw new \Exception("Script name conflict - '$name'");
 		\PhpQuery\Plugin\UtilScripts::$scriptMethods[$name] = $callback;
 	}
 }

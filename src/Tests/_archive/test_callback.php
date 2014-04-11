@@ -1,6 +1,6 @@
 <?php
 //if (PHP_VERSION < 5.3)
-//	throw new Exception("This test case is only for PHP 5.3 and above.");
+//	throw new \Exception("This test case is only for PHP 5.3 and above.");
 require('/home/bob/Sources/php/simpletest/simpletest/trunk/autorun.php');
 require_once('../phpQuery/phpQuery.php');
 phpQuery::$debug = true;

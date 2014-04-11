@@ -176,7 +176,7 @@ abstract class phpQuery {
     if (!$context) {
       $domId = self::$defaultDocumentID;
       if (!$domId)
-        throw new Exception("Can't use last created DOM, because there isn't any. Use phpQuery::newDocument() first.");
+        throw new \Exception("Can't use last created DOM, because there isn't any. Use phpQuery::newDocument() first.");
       //		} else if (is_object($context) && ($context instanceof PHPQUERY || is_subclass_of($context, 'PhpQueryObject')))
     }
     else if (is_object($context) && $context instanceof PhpQueryObject)
@@ -184,14 +184,14 @@ abstract class phpQuery {
     else if ($context instanceof \DOMDocument) {
       $domId = self::getDocumentID($context);
       if (!$domId) {
-        //throw new Exception('Orphaned \DOMDocument');
+        //throw new \Exception('Orphaned \DOMDocument');
         $domId = self::newDocument($context)->getDocumentID();
       }
     }
     else if ($context instanceof \DOMNode) {
       $domId = self::getDocumentID($context);
       if (!$domId) {
-        throw new Exception('Orphaned DOMNode');
+        throw new \Exception('Orphaned DOMNode');
         //				$domId = self::newDocument($context->ownerDocument);
       }
     }
@@ -495,7 +495,7 @@ abstract class phpQuery {
    */
   protected static function createDocumentWrapper($html, $contentType = null, $documentID = null) {
     if (function_exists('domxml_open_mem'))
-      throw new Exception("Old PHP4 DOM XML extension detected. phpQuery won't work until this extension is enabled.");
+      throw new \Exception("Old PHP4 DOM XML extension detected. phpQuery won't work until this extension is enabled.");
     //		$id = $documentID
     //			? $documentID
     //			: md5(microtime());
@@ -539,7 +539,7 @@ abstract class phpQuery {
         $targetRef2 = &self::$pluginsStaticMethods;
         break;
       default:
-        throw new Exception("Unsupported \$target type");
+        throw new \Exception("Unsupported \$target type");
     }
     if (is_string($source))
       $source = array(
@@ -547,12 +547,12 @@ abstract class phpQuery {
       );
     foreach ($source as $method => $callback) {
       if (isset($targetRef[$method])) {
-        //				throw new Exception
+        //				throw new \Exception
         self::debug("Duplicate method '{$method}', can\'t extend '{$target}'");
         continue;
       }
       if (isset($targetRef2[$method])) {
-        //				throw new Exception
+        //				throw new \Exception
         self::debug("Duplicate method '{$method}' from plugin '{$targetRef2[$method]}',"
           . " can\'t extend '{$target}'");
         continue;
@@ -596,7 +596,7 @@ abstract class phpQuery {
         )))
           continue;
         if (isset(self::$pluginsStaticMethods[$method])) {
-          throw new Exception("Duplicate method '{$method}' from plugin '{$c}' conflicts with same method from plugin '"
+          throw new \Exception("Duplicate method '{$method}' from plugin '{$c}' conflicts with same method from plugin '"
             . self::$pluginsStaticMethods[$method] . "'");
           return;
         }
@@ -622,7 +622,7 @@ abstract class phpQuery {
         )))
           continue;
         if (isset(self::$pluginsMethods[$method])) {
-          throw new Exception("Duplicate method '{$method}' from plugin '{$c}' conflicts with same method from plugin '"
+          throw new \Exception("Duplicate method '{$method}' from plugin '{$c}' conflicts with same method from plugin '"
             . self::$pluginsMethods[$method] . "'");
           continue;
         }
@@ -726,7 +726,7 @@ abstract class phpQuery {
         self::$ajaxAllowedHosts[$k] = $_SERVER['HTTP_HOST'];
     $host = parse_url($options['url'], PHP_URL_HOST);
     if (!in_array($host, self::$ajaxAllowedHosts)) {
-      throw new Exception("Request not permitted, host '$host' not present in "
+      throw new \Exception("Request not permitted, host '$host' not present in "
         . "phpQuery::\$ajaxAllowedHosts");
     }
     // JSONP
@@ -1377,7 +1377,7 @@ class phpQueryPlugins {
       return isset($return) ? $return : $this;
     }
     else
-      throw new Exception("Method '{$method}' doesnt exist");
+      throw new \Exception("Method '{$method}' doesnt exist");
   }
 }
 // // add plugins dir and Zend framework to include path

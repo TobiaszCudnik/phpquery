@@ -109,7 +109,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess {
     //		var_dump($id);
     if (!isset(phpQuery::$documents[$id])) {
       //			var_dump(phpQuery::$documents);
-      throw new Exception("Document with ID '{$id}' isn't loaded. Use phpQuery::newDocument(\$html) or phpQuery::newDocumentFile(\$file) first.");
+      throw new \Exception("Document with ID '{$id}' isn't loaded. Use phpQuery::newDocument(\$html) or phpQuery::newDocumentFile(\$file) first.");
     }
     $this->documentID = $id;
     $this->documentWrapper = &phpQuery::$documents[$id];
@@ -2395,14 +2395,14 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess {
           case 'insertBefore':
           case 'before':
             if (!$toNode->parentNode)
-              throw new Exception("No parentNode, can't do {$type}()");
+              throw new \Exception("No parentNode, can't do {$type}()");
             else
               $toNode->parentNode->insertBefore($insert, $toNode);
             break;
           case 'insertAfter':
           case 'after':
             if (!$toNode->parentNode)
-              throw new Exception("No parentNode, can't do {$type}()");
+              throw new \Exception("No parentNode, can't do {$type}()");
             else
               $toNode->parentNode->insertBefore($insert, $nextSibling);
             break;
@@ -2557,7 +2557,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess {
       ), $args);
     }
     else
-      throw new Exception("Method '{$method}' doesnt exist");
+      throw new \Exception("Method '{$method}' doesnt exist");
   }
   /**
    * Safe rename of next().
@@ -3305,7 +3305,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess {
    */
   public function offsetUnset($offset) {
     // empty
-    throw new Exception("Can't do unset, use array interface only for calling queries and replacing HTML.");
+    throw new \Exception("Can't do unset, use array interface only for calling queries and replacing HTML.");
   }
   // ARRAYACCESS INTERFACE END
   /**
