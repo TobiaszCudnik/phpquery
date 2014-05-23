@@ -1,21 +1,28 @@
 <?php
+namespace PhpQuery\Plugin;
+
+use PhpQuery\PhpQuery as phpQuery;
 /**
  * WebBrowser plugin.
  *
  */
-class \PhpQuery\Plugin\WebBrowser {
+class WebBrowser {
 	/**
 	 * Limit binded methods to specified ones.
 	 *
 	 * @var array
 	 */
 	public static $phpQueryMethods = null;
-	/**
-	 * Enter description here...
-	 *
-	 * @param PhpQueryObject $self
-	 * @todo support 'reset' event
-	 */
+
+    /**
+     * Enter description here...
+     *
+     * @param \PhpQuery\PhpQueryObject $self
+     * @param null                     $callback
+     * @param null                     $location
+     * @throws \Exception
+     * @todo support 'reset' event
+     */
 	public static function WebBrowser($self, $callback = null, $location = null) {
 		$self = $self->_clone()->toRoot();
 		$location = $location
@@ -58,13 +65,14 @@ class \PhpQuery\Plugin\WebBrowser {
 		}
 		return $self;
 	}
-	/**
-	 * Method changing browser location.
-	 * Fires callback registered with WebBrowser(), if any.
-	 * @param $self
-	 * @param $url
-	 * @return unknown_type
-	 */
+
+    /**
+     * Method changing browser location.
+     * Fires callback registered with WebBrowser(), if any.
+     * @param $self
+     * @param $url
+     * @return bool
+     */
 	public static function location($self, $url = null) {
 		// TODO if ! $url return actual location ???
 		$xhr = isset($self->document->xhr)
@@ -105,16 +113,17 @@ class \PhpQuery\Plugin\WebBrowser {
 		return $return;
         }
 }
-class \PhpQuery\Plugin\UtilWebBrowser {
-	/**
-	 *
-	 * @param $url
-	 * @param $callback
-	 * @param $param1
-	 * @param $param2
-	 * @param $param3
-	 * @return Zend_Http_Client
-	 */
+class UtilWebBrowser {
+    /**
+     *
+     * @param $url
+     * @param $callback
+     * @param $param1
+     * @param $param2
+     * @param $param3
+     * @throws \Exception
+     * @return \Zend_Http_Client
+     */
 	public static function browserGet($url, $callback,
 		$param1 = null, $param2 = null, $param3 = null) {
 		phpQuery::debug("[WebBrowser] GET: $url");
@@ -140,7 +149,6 @@ class \PhpQuery\Plugin\UtilWebBrowser {
 			return $xhr;
 		} else {
 			throw new \Exception("[WebBrowser] GET request failed; url: $url");
-			return false;
 		}
 	}
 	/**
@@ -151,7 +159,7 @@ class \PhpQuery\Plugin\UtilWebBrowser {
 	 * @param $param1
 	 * @param $param2
 	 * @param $param3
-	 * @return Zend_Http_Client
+	 * @return \Zend_Http_Client
 	 */
 	public static function browserPost($url, $data, $callback,
 		$param1 = null, $param2 = null, $param3 = null) {
@@ -222,7 +230,7 @@ class \PhpQuery\Plugin\UtilWebBrowser {
 		return $settings;
 	}
 	/**
-	 * @param Zend_Http_Client $xhr
+	 * @param \Zend_Http_Client $xhr
 	 */
 	public static function browserReceive($xhr) {
 		phpQuery::debug("[WebBrowser] Received from ".$xhr->getUri(true));
@@ -277,13 +285,12 @@ class \PhpQuery\Plugin\UtilWebBrowser {
 
 		return $body;
 	}
-	/**
-	 * 
-	 * @param $e
-	 * @param $callback
-	 * @return unknown_type
-	 */
-	public static function hadleClick($e, $callback = null) {
+
+    /**
+     * @param      $e
+     * @param null $callback
+     */
+    public static function hadleClick($e, $callback = null) {
 		$node = phpQuery::pq($e->target);
 		$type = null;
 		if ($node->is('a[href]')) {
@@ -295,7 +302,7 @@ class \PhpQuery\Plugin\UtilWebBrowser {
 				'url' => resolve_url($e->data[0], $node->attr('href')),
 				'referer' => $node->document->location,
 			), $xhr);
-			if ((! $callback || !($callback instanceof Callback)) && $e->data[1])
+			if ((! $callback || !($callback instanceof \Callback)) && $e->data[1])
 				$callback = $e->data[1];
 			if ($xhr->getLastResponse()->isSuccessful() && $callback)
 				phpQuery::callbackRun($callback, array(
@@ -304,12 +311,14 @@ class \PhpQuery\Plugin\UtilWebBrowser {
 		} else if ($node->is(':submit') && $node->parents('form')->size())
 			$node->parents('form')->trigger('submit', array($e));
 	}
-	/**
-	 * Enter description here...
-	 *
-	 * @param unknown_type $e
-	 * @TODO trigger submit for form after form's  submit button has a click event
-	 */
+
+    /**
+     * Enter description here...
+     *
+     * @TODO trigger submit for form after form's  submit button has a click event
+     * @param      $e
+     * @param null $callback
+     */
 	public static function handleSubmit($e, $callback = null) {
 		$node = phpQuery::pq($e->target);
 		if (!$node->is('form') || !$node->is('[action]'))
@@ -350,8 +359,6 @@ class \PhpQuery\Plugin\UtilWebBrowser {
 }
 /**
  *
- * @param unknown_type $parsed
- * @return unknown
  * @link http://www.php.net/manual/en/function.parse-url.php
  * @author stevenlewis at hotmail dot com
  */
@@ -373,9 +380,6 @@ function glue_url($parsed)
 /**
  * Enter description here...
  *
- * @param unknown_type $base
- * @param unknown_type $url
- * @return unknown
  * @author adrian-php at sixfingeredman dot net
  */
 function resolve_url($base, $url) {
@@ -433,4 +437,17 @@ function resolve_url($base, $url) {
         }
         // Step 7
         return glue_url($base);
+}
+
+function unparse_url($parsed_url) {
+    $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+    $host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+    $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+    $user     = isset($parsed_url['user']) ? $parsed_url['user'] : '';
+    $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
+    $pass     = ($user || $pass) ? "$pass@" : '';
+    $path     = isset($parsed_url['path']) ? $parsed_url['path'] : '';
+    $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+    $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+    return "$scheme$user$pass$host$port$path$query$fragment";
 }

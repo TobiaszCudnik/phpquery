@@ -11,4 +11,3 @@
  * By default each script returns $self aka $this.
  */
 $return = $self->find($params[0]);
-?>

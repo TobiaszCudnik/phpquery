@@ -6,6 +6,8 @@
  * @package phpQuery.Plugins.Scripts
  * @author Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
  */
+use PhpQuery\PhpQuery as phpQuery;
+
 phpQuery::ajaxAllowHost(
 	'code.google.com',
 	'google.com', 'www.google.com',
@@ -44,4 +46,3 @@ $self->document->xhr = phpQuery::$plugins->browserGet(
 //			->parents('form')
 //				->submit();"
 //));
-?>
