@@ -1,7 +1,7 @@
 <?php
 namespace PhpQuery;
 
-use PhpQuery\Dom\DomEvent;
+use PhpQuery\Dom\DOMEvent;
 
 /**
  * Event handling class.

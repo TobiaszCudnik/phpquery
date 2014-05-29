@@ -1,4 +1,6 @@
 <?php
+use PhpQuery\Dom\DOMDocumentWrapper;
+
 /**
  * Charset and document types test.
  *
@@ -19,7 +21,7 @@ class phpQuery {
 			print var_dump($text);
 	}
 }
-require_once('../phpQuery/DOMDocumentWrapper.php');
+require_once(__DIR__ . '/../../Dom/DOMDocumentWrapper.php');
 phpQuery::$debug = 2;
 
 /* ENCODINGS */

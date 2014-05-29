@@ -1556,7 +1556,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     /**
      *
      * @param $value
-     * @return unknown_type
+     * @return string
      * @TODO implement in all methods using passed parameters
      */
     protected static function unQuote($value)
