@@ -932,7 +932,7 @@ abstract class phpQuery
             $client->setParameterPost($options['data']);
         }
         if (self::$active == 0 && $options['global'])
-            phpQueryEvents::trigger($documentID, 'ajaxStart');
+            PhpQueryEvents::trigger($documentID, 'ajaxStart');
         self::$active++;
         // beforeSend callback
         if (isset($options['beforeSend']) && $options['beforeSend'])
@@ -944,7 +944,7 @@ abstract class phpQuery
             );
         // ajaxSend event
         if ($options['global'])
-            phpQueryEvents::trigger(
+            PhpQueryEvents::trigger(
                 $documentID,
                 'ajaxSend',
                 array(
@@ -982,7 +982,7 @@ abstract class phpQuery
                     )
                 );
             if ($options['global'])
-                phpQueryEvents::trigger(
+                PhpQueryEvents::trigger(
                     $documentID,
                     'ajaxSuccess',
                     array(
@@ -1001,7 +1001,7 @@ abstract class phpQuery
                     )
                 );
             if ($options['global'])
-                phpQueryEvents::trigger(
+                PhpQueryEvents::trigger(
                     $documentID,
                     'ajaxError',
                     array(
@@ -1021,7 +1021,7 @@ abstract class phpQuery
                 )
             );
         if ($options['global'])
-            phpQueryEvents::trigger(
+            PhpQueryEvents::trigger(
                 $documentID,
                 'ajaxComplete',
                 array(
@@ -1030,7 +1030,7 @@ abstract class phpQuery
                 )
             );
         if ($options['global'] && !--self::$active)
-            phpQueryEvents::trigger($documentID, 'ajaxStop');
+            PhpQueryEvents::trigger($documentID, 'ajaxStop');
         return $client;
         //		if (is_null($domId))
         //			$domId = self::$defaultDocumentID ? self::$defaultDocumentID : false;

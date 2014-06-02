@@ -1,6 +1,8 @@
 <?php
 namespace PhpQuery\Tests;
 use PhpQuery\PhpQuery as phpQuery;
+use PhpQuery\PhpQueryObject;
+
 PhpQuery::use_function(__NAMESPACE__);
 
 class BasicTest extends \PHPUnit_Framework_TestCase {
@@ -14,7 +16,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @param phpQueryObject $pq
+   * @param PhpQueryObject $pq
    * @dataProvider provider
    * @return void
    */
@@ -28,7 +30,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @param phpQueryObject $pq
+   * @param PhpQueryObject $pq
    * @dataProvider provider
    * @return void
    */
@@ -42,7 +44,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @param phpQueryObject $pq
+   * @param PhpQueryObject $pq
    * @dataProvider provider
    * @return void
    */
@@ -74,7 +76,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @param phpQueryObject $pq
+   * @param PhpQueryObject $pq
    * @dataProvider provider
    * @return void
    */
@@ -86,7 +88,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @param phpQueryObject $pq
+   * @param PhpQueryObject $pq
    * @dataProvider provider
    * @return void
    */
@@ -108,7 +110,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @param phpQueryObject $pq
+   * @param PhpQueryObject $pq
    * @dataProvider provider
    * @return void
    */
@@ -121,7 +123,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @param phpQueryObject $pq
+   * @param PhpQueryObject $pq
    * @dataProvider provider
    * @return void
    */
@@ -185,7 +187,7 @@ EOF;
   }
 
   /**
-   * @param phpQueryObject $pq
+   * @param PhpQueryObject $pq
    * @dataProvider provider
    * @return void
    */

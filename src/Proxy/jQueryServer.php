@@ -1,5 +1,8 @@
 `
 <?php
+use PhpQuery\PhpQueryObject;
+use PhpQuery\PhpQuery as phpQuery;
+
 /**
  * jQuery Server Plugin
  *
@@ -86,7 +89,7 @@ class jQueryServer {
       $this->options['dataType'] = '';
     switch (strtolower($this->options['dataType'])) {
       case 'json':
-        if ($pq instanceof PHPQUERYOBJECT) {
+        if ($pq instanceof PhpQueryObject) {
           $results = array();
           foreach ($pq as $node)
             $results[] = pq($node)->htmlOuter();
@@ -113,4 +116,3 @@ class jQueryServer {
   //	}
 }
 new jQueryServer($_POST['data']);
-?>
