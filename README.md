@@ -101,6 +101,11 @@ Source for test.html:
 
 Beyond these adjustments, this project will be minimally maintained. For more phpQuery usage information and fork history, I highly recommend you review the https://github.com/electrolinux/phpquery README.
 
+## Very Similar Project
+
+See [QueryPath](https://github.com/technosophos/querypath) for a more active project that also works
+to replicate the jQuery syntax for PHP.
+
 ## My Preferred Alternative
 
 There are several alternatives to phpQuery out there. While several have a healthy adoption rate, I was
