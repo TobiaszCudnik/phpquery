@@ -1,10 +1,10 @@
 <?php
 namespace PhpQuery\Plugin;
 
-use PhpQuery\PhpQuery as phpQuery;
+use PhpQuery\PhpQuery;
 /**
- * phpQuery plugin class extending phpQuery object.
- * Methods from this class are callable on every phpQuery object.
+ * PhpQuery plugin class extending PhpQuery object.
+ * Methods from this class are callable on every PhpQuery object.
  *
  * Class name prefix '\PhpQuery\Plugin\' must be preserved.
  */
@@ -17,7 +17,7 @@ abstract class Scripts {
 	 *
 	 * @var array|null
 	 */
-	public static $phpQueryMethods = null;
+	public static $PhpQueryMethods = null;
 	public static $config = array();
 
     /**
@@ -33,15 +33,15 @@ abstract class Scripts {
 		$return = null;
 		$config = self::$config;
 		if (\PhpQuery\Plugin\UtilScripts::$scriptMethods[$arg1]) {
-			phpQuery::callbackRun(
+			PhpQuery::callbackRun(
 				\PhpQuery\Plugin\UtilScripts::$scriptMethods[$arg1],
 				array($self, $params, &$return, $config)
 			);
 		} else if ($arg1 != '__config' && file_exists(dirname(__FILE__)."/Scripts/$arg1.php")) {
-			phpQuery::debug("Loading script '$arg1'");
+			PhpQuery::debug("Loading script '$arg1'");
 			require dirname(__FILE__)."/Scripts/$arg1.php";
 		} else {
-			phpQuery::debug("Requested script '$arg1' doesn't exist");
+			PhpQuery::debug("Requested script '$arg1' doesn't exist");
 		}
 		return $return
 			? $return

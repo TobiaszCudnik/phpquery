@@ -1,12 +1,12 @@
 <?php
-require_once('../phpQuery/phpQuery.php');
-phpQuery::$debug = 2;
+require_once('../PhpQuery/PhpQuery.php');
+PhpQuery::$debug = 2;
 
 
 $testName = 'HTML insertion';
-$doc = phpQuery::newDocumentFile('document-types/document-utf8.xhtml');
-//$doc = phpQuery::newDocumentFile('document-types/document-utf8.html');
-//$doc = phpQuery::newDocumentFile('document-types/document-utf8.xml');
+$doc = PhpQuery::newDocumentFile('document-types/document-utf8.xhtml');
+//$doc = PhpQuery::newDocumentFile('document-types/document-utf8.html');
+//$doc = PhpQuery::newDocumentFile('document-types/document-utf8.xml');
 //print $doc->find('step');
 print $doc->find('p');
 $markup = "test<br />test<p>test p</p>";

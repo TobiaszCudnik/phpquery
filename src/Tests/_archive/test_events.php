@@ -1,6 +1,6 @@
 <?php
-require_once('../phpQuery/phpQuery.php');
-// phpQuery::$debug = true;
+require_once('../PhpQuery/PhpQuery.php');
+// PhpQuery::$debug = true;
 $form = <<<EOF
 <form>
   <input name='input-example'>
@@ -13,7 +13,7 @@ $form = <<<EOF
   <input type='checkbox' name='checkbox-example' value='foo'>
 </form>
 EOF;
-$doc = phpQuery::newDocumentHTML($form);
+$doc = PhpQuery::newDocumentHTML($form);
 $inputs = $doc['form > *'];
 // creates array from input names
 // $results = $inputs->get(null,

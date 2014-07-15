@@ -1,17 +1,17 @@
 <?php
-require_once('../phpQuery/phpQuery.php');
-phpQuery::$debug = true;
-phpQuery::extend('WebBrowser');
+require_once('../PhpQuery/PhpQuery.php');
+PhpQuery::$debug = true;
+PhpQuery::extend('WebBrowser');
 
-phpQuery::$ajaxAllowedHosts[] = 'gmail.com';
-phpQuery::$ajaxAllowedHosts[] = 'google.com';
-phpQuery::$ajaxAllowedHosts[] = 'www.google.com';
-phpQuery::$ajaxAllowedHosts[] = 'www.google.pl';
-phpQuery::$ajaxAllowedHosts[] = 'mail.google.com';
+PhpQuery::$ajaxAllowedHosts[] = 'gmail.com';
+PhpQuery::$ajaxAllowedHosts[] = 'google.com';
+PhpQuery::$ajaxAllowedHosts[] = 'www.google.com';
+PhpQuery::$ajaxAllowedHosts[] = 'www.google.pl';
+PhpQuery::$ajaxAllowedHosts[] = 'mail.google.com';
 
 // Google search results
 if (0) {
-	phpQuery::$plugins->browserGet('http://google.com/', 'success1');
+	PhpQuery::$plugins->browserGet('http://google.com/', 'success1');
 	/**
 	*
 	* @param $pq PhpQueryObject
@@ -22,7 +22,7 @@ if (0) {
 		$pq
 			->WebBrowser('success2')
 				->find('input[name=q]')
-				->val('phpQuery')
+				->val('PhpQuery')
 				->parents('form')
 					->submit()
 		;
@@ -41,8 +41,8 @@ if (0) {
 
 // Gmail login (not working...)
 if (0) {
-	phpQuery::plugin("Scripts");
-	phpQuery::newDocument('<div/>')
+	PhpQuery::plugin("Scripts");
+	PhpQuery::newDocument('<div/>')
 		->script('google_login')
 		->location('http://mail.google.com/')
 		->toReference($pq);
@@ -55,7 +55,7 @@ if (0) {
 if (0) {
 	$browser = null;
 	$browserCallback = new CallbackReference($browser);
-	phpQuery::browserGet('http://mail.google.com/', $browserCallback);
+	PhpQuery::browserGet('http://mail.google.com/', $browserCallback);
 	if ($browser) {
 		$browser
 			->WebBrowser($browserCallback)

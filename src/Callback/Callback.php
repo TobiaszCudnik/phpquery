@@ -14,11 +14,11 @@ interface ICallbackNamed {
  *   'param1 is now statically set', 
  *   new CallbackParam, new CallbackParam
  * );
- * phpQuery::callbackRun($fooCurried,
+ * PhpQuery::callbackRun($fooCurried,
  * 	array('param2 value', 'param3 value'
  * );
  * 
- * Callback class is supported in all phpQuery methods which accepts callbacks. 
+ * Callback class is supported in all PhpQuery methods which accepts callbacks. 
  *
  * @link http://code.google.com/p/phpquery/wiki/Callbacks#Param_Structures
  * @author Tobiasz Cudnik <tobiasz.cudnik/gmail.com>

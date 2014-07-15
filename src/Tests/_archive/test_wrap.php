@@ -1,9 +1,9 @@
 <?php
-require_once('../phpQuery/phpQuery.php');
-phpQuery::$debug = true;
+require_once('../PhpQuery/PhpQuery.php');
+PhpQuery::$debug = true;
 
 $testName = 'Wrap';
-$p = phpQuery::newDocumentFile('test.html')
+$p = PhpQuery::newDocumentFile('test.html')
 	->find('p')
 		->slice(1, 3);
 $p->wrap('<div class="wrapper">');
@@ -23,7 +23,7 @@ print "\n";
 
 $testName = 'WrapAll';
 $testResult = 1;
-phpQuery::newDocumentFile('test.html')
+PhpQuery::newDocumentFile('test.html')
 	->find('p')
 		->slice(1, 3)
 			->wrapAll('<div class="wrapper">');
@@ -39,7 +39,7 @@ print "\n";
 
 $testName = 'WrapInner';
 $testResult = 3;
-phpQuery::newDocumentFile('test.html')
+PhpQuery::newDocumentFile('test.html')
 	->find('li:first')
 		->wrapInner('<div class="wrapper">');
 $result = pq('.wrapper p');
@@ -54,7 +54,7 @@ print "\n";
 // TODO !
 $testName = 'WrapAllTest';
 /*
-$doc = phpQuery::newDocumentHTML('<div id="myDiv"></div>');
+$doc = PhpQuery::newDocumentHTML('<div id="myDiv"></div>');
 $doc['#myDiv']->append('hors paragraphe<p>Test</p>hors paragraphe')
 	->contents()
 		->not('[nodeType=1]')
@@ -62,7 +62,7 @@ $doc['#myDiv']->append('hors paragraphe<p>Test</p>hors paragraphe')
 var_dump((string)$doc);
 */
 //$testResult = 3;
-//phpQuery::newDocumentFile('test.html')
+//PhpQuery::newDocumentFile('test.html')
 //	->find('li:first')
 //		->wrapInner('<div class="wrapper">');
 //$result = pq('.wrapper p');

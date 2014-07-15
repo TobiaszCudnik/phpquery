@@ -1,12 +1,12 @@
 `
 <?php
 use PhpQuery\PhpQueryObject;
-use PhpQuery\PhpQuery as phpQuery;
+use PhpQuery\PhpQuery;
 
 /**
  * jQuery Server Plugin
  *
- * Backend class using phpQuery.
+ * Backend class using PhpQuery.
  *
  * @version 0.5.1
  * @author Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
@@ -30,7 +30,7 @@ class jQueryServer {
   public $allowedHosts = null;
   function __construct($data) {
     $pq = null;
-    include_once(dirname(__FILE__) . '/../phpQuery/phpQuery.php');
+    include_once(dirname(__FILE__) . '/../PhpQuery/PhpQuery.php');
     if (file_exists(dirname(__FILE__) . '/jQueryServer.config.php')) {
       include_once(dirname(__FILE__) . '/jQueryServer.config.php');
       if ($jQueryServerConfig)
@@ -48,13 +48,13 @@ class jQueryServer {
         return;
       }
     }
-    //		phpQueryClass::$debug = true;
+    //		PhpQueryClass::$debug = true;
     //		if (! function_exists('json_decode')) {
     //			include_once(dirname(__FILE__).'/JSON.php');
     //			$this->json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
     //		}
     //		$data = $this->jsonDecode($data);
-    $data = phpQuery::parseJSON($data);
+    $data = PhpQuery::parseJSON($data);
     // load document (required for first $data element)
     if (is_array($data[0]) && isset($data[0]['url'])) {
       $this->options = $data[0];
@@ -64,18 +64,18 @@ class jQueryServer {
         $this,
         'success'
       );
-      phpQuery::ajax($ajax);
+      PhpQuery::ajax($ajax);
     }
     else {
       throw new \Exception("URL needed to download content");
     }
   }
   public function success($response) {
-    $pq = phpQuery::newDocument($response);
+    $pq = PhpQuery::newDocument($response);
     foreach ($this->calls as $k => $r) {
       // check if method exists
       if (!method_exists(get_class($pq), $r['method'])) {
-        throw new \Exception("Method '{$r['method']}' not implemented in phpQuery, sorry...");
+        throw new \Exception("Method '{$r['method']}' not implemented in PhpQuery, sorry...");
         // execute method
       }
       else {
@@ -93,10 +93,10 @@ class jQueryServer {
           $results = array();
           foreach ($pq as $node)
             $results[] = pq($node)->htmlOuter();
-          print phpQuery::toJSON($results);
+          print PhpQuery::toJSON($results);
         }
         else {
-          print phpQuery::toJSON($pq);
+          print PhpQuery::toJSON($pq);
         }
         break;
       default:

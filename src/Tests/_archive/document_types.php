@@ -11,7 +11,7 @@ use PhpQuery\Dom\DOMDocumentWrapper;
  * - document fragments tests (with all 4 charset scenarios)
  *
  */
-class phpQuery {
+class PhpQuery {
 	static $defaultDocumentID;
 	static $debug = 0;
 	static $documents = array();
@@ -22,7 +22,7 @@ class phpQuery {
 	}
 }
 require_once(__DIR__ . '/../../Dom/DOMDocumentWrapper.php');
-phpQuery::$debug = 2;
+PhpQuery::$debug = 2;
 
 /* ENCODINGS */
 //print '<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-2">';

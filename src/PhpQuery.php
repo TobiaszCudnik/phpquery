@@ -1,6 +1,6 @@
 <?php
 /**
- * phpQuery is a server-side, chainable, CSS3 selector driven
+ * PhpQuery is a server-side, chainable, CSS3 selector driven
  * Document Object Model (DOM) API based on jQuery JavaScript Library.
  *
  * @version 0.9.5
@@ -9,7 +9,7 @@
  * @link    http://jquery.com/
  * @author  Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
- * @package phpQuery
+ * @package PhpQuery
  */
 
 namespace PhpQuery;
@@ -17,15 +17,15 @@ namespace PhpQuery;
 require_once __DIR__ . '/bootstrap.php';
 
 /**
- * Shortcut to phpQuery::pq($arg1, $context)
+ * Shortcut to PhpQuery::pq($arg1, $context)
  * Chainable.
  *
- * @see     phpQuery::pq()
+ * @see     PhpQuery::pq()
  * @param      $arg1
  * @param null $context
  * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
  * @author  Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
- * @package phpQuery
+ * @package PhpQuery
  */
 function pq($arg1, $context = null)
 {
@@ -33,12 +33,12 @@ function pq($arg1, $context = null)
 }
 
 /**
- * Static namespace for phpQuery functions.
+ * Static namespace for PhpQuery functions.
  *
  * @author  Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
- * @package phpQuery
+ * @package PhpQuery
  */
-abstract class phpQuery
+abstract class PhpQuery
 {
     /**
      * XXX: Workaround for mbstring problems
@@ -53,7 +53,7 @@ abstract class phpQuery
     /**
      * Applies only to HTML.
      *
-     * @var unknown_type
+     * @var string
      */
     public static $defaultDoctype = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">';
@@ -67,7 +67,7 @@ abstract class phpQuery
     /**
      * List of loaded plugins.
      *
-     * @var unknown_type
+     * @var array
      */
     public static $pluginsLoaded = array();
     public static $pluginsMethods = array();
@@ -149,7 +149,7 @@ abstract class phpQuery
      *   pq('<div/>', $pq->getDocumentID())
      * - Import into same document as \DOMNode belongs to:
      *   pq('<div/>', \DOMNode)
-     * - Import into document from phpQuery object:
+     * - Import into document from PhpQuery object:
      *   pq('<div/>', $pq)
      *
      * 2. Run query:
@@ -159,21 +159,21 @@ abstract class phpQuery
      *   pq('div.myClass', $pq->getDocumentID())
      * - Run query on same document as \DOMNode belongs to and use node(s)as root for query:
      *   pq('div.myClass', \DOMNode)
-     * - Run query on document from phpQuery object
+     * - Run query on document from PhpQuery object
      *   and use object's stack as root node(s) for query:
      *   pq('div.myClass', $pq)
      *
      * @param string|\DOMNode|\DOMNodeList|array $arg1    HTML markup, CSS Selector, \DOMNode or array of \DOMNodes
-     * @param string|PhpQueryObject|\DOMNode     $context DOM ID from $pq->getDocumentID(), phpQuery object (determines also query root) or \DOMNode (determines also query root)
+     * @param string|PhpQueryObject|\DOMNode     $context DOM ID from $pq->getDocumentID(), PhpQuery object (determines also query root) or \DOMNode (determines also query root)
      *
      * @throws \Exception
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery|QueryTemplatesPhpQuery|false
-     * phpQuery object or false in case of error.
+     * PhpQuery object or false in case of error.
      */
     public static function pq($arg1, $context = null)
     {
         if ($arg1 instanceof \DOMNode && !isset($context)) {
-            foreach (phpQuery::$documents as $documentWrapper) {
+            foreach (PhpQuery::$documents as $documentWrapper) {
                 $compare = $arg1 instanceof \DOMDocument ? $arg1 : $arg1->ownerDocument;
                 if ($documentWrapper->document->isSameNode($compare)) {
                     $context = $documentWrapper->id;
@@ -183,7 +183,7 @@ abstract class phpQuery
         if (!$context) {
             $domId = self::$defaultDocumentID;
             if (!$domId) {
-                throw new \Exception("Can't use last created DOM, because there isn't any. Use phpQuery::newDocument() first.");
+                throw new \Exception("Can't use last created DOM, because there isn't any. Use PhpQuery::newDocument() first.");
             }
             //		} else if (is_object($context) && ($context instanceof PHPQUERY || is_subclass_of($context, 'PhpQueryObject')))
         } else {
@@ -220,67 +220,67 @@ abstract class phpQuery
             }
             $class = get_class($arg1);
             // support inheritance by passing old object to overloaded constructor
-            $phpQuery           = $class != 'phpQuery' ? new $class($arg1, $domId)
+            $PhpQuery           = $class != 'PhpQuery' ? new $class($arg1, $domId)
                 : new PhpQueryObject($domId);
-            $phpQuery->elements = array();
+            $PhpQuery->elements = array();
             foreach ($arg1->elements as $node) {
-                $phpQuery->elements[] = $phpQuery->document->importNode($node, true);
+                $PhpQuery->elements[] = $PhpQuery->document->importNode($node, true);
             }
-            return $phpQuery;
+            return $PhpQuery;
         } else {
             if ($arg1 instanceof \DOMNode
                 || (is_array($arg1) && isset($arg1[0]) && $arg1[0] instanceof \DOMNode)
             ) {
                 /*
-                 * Wrap DOM nodes with phpQuery object, import into document when needed:
+                 * Wrap DOM nodes with PhpQuery object, import into document when needed:
                  * pq(array($domNode1, $domNode2))
                  */
-                $phpQuery = new PhpQueryObject($domId);
+                $PhpQuery = new PhpQueryObject($domId);
                 if (!($arg1 instanceof \DOMNodeList) && !is_array($arg1)) {
                     $arg1 = array(
                         $arg1
                     );
                 }
-                $phpQuery->elements = array();
+                $PhpQuery->elements = array();
                 foreach ($arg1 as $node) {
                     $sameDocument         = $node->ownerDocument instanceof \DOMDocument
-                        && !$node->ownerDocument->isSameNode($phpQuery->document);
-                    $phpQuery->elements[] = $sameDocument ? $phpQuery->document->importNode($node, true)
+                        && !$node->ownerDocument->isSameNode($PhpQuery->document);
+                    $PhpQuery->elements[] = $sameDocument ? $PhpQuery->document->importNode($node, true)
                         : $node;
                 }
-                return $phpQuery;
+                return $PhpQuery;
             } else {
                 if (self::isMarkup($arg1)) {
                     /**
                      * Import HTML:
                      * pq('<div/>')
                      */
-                    $phpQuery = new PhpQueryObject($domId);
-                    return $phpQuery->newInstance($phpQuery->documentWrapper->import($arg1));
+                    $PhpQuery = new PhpQueryObject($domId);
+                    return $PhpQuery->newInstance($PhpQuery->documentWrapper->import($arg1));
                 } else {
                     /**
                      * Run CSS query:
                      * pq('div.myClass')
                      */
-                    $phpQuery = new PhpQueryObject($domId);
+                    $PhpQuery = new PhpQueryObject($domId);
                     //			if ($context && ($context instanceof PHPQUERY || is_subclass_of($context, 'PhpQueryObject')))
                     if ($context && $context instanceof PhpQueryObject) {
-                        $phpQuery->elements = $context->elements;
+                        $PhpQuery->elements = $context->elements;
                     } else {
                         if ($context && $context instanceof \DOMNodeList) {
-                            $phpQuery->elements = array();
+                            $PhpQuery->elements = array();
                             foreach ($context as $node) {
-                                $phpQuery->elements[] = $node;
+                                $PhpQuery->elements[] = $node;
                             }
                         } else {
                             if ($context && $context instanceof \DOMNode) {
-                                $phpQuery->elements = array(
+                                $PhpQuery->elements = array(
                                     $context
                                 );
                             }
                         }
                     }
-                    return $phpQuery->find($arg1);
+                    return $PhpQuery->find($arg1);
                 }
             }
         }
@@ -305,16 +305,16 @@ abstract class phpQuery
      * $id can be retrived via getDocumentID() or getDocumentIDRef().
      * Chainable.
      *
-     * @see phpQuery::selectDocument()
+     * @see PhpQuery::selectDocument()
      * @param null $id
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public static function getDocument($id = null)
     {
         if ($id)
-            phpQuery::selectDocument($id);
+            PhpQuery::selectDocument($id);
         else
-            $id = phpQuery::$defaultDocumentID;
+            $id = PhpQuery::$defaultDocumentID;
         return new PhpQueryObject($id);
     }
 
@@ -330,7 +330,7 @@ abstract class phpQuery
     {
         if (!$markup)
             $markup = '';
-        $documentID = phpQuery::createDocumentWrapper($markup, $contentType);
+        $documentID = PhpQuery::createDocumentWrapper($markup, $contentType);
         return new PhpQueryObject($documentID);
     }
 
@@ -387,7 +387,7 @@ abstract class phpQuery
     public static function newDocumentPHP($markup = null, $contentType = "text/html")
     {
         // TODO pass charset to phpToMarkup if possible (use DOMDocumentWrapper function)
-        $markup = phpQuery::phpToMarkup($markup, self::$defaultCharset);
+        $markup = PhpQuery::phpToMarkup($markup, self::$defaultCharset);
         return self::newDocument($markup, $contentType);
     }
 
@@ -409,7 +409,7 @@ abstract class phpQuery
                     //							.$m[5].$m[2];'
                     //					),
                     array(
-                        'phpQuery',
+                        'PhpQuery',
                         '_phpToMarkupCallback'
                     ),
                     $php
@@ -439,7 +439,7 @@ abstract class phpQuery
     }
 
     /**
-     * Converts document markup containing PHP code generated by phpQuery::php()
+     * Converts document markup containing PHP code generated by PhpQuery::php()
      * into valid (executable) PHP code syntax.
      *
      * @param string|PhpQueryObject $content
@@ -456,7 +456,7 @@ abstract class phpQuery
             //				'return "<'.'?php ".htmlspecialchars_decode($m[1])." ?'.'>";'
             //			),
             array(
-                'phpQuery',
+                'PhpQuery',
                 '_markupToPHPCallback'
             ),
             $content
@@ -582,17 +582,17 @@ abstract class phpQuery
     protected static function createDocumentWrapper($html, $contentType = null, $documentID = null)
     {
         if (function_exists('domxml_open_mem'))
-            throw new \Exception("Old PHP4 DOM XML extension detected. phpQuery won't work until this extension is enabled.");
+            throw new \Exception("Old PHP4 DOM XML extension detected. PhpQuery won't work until this extension is enabled.");
         //		$id = $documentID
         //			? $documentID
         //			: md5(microtime());
         $document = null;
         if ($html instanceof \DOMDocument) {
             if (self::getDocumentID($html)) {
-                // document already exists in phpQuery::$documents, make a copy
+                // document already exists in PhpQuery::$documents, make a copy
                 $document = clone $html;
             } else {
-                // new document, add it to phpQuery::$documents
+                // new document, add it to PhpQuery::$documents
                 $wrapper = new Dom\DOMDocumentWrapper($html, $contentType, $documentID);
             }
         } else {
@@ -600,9 +600,9 @@ abstract class phpQuery
         }
         //		$wrapper->id = $id;
         // bind document
-        phpQuery::$documents[$wrapper->id] = $wrapper;
+        PhpQuery::$documents[$wrapper->id] = $wrapper;
         // remember last loaded document
-        phpQuery::selectDocument($wrapper->id);
+        PhpQuery::selectDocument($wrapper->id);
         return $wrapper->id;
     }
 
@@ -622,7 +622,7 @@ abstract class phpQuery
                 $targetRef  = & self::$extendMethods;
                 $targetRef2 = & self::$pluginsMethods;
                 break;
-            case 'phpQuery':
+            case 'PhpQuery':
                 $targetRef  = & self::$extendStaticMethods;
                 $targetRef2 = & self::$pluginsStaticMethods;
                 break;
@@ -653,17 +653,17 @@ abstract class phpQuery
     }
 
     /**
-     * Extend phpQuery with $class from $file.
+     * Extend PhpQuery with $class from $file.
      *
-     * @param string $class Extending class name. Real class name can be prepended phpQuery_.
+     * @param string $class Extending class name. Real class name can be prepended PhpQuery_.
      * @param string $file  Filename to include. Defaults to "{$class}.php".
      * @throws \Exception
      * @return bool
      */
     public static function plugin($class, $file = null)
     {
-        // TODO $class checked agains phpQuery_$class
-        //		if (strpos($class, 'phpQuery') === 0)
+        // TODO $class checked agains PhpQuery_$class
+        //		if (strpos($class, 'PhpQuery') === 0)
         //			$class = substr($class, 8);
         if (in_array($class, self::$pluginsLoaded))
             return true;
@@ -678,8 +678,8 @@ abstract class phpQuery
         if (class_exists('\PhpQuery\Plugin\Util' . $class)) {
             $realClass = '\PhpQuery\Plugin\Util' . $class;
             $vars      = get_class_vars($realClass);
-            $loop      = isset($vars['phpQueryMethods'])
-            && !is_null($vars['phpQueryMethods']) ? $vars['phpQueryMethods']
+            $loop      = isset($vars['PhpQueryMethods'])
+            && !is_null($vars['PhpQueryMethods']) ? $vars['PhpQueryMethods']
                 : get_class_methods($realClass);
             foreach ($loop as $method) {
                 if ($method == '__initialize')
@@ -711,8 +711,8 @@ abstract class phpQuery
         if (class_exists('\\PhpQuery\\Plugin\\' . $class)) {
             $realClass = '\\PhpQuery\\Plugin\\' . $class;
             $vars      = get_class_vars($realClass);
-            $loop      = isset($vars['phpQueryMethods'])
-            && !is_null($vars['phpQueryMethods']) ? $vars['phpQueryMethods']
+            $loop      = isset($vars['PhpQueryMethods'])
+            && !is_null($vars['PhpQueryMethods']) ? $vars['PhpQueryMethods']
                 : get_class_methods($realClass);
             foreach ($loop as $method) {
                 if (!is_callable(
@@ -738,24 +738,24 @@ abstract class phpQuery
      * Unloades all or specified document from memory.
      *
      * @param null $id
-     * @internal param mixed $documentID @see phpQuery::getDocumentID() for supported types.
+     * @internal param mixed $documentID @see PhpQuery::getDocumentID() for supported types.
      */
     public static function unloadDocuments($id = null)
     {
         if (isset($id)) {
             if ($id = self::getDocumentID($id))
-                unset(phpQuery::$documents[$id]);
+                unset(PhpQuery::$documents[$id]);
         } else {
-            foreach (phpQuery::$documents as $k => $v) {
-                unset(phpQuery::$documents[$k]);
+            foreach (PhpQuery::$documents as $k => $v) {
+                unset(PhpQuery::$documents[$k]);
             }
         }
     }
 
     /**
-     * Parses phpQuery object or HTML result against PHP tags and makes them active.
+     * Parses PhpQuery object or HTML result against PHP tags and makes them active.
      *
-     * @param phpQuery|string $content
+     * @param PhpQuery|string $content
      * @deprecated
      * @return string
      */
@@ -801,7 +801,7 @@ abstract class phpQuery
      * @throws \Exception
      * @internal param \PhpQuery\See $array $options http://docs.jquery.com/Ajax/jQuery.ajax#toptions
      * Additional options are:
-     * 'document' - document for global events, @see phpQuery::getDocumentID()
+     * 'document' - document for global events, @see PhpQuery::getDocumentID()
      * 'referer' - implemented
      * 'requested_with' - TODO; not implemented (X-Requested-With)
      * @return \Zend_Http_Client
@@ -845,7 +845,7 @@ abstract class phpQuery
         $host = parse_url($options['url'], PHP_URL_HOST);
         if (!in_array($host, self::$ajaxAllowedHosts)) {
             throw new \Exception("Request not permitted, host '$host' not present in "
-                                 . "phpQuery::\$ajaxAllowedHosts");
+                                 . "PhpQuery::\$ajaxAllowedHosts");
         }
         // JSONP
         $jsre = "/=\\?(&|$)/";
@@ -936,7 +936,7 @@ abstract class phpQuery
         self::$active++;
         // beforeSend callback
         if (isset($options['beforeSend']) && $options['beforeSend'])
-            phpQuery::callbackRun(
+            PhpQuery::callbackRun(
                 $options['beforeSend'],
                 array(
                     $client
@@ -952,7 +952,7 @@ abstract class phpQuery
                     $options
                 )
             );
-        if (phpQuery::$debug) {
+        if (PhpQuery::$debug) {
             self::debug("{$options['type']}: {$options['url']}\n");
             self::debug("Options: <pre>" . var_export($options, true) . "</pre>\n");
             //			if ($client->getCookieJar())
@@ -960,7 +960,7 @@ abstract class phpQuery
         }
         // request
         $response = $client->request();
-        if (phpQuery::$debug) {
+        if (PhpQuery::$debug) {
             self::debug(
                 'Status: ' . $response->getStatus() . ' / '
                 . $response->getMessage()
@@ -973,7 +973,7 @@ abstract class phpQuery
             self::$lastModified = $response->getHeader('Last-Modified');
             $data               = self::httpData($response->getBody(), $options['dataType'], $options);
             if (isset($options['success']) && $options['success'])
-                phpQuery::callbackRun(
+                PhpQuery::callbackRun(
                     $options['success'],
                     array(
                         $data,
@@ -992,7 +992,7 @@ abstract class phpQuery
                 );
         } else {
             if (isset($options['error']) && $options['error'])
-                phpQuery::callbackRun(
+                PhpQuery::callbackRun(
                     $options['error'],
                     array(
                         $client,
@@ -1013,7 +1013,7 @@ abstract class phpQuery
                 );
         }
         if (isset($options['complete']) && $options['complete'])
-            phpQuery::callbackRun(
+            PhpQuery::callbackRun(
                 $options['complete'],
                 array(
                     $client,
@@ -1034,7 +1034,7 @@ abstract class phpQuery
         return $client;
         //		if (is_null($domId))
         //			$domId = self::$defaultDocumentID ? self::$defaultDocumentID : false;
-        //		return new phpQueryAjaxResponse($response, $domId);
+        //		return new PhpQueryAjaxResponse($response, $domId);
     }
 
     protected static function httpData($data, $type, $options)
@@ -1061,7 +1061,7 @@ abstract class phpQuery
     /**
      * Enter description here...
      *
-     * @param array|phpQuery $data
+     * @param array|PhpQuery $data
      *
      * @return string
      */
@@ -1077,7 +1077,7 @@ abstract class phpQuery
             $data     = null;
         }
         // TODO some array_values on this shit
-        return phpQuery::ajax(
+        return PhpQuery::ajax(
             array(
                 'type'     => 'GET',
                 'url'      => $url,
@@ -1094,7 +1094,7 @@ abstract class phpQuery
             $callback = $data;
             $data     = null;
         }
-        return phpQuery::ajax(
+        return PhpQuery::ajax(
             array(
                 'type'     => 'POST',
                 'url'      => $url,
@@ -1112,7 +1112,7 @@ abstract class phpQuery
             $data     = null;
         }
         // TODO some array_values on this shit
-        return phpQuery::ajax(
+        return PhpQuery::ajax(
             array(
                 'type'     => 'GET',
                 'url'      => $url,
@@ -1132,8 +1132,8 @@ abstract class phpQuery
     {
         $loop = is_array($host1) ? $host1 : func_get_args();
         foreach ($loop as $host) {
-            if ($host && !in_array($host, phpQuery::$ajaxAllowedHosts)) {
-                phpQuery::$ajaxAllowedHosts[] = $host;
+            if ($host && !in_array($host, PhpQuery::$ajaxAllowedHosts)) {
+                PhpQuery::$ajaxAllowedHosts[] = $host;
             }
         }
     }
@@ -1142,7 +1142,7 @@ abstract class phpQuery
     {
         $loop = is_array($url1) ? $url1 : func_get_args();
         foreach ($loop as $url)
-            phpQuery::ajaxAllowHost(parse_url($url, PHP_URL_HOST));
+            PhpQuery::ajaxAllowHost(parse_url($url, PHP_URL_HOST));
     }
 
     /**
@@ -1188,18 +1188,18 @@ abstract class phpQuery
     public static function getDocumentID($source)
     {
         if ($source instanceof \DOMDocument) {
-            foreach (phpQuery::$documents as $id => $document) {
+            foreach (PhpQuery::$documents as $id => $document) {
                 if ($source->isSameNode($document->document))
                     return $id;
             }
         } else if ($source instanceof \DOMNode) {
-            foreach (phpQuery::$documents as $id => $document) {
+            foreach (PhpQuery::$documents as $id => $document) {
                 if ($source->ownerDocument->isSameNode($document->document))
                     return $id;
             }
         } else if ($source instanceof PhpQueryObject)
             return $source->getDocumentID();
-        else if (is_string($source) && isset(phpQuery::$documents[$source]))
+        else if (is_string($source) && isset(PhpQuery::$documents[$source]))
             return $source;
     }
 
@@ -1266,7 +1266,7 @@ abstract class phpQuery
         }
         if (is_object($object) && !($object instanceof \Iterator)) {
             foreach (get_object_vars($object) as $name => $value)
-                phpQuery::callbackRun(
+                PhpQuery::callbackRun(
                     $callback,
                     array(
                         $name,
@@ -1276,7 +1276,7 @@ abstract class phpQuery
                 );
         } else {
             foreach ($object as $name => $value)
-                phpQuery::callbackRun(
+                PhpQuery::callbackRun(
                     $callback,
                     array(
                         $name,
@@ -1300,7 +1300,7 @@ abstract class phpQuery
             $paramStructure = array_slice($paramStructure, 2);
         }
         foreach ($array as $v) {
-            $vv = phpQuery::callbackRun(
+            $vv = PhpQuery::callbackRun(
                 $callback,
                 array(
                     $v
@@ -1355,7 +1355,7 @@ abstract class phpQuery
     }
 
     /**
-     * Merge 2 phpQuery objects.
+     * Merge 2 PhpQuery objects.
      * @param array $one
      * @param array $two
      * @return array
@@ -1528,7 +1528,7 @@ abstract class phpQuery
     {
         return call_user_func_array(
             array(
-                phpQuery::$plugins,
+                PhpQuery::$plugins,
                 $method
             ),
             $params
@@ -1538,19 +1538,19 @@ abstract class phpQuery
     protected static function dataSetupNode($node, $documentID)
     {
         // search are return if alredy exists
-        foreach (phpQuery::$documents[$documentID]->dataNodes as $dataNode) {
+        foreach (PhpQuery::$documents[$documentID]->dataNodes as $dataNode) {
             if ($node->isSameNode($dataNode))
                 return $dataNode;
         }
         // if doesn't, add it
-        phpQuery::$documents[$documentID]->dataNodes[] = $node;
+        PhpQuery::$documents[$documentID]->dataNodes[] = $node;
         return $node;
     }
 
     protected static function dataRemoveNode($node, $documentID)
     {
         // search are return if alredy exists
-        foreach (phpQuery::$documents[$documentID]->dataNodes as $k => $dataNode) {
+        foreach (PhpQuery::$documents[$documentID]->dataNodes as $k => $dataNode) {
             if ($node->isSameNode($dataNode)) {
                 unset(self::$documents[$documentID]->dataNodes[$k]);
                 unset(self::$documents[$documentID]->data[$dataNode->dataID]);
@@ -1563,10 +1563,10 @@ abstract class phpQuery
         if (!$documentID)
             // TODO check if this works
             $documentID = self::getDocumentID($node);
-        $document = phpQuery::$documents[$documentID];
+        $document = PhpQuery::$documents[$documentID];
         $node     = self::dataSetupNode($node, $documentID);
         if (!isset($node->dataID))
-            $node->dataID = ++phpQuery::$documents[$documentID]->uuid;
+            $node->dataID = ++PhpQuery::$documents[$documentID]->uuid;
         $id = $node->dataID;
         if (!isset($document->data[$id]))
             $document->data[$id] = array();
@@ -1584,7 +1584,7 @@ abstract class phpQuery
         if (!$documentID)
             // TODO check if this works
             $documentID = self::getDocumentID($node);
-        $document = phpQuery::$documents[$documentID];
+        $document = PhpQuery::$documents[$documentID];
         $node     = self::dataSetupNode($node, $documentID);
         $id       = $node->dataID;
         if ($name) {
@@ -1605,17 +1605,17 @@ abstract class phpQuery
  * Plugins static namespace class.
  *
  * @author  Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
- * @package phpQuery
+ * @package PhpQuery
  * @todo    move plugin methods here (as statics)
  */
-class phpQueryPlugins
+class PhpQueryPlugins
 {
     public function __call($method, $args)
     {
-        if (isset(phpQuery::$extendStaticMethods[$method])) {
-            $return = call_user_func_array(phpQuery::$extendStaticMethods[$method], $args);
-        } else if (isset(phpQuery::$pluginsStaticMethods[$method])) {
-            $class     = phpQuery::$pluginsStaticMethods[$method];
+        if (isset(PhpQuery::$extendStaticMethods[$method])) {
+            $return = call_user_func_array(PhpQuery::$extendStaticMethods[$method], $args);
+        } else if (isset(PhpQuery::$pluginsStaticMethods[$method])) {
+            $class     = PhpQuery::$pluginsStaticMethods[$method];
             $realClass = "\PhpQuery\Plugin\Util$class";
             $return    = call_user_func_array(
                 array(
@@ -1630,15 +1630,4 @@ class phpQueryPlugins
     }
 }
 
-// // add plugins dir and Zend framework to include path
-// set_include_path(
-// 	get_include_path()
-// 		.PATH_SEPARATOR.dirname(__FILE__).'/phpQuery/'
-// 		.PATH_SEPARATOR.dirname(__FILE__).'/phpQuery/plugins/'
-// );
-// why ? no __call nor __get for statics in php...
-// XXX __callStatic will be available in PHP 5.3
-phpQuery::$plugins = new phpQueryPlugins();
-// include bootstrap file (personal library config)
-if (file_exists(dirname(__FILE__) . '/phpQuery/bootstrap.php'))
-    require_once dirname(__FILE__) . '/phpQuery/bootstrap.php';
+PhpQuery::$plugins = new PhpQueryPlugins();

@@ -2,8 +2,8 @@
 //if (PHP_VERSION < 5.3)
 //	throw new \Exception("This test case is only for PHP 5.3 and above.");
 require('/home/bob/Sources/php/simpletest/simpletest/trunk/autorun.php');
-require_once('../phpQuery/phpQuery.php');
-phpQuery::$debug = true;
+require_once('../PhpQuery/PhpQuery.php');
+PhpQuery::$debug = true;
 
 class CallbackTest extends UnitTestCase {
 	public function callback2() {
@@ -17,8 +17,8 @@ class CallbackTest extends UnitTestCase {
 			'newMethod1' => array($this, 'callback1'),
 			'newMethod2' => array($this, 'callback2'),
 		);
-		phpQuery::extend('PhpQueryObject', $newMethods);
-		$doc = phpQuery::newDocumentXML("<div/>");
+		PhpQuery::extend('PhpQueryObject', $newMethods);
+		$doc = PhpQuery::newDocumentXML("<div/>");
 		$this->assertTrue($doc->newMethod1() == $doc,
 			'$doc->newMethod1 == $doc');
 		$this->assertTrue($doc->newMethod2() == "callback2",

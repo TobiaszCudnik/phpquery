@@ -3,12 +3,12 @@
  * Automated google account login.
  * Uses __config.php to keep login data.
  *
- * @package phpQuery.Plugins.Scripts
+ * @package PhpQuery.Plugins.Scripts
  * @author Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
  */
-use PhpQuery\PhpQuery as phpQuery;
+use PhpQuery\PhpQuery;
 
-phpQuery::ajaxAllowHost(
+PhpQuery::ajaxAllowHost(
 	'code.google.com',
 	'google.com', 'www.google.com',
 	'mail.google.com',
@@ -31,12 +31,12 @@ if (! function_exists('ndfasui8923')) {
 		'config', 'self', 'return', 'params'
 	));
 }
-phpQuery::plugin('WebBrowser');
-$self->document->xhr = phpQuery::$plugins->browserGet(
+PhpQuery::plugin('WebBrowser');
+$self->document->xhr = PhpQuery::$plugins->browserGet(
 	'https://www.google.com/accounts/Login',
 	$ndfasui8923
 );
-//$self->document->xhr = phpQuery::$plugins->browserGet('https://www.google.com/accounts/Login', create_function('$browser', "
+//$self->document->xhr = PhpQuery::$plugins->browserGet('https://www.google.com/accounts/Login', create_function('$browser', "
 //	\$browser
 //		->WebBrowser()
 //		->find('#Email')

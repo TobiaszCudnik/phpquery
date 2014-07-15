@@ -1,13 +1,13 @@
 <?php
-require_once('../phpQuery/phpQuery.php');
-phpQuery::$debug = true;
+require_once('../PhpQuery/PhpQuery.php');
+PhpQuery::$debug = true;
 
-$testName = 'Multi document append phpQuery object';
+$testName = 'Multi document append PhpQuery object';
 $testResult = array(
 	'p.body',
 );
-$doc1 = phpQuery::newDocumentFile('test.html');
-$doc2 = phpQuery::newDocumentFile('test.html');
+$doc1 = PhpQuery::newDocumentFile('test.html');
+$doc2 = PhpQuery::newDocumentFile('test.html');
 
 foreach ($doc1->find('p') as $node)
    $doc2->find('body')->append(pq($node));
@@ -23,8 +23,8 @@ $testName = 'Multi document append DOMNode';
 $testResult = array(
 	'p.body',
 );
-$doc1 = phpQuery::newDocumentFile('test.html');
-$doc2 = phpQuery::newDocumentFile('test.html');
+$doc1 = PhpQuery::newDocumentFile('test.html');
+$doc2 = PhpQuery::newDocumentFile('test.html');
 foreach ($doc1->find('p') as $node)
    $doc2->find('body')->append($node);
 $testResult = $doc2->find('p');

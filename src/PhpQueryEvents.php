@@ -7,7 +7,7 @@ use PhpQuery\Dom\DOMEvent;
  * Event handling class.
  *
  * @author  Tobiasz Cudnik
- * @package phpQuery
+ * @package PhpQuery
  * @static
  */
 abstract class PhpQueryEvents
@@ -27,7 +27,7 @@ abstract class PhpQueryEvents
     public static function trigger($document, $type, $data = array(), $node = null)
     {
         // trigger: function(type, data, elem, donative, extra) {
-        $documentID = phpQuery::getDocumentID($document);
+        $documentID = PhpQuery::getDocumentID($document);
         $namespace  = null;
         if (strpos($type, '.') !== false) {
             list($name, $namespace) = explode('.', $type);
@@ -36,7 +36,7 @@ abstract class PhpQueryEvents
         }
         if (!$node) {
             if (self::issetGlobal($documentID, $type)) {
-                $pq = phpQuery::getDocument($documentID);
+                $pq = PhpQuery::getDocument($documentID);
                 // TODO check add($pq->document)
                 $pq->find('*')->add($pq->document)->trigger($type, $data);
             }
@@ -56,7 +56,7 @@ abstract class PhpQueryEvents
             $i = 0;
             while ($node) {
                 // TODO whois
-                phpQuery::debug(
+                PhpQuery::debug(
                     "Triggering " . ($i ? "bubbled " : '')
                     . "event '{$type}' on " . "node \n"
                 );
@@ -78,7 +78,7 @@ abstract class PhpQueryEvents
                             continue;
                         }
                         foreach ($handlers as $handler) {
-                            phpQuery::debug("Calling event handler\n");
+                            PhpQuery::debug("Calling event handler\n");
                             $event->data = $handler['data'] ? $handler['data'] : null;
                             $params      = array_merge(
                                 array(
@@ -86,7 +86,7 @@ abstract class PhpQueryEvents
                                 ),
                                 $data
                             );
-                            $return      = phpQuery::callbackRun($handler['callback'], $params);
+                            $return      = PhpQuery::callbackRun($handler['callback'], $params);
                             if ($return === false) {
                                 $event->bubbles = false;
                             }
@@ -119,8 +119,8 @@ abstract class PhpQueryEvents
      */
     public static function add($document, $node, $type, $data, $callback = null)
     {
-        phpQuery::debug("Binding '$type' event");
-        $documentID = phpQuery::getDocumentID($document);
+        PhpQuery::debug("Binding '$type' event");
+        $documentID = PhpQuery::getDocumentID($document);
         //		if (is_null($callback) && is_callable($data)) {
         //			$callback = $data;
         //			$data = null;
@@ -151,7 +151,7 @@ abstract class PhpQueryEvents
      */
     public static function remove($document, $node, $type = null, $callback = null)
     {
-        $documentID = phpQuery::getDocumentID($document);
+        $documentID = PhpQuery::getDocumentID($document);
         $eventNode  = self::getNode($documentID, $node);
         if (is_object($eventNode) && isset($eventNode->eventHandlers[$type])) {
             if ($callback) {
@@ -168,7 +168,7 @@ abstract class PhpQueryEvents
 
     protected static function getNode($documentID, $node)
     {
-        foreach (phpQuery::$documents[$documentID]->eventsNodes as $eventNode) {
+        foreach (PhpQuery::$documents[$documentID]->eventsNodes as $eventNode) {
             if ($node->isSameNode($eventNode)) {
                 return $eventNode;
             }
@@ -177,16 +177,16 @@ abstract class PhpQueryEvents
 
     protected static function setNode($documentID, $node)
     {
-        phpQuery::$documents[$documentID]->eventsNodes[] = $node;
-        return phpQuery::$documents[$documentID]->eventsNodes[count(phpQuery::$documents[$documentID]->eventsNodes)
+        PhpQuery::$documents[$documentID]->eventsNodes[] = $node;
+        return PhpQuery::$documents[$documentID]->eventsNodes[count(PhpQuery::$documents[$documentID]->eventsNodes)
         - 1];
     }
 
     protected static function issetGlobal($documentID, $type)
     {
-        return isset(phpQuery::$documents[$documentID]) ? in_array(
+        return isset(PhpQuery::$documents[$documentID]) ? in_array(
             $type,
-            phpQuery::$documents[$documentID]->eventsGlobal
+            PhpQuery::$documents[$documentID]->eventsGlobal
         )
             : false;
     }

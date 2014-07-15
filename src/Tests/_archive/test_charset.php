@@ -1,10 +1,10 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <?php
-require_once('../phpQuery/phpQuery.php');
-// phpQuery::$debug = true;
+require_once('../PhpQuery/PhpQuery.php');
+// PhpQuery::$debug = true;
 
 $testName = 'Text node append';
-$result = phpQuery::newDocumentFile('test.html')
+$result = PhpQuery::newDocumentFile('test.html')
 	->find('li:first')
 		->find('p:first')
 			->html('żźć');
@@ -15,7 +15,7 @@ else
 print "\n";
 
 $testName = 'Text node HTML entite append';
-$result = phpQuery::newDocumentFile('test.html')
+$result = PhpQuery::newDocumentFile('test.html')
 	->find('li:first')
 		->find('p:first')
 			->_empty()
@@ -29,7 +29,7 @@ else {
 print "\n";
 
 $testName = 'DOMElement node HTML entite append';
-$result = phpQuery::newDocumentFile('test.html')
+$result = PhpQuery::newDocumentFile('test.html')
 	->find('li:first')
 		->find('p:first')
 			->empty()
@@ -43,7 +43,7 @@ else {
 print "\n";
 
 $testName = 'Append and move';
-$result = phpQuery::newDocumentFile('test.html');
+$result = PhpQuery::newDocumentFile('test.html');
 $li = $result->find('li:first');
 $result->find('div')->_empty();
 $li->html('test1-&eacute;-test1')
@@ -62,7 +62,7 @@ else {
 print "\n";
 
 $testName = 'Attr charset';
-$result = phpQuery::newDocumentFile('test.html')
+$result = PhpQuery::newDocumentFile('test.html')
 	->find('li:first')
 		->attr('test', 'foo &eacute; żźć bar');
 if (trim($result->attr('test')) == 'foo &eacute; żźć bar')
@@ -75,10 +75,10 @@ print "\n";
 
 
 //$testName = 'Loading document without meta charset';
-//$result = phpQuery::newDocumentFile('test.html')
+//$result = PhpQuery::newDocumentFile('test.html')
 //	->_empty();
 ////var_dump((string)$result->htmlOuter());
-//$result = phpQuery::newDocument($result->htmlOuter());
+//$result = PhpQuery::newDocument($result->htmlOuter());
 //$validResult = <<<EOF
 //<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 //<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /></head></html>

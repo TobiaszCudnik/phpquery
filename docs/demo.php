@@ -1,14 +1,14 @@
 <?php
-require('phpQuery/phpQuery.php');
+require(__DIR__ . '/../src/PhpQuery.php');
 
 // INITIALIZE IT
-// phpQuery::newDocumentHTML($markup);
-// phpQuery::newDocumentXML();
-// phpQuery::newDocumentFileXHTML('test.html');
-// phpQuery::newDocumentFilePHP('test.php');
-// phpQuery::newDocument('test.xml', 'application/rss+xml');
+// PhpQuery::newDocumentHTML($markup);
+// PhpQuery::newDocumentXML();
+// PhpQuery::newDocumentFileXHTML('test.html');
+// PhpQuery::newDocumentFilePHP('test.php');
+// PhpQuery::newDocument('test.xml', 'application/rss+xml');
 // this one defaults to text/html in utf8
-$doc = phpQuery::newDocument('<div/>');
+$doc = PhpQuery::newDocument('<div/>');
 
 // FILL IT
 // array syntax works like ->find() here
@@ -28,7 +28,7 @@ $doc['ul > li']
 
 // SELECT DOCUMENT
 // pq(); is using selected document as default
-phpQuery::selectDocument($doc);
+PhpQuery::selectDocument($doc);
 // documents are selected when created or by above method
 // query all unordered lists in last selected document
 $ul = pq('ul')->insertAfter('div');
@@ -36,18 +36,18 @@ $ul = pq('ul')->insertAfter('div');
 // ITERATE IT
 // all direct LIs from $ul
 foreach($ul['> li'] as $li) {
-	// iteration returns PLAIN dom nodes, NOT phpQuery objects
+	// iteration returns PLAIN dom nodes, NOT PhpQuery objects
 	$tagName = $li->tagName;
 	$childNodes = $li->childNodes;
-	// so you NEED to wrap it within phpQuery, using pq();
+	// so you NEED to wrap it within PhpQuery, using pq();
 	pq($li)->addClass('my-second-new-class');
 }
 
 // PRINT OUTPUT
 // 1st way
-print phpQuery::getDocument($doc->getDocumentID());
+print PhpQuery::getDocument($doc->getDocumentID());
 // 2nd way
-print phpQuery::getDocument(pq('div')->getDocumentID());
+print PhpQuery::getDocument(pq('div')->getDocumentID());
 // 3rd way
 print pq('div')->getDocument();
 // 4th way

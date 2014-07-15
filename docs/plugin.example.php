@@ -1,26 +1,26 @@
 <?php
 /**
- * Example of phpQuery plugin.
+ * Example of PhpQuery plugin.
  *
  * Load it like this:
- * phpQuery::plugin('example')
- * phpQuery::plugin('example', 'example.php')
+ * PhpQuery::plugin('example')
+ * PhpQuery::plugin('example', 'example.php')
  * pq('ul')->plugin('example')
  * pq('ul')->plugin('example', 'example.php')
  *
  * Plugin classes are never intialized, just method calls are forwarded
- * in static way from phpQuery.
+ * in static way from PhpQuery.
  *
  * Have fun writing plugins :)
  */
 
 /**
- * phpQuery plugin class extending phpQuery object.
- * Methods from this class are callable on every phpQuery object.
+ * PhpQuery plugin class extending PhpQuery object.
+ * Methods from this class are callable on every PhpQuery object.
  *
  * Class name prefix '\PhpQuery\Plugin\' must be preserved.
  */
-abstract class \PhpQuery\Plugin\example {
+abstract class PhpQuery_Plugin_example {
 	/**
 	 * Limit binded methods.
 	 *
@@ -29,14 +29,14 @@ abstract class \PhpQuery\Plugin\example {
 	 *
 	 * @var array|null
 	 */
-	public static $phpQueryMethods = null;
+	public static $PhpQueryMethods = null;
 	/**
 	 * Enter description here...
 	 *
-	 * @param PhpQueryObject $self
+	 * @param \PhpQueryObject $self
 	 */
 	public static function example($self, $arg1) {
-		// this method can be called on any phpQuery object, like this:
+		// this method can be called on any PhpQuery object, like this:
 		// pq('div')->example('$arg1 Value')
 
 		// do something
@@ -45,19 +45,19 @@ abstract class \PhpQuery\Plugin\example {
 		return $self->find('div');
 	}
 	protected static function helperFunction() {
-		// this method WONT be avaible as phpQuery method,
+		// this method WONT be avaible as PhpQuery method,
 		// because it isn't publicly callable
 	}
 }
 
 /**
- * phpQuery plugin class extending phpQuery static namespace.
+ * PhpQuery plugin class extending PhpQuery static namespace.
  * Methods from this class are callable as follows:
- * phpQuery::$plugins->staticMethod()
+ * PhpQuery::$plugins->staticMethod()
  *
- * Class name prefix 'phpQueryPlugin_' must be preserved.
+ * Class name prefix 'PhpQueryPlugin_' must be preserved.
  */
-abstract class phpQueryPlugin_example {
+abstract class PhpQueryPlugin_example {
 	/**
 	 * Limit binded methods.
 	 *
@@ -66,10 +66,9 @@ abstract class phpQueryPlugin_example {
 	 *
 	 * @var array|null
 	 */
-	public static $phpQueryMethods = null;
+	public static $PhpQueryMethods = null;
 	public static function staticMethod() {
-		// this method can be called within phpQuery class namespace, like this:
-		// phpQuery::$plugins->staticMethod()
+		// this method can be called within PhpQuery class namespace, like this:
+		// PhpQuery::$plugins->staticMethod()
 	}
 }
-?>

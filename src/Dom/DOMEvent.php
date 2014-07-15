@@ -7,7 +7,7 @@ namespace PhpQuery\Dom;
  * Based on
  * @link    http://developer.mozilla.org/En/DOM:event
  * @author  Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
- * @package phpQuery
+ * @package PhpQuery
  * @todo    implement ArrayAccess ?
  */
 class DOMEvent

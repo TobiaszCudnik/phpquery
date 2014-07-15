@@ -1,6 +1,6 @@
 <?php
-require_once('../phpQuery/phpQuery.php');
-phpQuery::$debug = true;
+require_once('../PhpQuery/PhpQuery.php');
+PhpQuery::$debug = true;
 $testName = 'Selectors';
 $tests = array(
 	array(
@@ -273,7 +273,7 @@ $tests = array(
 //	),
 );
 
-phpQuery::newDocumentFile('test.html');
+PhpQuery::newDocumentFile('test.html');
 foreach( $tests as $k => $test ) {
 	$tests[ $k ][2] = pq( $test[0] )->whois();
 }
@@ -289,7 +289,7 @@ foreach( $tests as $test ) {
 
 //
 $testName = 'Complicated selector 1';
-phpQuery::newDocumentFile('test.html');
+PhpQuery::newDocumentFile('test.html');
 pq('<select name="test[]"><option value=3>test</option></select>')
 	->appendTo('body');
 $result = pq('select[name="test[]"]:has(option[value=3])');

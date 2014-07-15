@@ -1,7 +1,7 @@
 <?php
 namespace PhpQuery\Dom;
 
-use PhpQuery\PhpQuery as phpQuery;
+use PhpQuery\PhpQuery;
 
 /**
  * DOMDocumentWrapper class simplifies work with DOMDocument.
@@ -11,7 +11,7 @@ use PhpQuery\PhpQuery as phpQuery;
  *
  * @todo    check XML catalogs compatibility
  * @author  Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
- * @package phpQuery
+ * @package PhpQuery
  */
 class DOMDocumentWrapper
 {
@@ -60,7 +60,7 @@ class DOMDocumentWrapper
 
     public function load($markup, $contentType = null, $newDocumentID = null)
     {
-        //		phpQuery::$documents[$id] = $this;
+        //		PhpQuery::$documents[$id] = $this;
         $this->contentType = strtolower($contentType);
         if ($markup instanceof \DOMDocument) {
             $this->document = $markup;
@@ -78,7 +78,7 @@ class DOMDocumentWrapper
             $this->afterMarkupLoad();
             return true;
             // remember last loaded document
-            //			return phpQuery::selectDocument($id);
+            //			return PhpQuery::selectDocument($id);
         }
         return false;
     }
@@ -99,34 +99,34 @@ class DOMDocumentWrapper
             list($contentType, $charset) = $this->contentTypeToArray($this->contentType);
             switch ($contentType) {
                 case 'text/html':
-                    phpQuery::debug("Loading HTML, content type '{$this->contentType}'");
+                    PhpQuery::debug("Loading HTML, content type '{$this->contentType}'");
                     $loaded = $this->loadMarkupHTML($markup, $charset);
                     break;
                 case 'text/xml':
                 case 'application/xhtml+xml':
-                    phpQuery::debug("Loading XML, content type '{$this->contentType}'");
+                    PhpQuery::debug("Loading XML, content type '{$this->contentType}'");
                     $loaded = $this->loadMarkupXML($markup, $charset);
                     break;
                 default:
                     // for feeds or anything that sometimes doesn't use text/xml
                     if (strpos('xml', $this->contentType) !== false) {
-                        phpQuery::debug("Loading XML, content type '{$this->contentType}'");
+                        PhpQuery::debug("Loading XML, content type '{$this->contentType}'");
                         $loaded = $this->loadMarkupXML($markup, $charset);
                     } else {
-                        phpQuery::debug("Could not determine document type from content type '{$this->contentType}'");
+                        PhpQuery::debug("Could not determine document type from content type '{$this->contentType}'");
                     }
             }
         } else {
             // content type autodetection
             if ($this->isXML($markup)) {
-                phpQuery::debug("Loading XML, isXML() == true");
+                PhpQuery::debug("Loading XML, isXML() == true");
                 $loaded = $this->loadMarkupXML($markup);
                 if (!$loaded && $this->isXHTML) {
-                    phpQuery::debug('Loading as XML failed, trying to load as HTML, isXHTML == true');
+                    PhpQuery::debug('Loading as XML failed, trying to load as HTML, isXHTML == true');
                     $loaded = $this->loadMarkupHTML($markup);
                 }
             } else {
-                phpQuery::debug("Loading HTML, isXML() == false");
+                PhpQuery::debug("Loading HTML, isXML() == false");
                 $loaded = $this->loadMarkupHTML($markup);
             }
         }
@@ -152,8 +152,8 @@ class DOMDocumentWrapper
 
     protected function loadMarkupHTML($markup, $requestedCharset = null)
     {
-        if (phpQuery::$debug) {
-            phpQuery::debug('Full markup load (HTML): ' . substr($markup, 0, 250));
+        if (PhpQuery::$debug) {
+            PhpQuery::debug('Full markup load (HTML): ' . substr($markup, 0, 250));
         }
         $this->loadMarkupReset();
         $this->isHTML = true;
@@ -172,7 +172,7 @@ class DOMDocumentWrapper
             }
         }
         if (!$charset) {
-            $charset = phpQuery::$defaultCharset;
+            $charset = PhpQuery::$defaultCharset;
         }
         // HTTP 1.1 says that the default charset is ISO-8859-1
         // @see http://www.w3.org/International/O-HTTP-charset
@@ -184,11 +184,11 @@ class DOMDocumentWrapper
         // Worse, some pages can have mixed encodings... we'll try not to worry about that
         $requestedCharset = strtoupper($requestedCharset);
         $documentCharset  = strtoupper($documentCharset);
-        phpQuery::debug("DOC: $documentCharset REQ: $requestedCharset");
+        PhpQuery::debug("DOC: $documentCharset REQ: $requestedCharset");
         if ($requestedCharset && $documentCharset
             && $requestedCharset !== $documentCharset
         ) {
-            phpQuery::debug("CHARSET CONVERT");
+            PhpQuery::debug("CHARSET CONVERT");
             // Document Encoding Conversion
             // http://code.google.com/p/phpquery/issues/detail?id=86
             if (function_exists('mb_detect_encoding')) {
@@ -202,33 +202,33 @@ class DOMDocumentWrapper
                     $docEncoding = $documentCharset;
                 }
                 // ok trust the document
-                phpQuery::debug("DETECTED '$docEncoding'");
+                PhpQuery::debug("DETECTED '$docEncoding'");
                 // Detected does not match what document says...
                 if ($docEncoding !== $documentCharset) {
                     // Tricky..
                 }
                 if ($docEncoding !== $requestedCharset) {
-                    phpQuery::debug("CONVERT $docEncoding => $requestedCharset");
+                    PhpQuery::debug("CONVERT $docEncoding => $requestedCharset");
                     $markup  = mb_convert_encoding($markup, $requestedCharset, $docEncoding);
                     $markup  = $this->charsetAppendToHTML($markup, $requestedCharset);
                     $charset = $requestedCharset;
                 }
             } else {
-                phpQuery::debug("TODO: charset conversion without mbstring...");
+                PhpQuery::debug("TODO: charset conversion without mbstring...");
             }
         }
         $return = false;
         if ($this->isDocumentFragment) {
-            phpQuery::debug("Full markup load (HTML), DocumentFragment detected, using charset '$charset'");
+            PhpQuery::debug("Full markup load (HTML), DocumentFragment detected, using charset '$charset'");
             $return = $this->documentFragmentLoadMarkup($this, $charset, $markup);
         } else {
             if ($addDocumentCharset) {
-                phpQuery::debug("Full markup load (HTML), appending charset: '$charset'");
+                PhpQuery::debug("Full markup load (HTML), appending charset: '$charset'");
                 $markup = $this->charsetAppendToHTML($markup, $charset);
             }
-            phpQuery::debug("Full markup load (HTML), documentCreate('$charset')");
+            PhpQuery::debug("Full markup load (HTML), documentCreate('$charset')");
             $this->documentCreate($charset);
-            $return = phpQuery::$debug === 2 ? $this->document->loadHTML($markup)
+            $return = PhpQuery::$debug === 2 ? $this->document->loadHTML($markup)
                 : @$this->document->loadHTML($markup);
             if ($return) {
                 $this->root = $this->document;
@@ -242,8 +242,8 @@ class DOMDocumentWrapper
 
     protected function loadMarkupXML($markup, $requestedCharset = null)
     {
-        if (phpQuery::$debug) {
-            phpQuery::debug('Full markup load (XML): ' . substr($markup, 0, 250));
+        if (PhpQuery::$debug) {
+            PhpQuery::debug('Full markup load (XML): ' . substr($markup, 0, 250));
         }
         $this->loadMarkupReset();
         $this->isXML = true;
@@ -268,7 +268,7 @@ class DOMDocumentWrapper
                 // this is XHTML, try to get charset from content-type meta header
                 $documentCharset = $this->charsetFromHTML($markup);
                 if ($documentCharset) {
-                    phpQuery::debug("Full markup load (XML), appending XHTML charset '$documentCharset'");
+                    PhpQuery::debug("Full markup load (XML), appending XHTML charset '$documentCharset'");
                     $this->charsetAppendToXML($markup, $documentCharset);
                     $charset = $documentCharset;
                 }
@@ -283,7 +283,7 @@ class DOMDocumentWrapper
             }
         }
         if (!$charset) {
-            $charset = phpQuery::$defaultCharset;
+            $charset = PhpQuery::$defaultCharset;
         }
         if ($requestedCharset && $documentCharset
             && $requestedCharset != $documentCharset
@@ -293,13 +293,13 @@ class DOMDocumentWrapper
         }
         $return = false;
         if ($this->isDocumentFragment) {
-            phpQuery::debug("Full markup load (XML), DocumentFragment detected, using charset '$charset'");
+            PhpQuery::debug("Full markup load (XML), DocumentFragment detected, using charset '$charset'");
             $return = $this->documentFragmentLoadMarkup($this, $charset, $markup);
         } else {
             // FIXME ???
             if ($isContentTypeXHTML && !$isMarkupXHTML) {
                 if (!$documentCharset) {
-                    phpQuery::debug("Full markup load (XML), appending charset '$charset'");
+                    PhpQuery::debug("Full markup load (XML), appending charset '$charset'");
                     $markup = $this->charsetAppendToXML($markup, $charset);
                 }
             }
@@ -312,11 +312,11 @@ class DOMDocumentWrapper
             $this->documentCreate($charset);
             if (phpversion() < 5.1) {
                 $this->document->resolveExternals = true;
-                $return                           = phpQuery::$debug === 2 ? $this->document->loadXML($markup)
+                $return                           = PhpQuery::$debug === 2 ? $this->document->loadXML($markup)
                     : @$this->document->loadXML($markup);
             } else {
                 /** @link http://pl2.php.net/manual/en/libxml.constants.php */
-                $libxmlStatic = phpQuery::$debug === 2 ? LIBXML_DTDLOAD
+                $libxmlStatic = PhpQuery::$debug === 2 ? LIBXML_DTDLOAD
                     | LIBXML_DTDATTR | LIBXML_NONET
                     : LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_NONET | LIBXML_NOWARNING
                     | LIBXML_NOERROR;
@@ -619,7 +619,7 @@ class DOMDocumentWrapper
                 $fragment->root = $fragment->document->firstChild;
             }
         } else {
-            $markup2 = phpQuery::$defaultDoctype
+            $markup2 = PhpQuery::$defaultDoctype
                 . '<html><head><meta http-equiv="Content-Type" content="text/html;charset='
                 . $charset . '"></head>';
             $noBody  = strpos($markup, '<body') === false;
@@ -645,7 +645,7 @@ class DOMDocumentWrapper
 
     protected function documentFragmentToMarkup($fragment)
     {
-        phpQuery::debug('documentFragmentToMarkup');
+        PhpQuery::debug('documentFragmentToMarkup');
         $tmp                          = $fragment->isDocumentFragment;
         $fragment->isDocumentFragment = false;
         $markup                       = $fragment->markup();
@@ -661,8 +661,8 @@ class DOMDocumentWrapper
             $markup = substr($markup, 0, strrpos($markup, '</body>'));
         }
         $fragment->isDocumentFragment = $tmp;
-        if (phpQuery::$debug) {
-            phpQuery::debug('documentFragmentToMarkup: ' . substr($markup, 0, 150));
+        if (PhpQuery::$debug) {
+            PhpQuery::debug('documentFragmentToMarkup: ' . substr($markup, 0, 150));
         }
         return $markup;
     }
@@ -692,7 +692,7 @@ class DOMDocumentWrapper
                     if ($node->isSameNode($this->root)) {
                         //	var_dump($node);
                         $nodes = array_slice($nodes, 0, $i)
-                            + phpQuery::DOMNodeListToArray($node->childNodes)
+                            + PhpQuery::DOMNodeListToArray($node->childNodes)
                             + array_slice($nodes, $i + 1);
                     }
                 }
@@ -770,7 +770,7 @@ class DOMDocumentWrapper
 
     public static function debug($text)
     {
-        phpQuery::debug($text);
+        PhpQuery::debug($text);
     }
 
     /**

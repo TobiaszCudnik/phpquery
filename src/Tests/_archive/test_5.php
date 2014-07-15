@@ -1,6 +1,6 @@
 <?php
-require_once('../phpQuery/phpQuery.php');
-phpQuery::$debug = true;
+require_once('../PhpQuery/PhpQuery.php');
+PhpQuery::$debug = true;
 
 // CALLBACKS
 class callbackClass {
@@ -28,7 +28,7 @@ $tests = array(
 	array(new callbackClass, 'methodCallback')
 );
 foreach($tests as $test) {
-	$result = phpQuery::newDocumentFile('test.html')
+	$result = PhpQuery::newDocumentFile('test.html')
 		->find('li')
 			->each($test);
 	$testName = is_array($test)

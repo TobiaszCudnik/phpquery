@@ -4,10 +4,10 @@ namespace PhpQuery;
 use Sabberworm\CSS\Parser as CssParser;
 
 /**
- * Class representing phpQuery objects.
+ * Class representing PhpQuery objects.
  *
  * @author  Tobiasz Cudnik <tobiasz.cudnik/gmail.com>
- * @package phpQuery
+ * @package PhpQuery
  * @method PhpQueryObject clone() clone()
  * @method PhpQueryObject empty() empty()
  * @property Int $length
@@ -108,12 +108,12 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         $id = $documentID instanceof self ? $documentID->getDocumentID()
             : $documentID;
         //		var_dump($id);
-        if (!isset(phpQuery::$documents[$id])) {
-            //			var_dump(phpQuery::$documents);
-            throw new \Exception("Document with ID '{$id}' isn't loaded. Use phpQuery::newDocument(\$html) or phpQuery::newDocumentFile(\$file) first.");
+        if (!isset(PhpQuery::$documents[$id])) {
+            //			var_dump(PhpQuery::$documents);
+            throw new \Exception("Document with ID '{$id}' isn't loaded. Use PhpQuery::newDocument(\$html) or PhpQuery::newDocumentFile(\$file) first.");
         }
         $this->documentID       = $id;
-        $this->documentWrapper  = & phpQuery::$documents[$id];
+        $this->documentWrapper  = & PhpQuery::$documents[$id];
         $this->document         = & $this->documentWrapper->document;
         $this->xpath            = & $this->documentWrapper->xpath;
         $this->charset          = & $this->documentWrapper->charset;
@@ -159,7 +159,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     public function documentFragment($state = null)
     {
         if ($state) {
-            phpQuery::$documents[$this->getDocumentID()]['documentFragment'] = $state;
+            PhpQuery::$documents[$this->getDocumentID()]['documentFragment'] = $state;
             return $this;
         }
         return $this->documentFragment;
@@ -206,15 +206,15 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      * Saves object's DocumentID to $var by reference.
      * <code>
      * $myDocumentId;
-     * phpQuery::newDocument('<div/>')
+     * PhpQuery::newDocument('<div/>')
      *     ->getDocumentIDRef($myDocumentId)
      *     ->find('div')->...
      * </code>
      *
      * @param $documentID
      * @internal param string $domId
-     * @see      phpQuery::newDocument
-     * @see      phpQuery::newDocumentFile
+     * @see      PhpQuery::newDocument
+     * @see      PhpQuery::newDocumentFile
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function getDocumentIDRef(&$documentID)
@@ -230,7 +230,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     public function getDocument()
     {
-        return phpQuery::getDocument($this->getDocumentID());
+        return PhpQuery::getDocument($this->getDocumentID());
     }
 
     /**
@@ -245,7 +245,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     /**
      * Get object's Document ID.
      *
-     * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
+     * @return string
      */
     public function getDocumentID()
     {
@@ -261,7 +261,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     public function unloadDocument()
     {
-        phpQuery::unloadDocuments($this->getDocumentID());
+        PhpQuery::unloadDocuments($this->getDocumentID());
     }
 
     public function isHTML()
@@ -287,7 +287,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     public function serialize()
     {
-        return phpQuery::param($this->serializeArray());
+        return PhpQuery::param($this->serializeArray());
     }
 
     /**
@@ -304,7 +304,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         $return = array();
         //		$source->dumpDie();
         foreach ($source as $input) {
-            $input = phpQuery::pq($input);
+            $input = PhpQuery::pq($input);
             if ($input->is('[disabled]')) {
                 continue;
             }
@@ -339,13 +339,13 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     protected function debug($in)
     {
-        if (!phpQuery::$debug) {
+        if (!PhpQuery::$debug) {
             return;
         }
         print('<pre>');
         print_r($in);
         // file debug
-        //		file_put_contents(dirname(__FILE__).'/phpQuery.log', print_r($in, true)."\n", FILE_APPEND);
+        //		file_put_contents(dirname(__FILE__).'/PhpQuery.log', print_r($in, true)."\n", FILE_APPEND);
         // quite handy debug trace
         //		if ( is_array($in))
         //			print_r(array_slice(debug_backtrace(), 3));
@@ -377,7 +377,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     protected function isChar($char)
     {
-        return extension_loaded('mbstring') && phpQuery::$mbstringSupport ? mb_eregi('\w', $char)
+        return extension_loaded('mbstring') && PhpQuery::$mbstringSupport ? mb_eregi('\w', $char)
             : preg_match('@\w@', $char);
     }
 
@@ -587,14 +587,14 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         foreach ($args as $callback) {
             if (is_array($return))
                 foreach ($return as $k => $v)
-                    $return[$k] = phpQuery::callbackRun(
+                    $return[$k] = PhpQuery::callbackRun(
                         $callback,
                         array(
                             $v
                         )
                     );
             else
-                $return = phpQuery::callbackRun(
+                $return = PhpQuery::callbackRun(
                     $callback,
                     array(
                         $return
@@ -631,7 +631,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         $args = func_get_args();
         $args = array_slice($args, 1);
         foreach ($args as $callback) {
-            $return = phpQuery::callbackRun(
+            $return = PhpQuery::callbackRun(
                 $callback,
                 array(
                     $return
@@ -670,14 +670,14 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         foreach ($args as $callback) {
             if (is_array($return))
                 foreach ($return as $k => $v)
-                    $return[$k] = phpQuery::callbackRun(
+                    $return[$k] = PhpQuery::callbackRun(
                         $callback,
                         array(
                             $v
                         )
                     );
             else
-                $return = phpQuery::callbackRun(
+                $return = PhpQuery::callbackRun(
                     $callback,
                     array(
                         $return
@@ -697,7 +697,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     {
         $class = get_class($this);
         // support inheritance by passing old object to overloaded constructor
-        $new           = $class != 'phpQuery' ? new $class($this, $this->getDocumentID())
+        $new           = $class != 'PhpQuery' ? new $class($this, $this->getDocumentID())
             : new PhpQueryObject($this->getDocumentID());
         $new->previous = $this;
         if (is_null($newStack)) {
@@ -705,7 +705,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             if ($this->elementsBackup)
                 $this->elements = $this->elementsBackup;
         } else if (is_string($newStack)) {
-            $new->elements = phpQuery::pq($newStack, $this->getDocumentID())->stack();
+            $new->elements = PhpQuery::pq($newStack, $this->getDocumentID())->stack();
         } else {
             $new->elements = $newStack;
         }
@@ -793,13 +793,13 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             foreach ($nodes as $node) {
                 $matched = false;
                 if ($compare) {
-                    phpQuery::$debug ? $this->debug(
+                    PhpQuery::$debug ? $this->debug(
                         "Found: " . $this->whois($node)
                         . ", comparing with {$compare}()"
                     ) : null;
-                    $phpQueryDebug   = phpQuery::$debug;
-                    phpQuery::$debug = false;
-                    // TODO ??? use phpQuery::callbackRun()
+                    $PhpQueryDebug   = PhpQuery::$debug;
+                    PhpQuery::$debug = false;
+                    // TODO ??? use PhpQuery::callbackRun()
                     if (call_user_func_array(
                         array(
                             $this,
@@ -812,17 +812,17 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                     )
                     )
                         $matched = true;
-                    phpQuery::$debug = $phpQueryDebug;
+                    PhpQuery::$debug = $PhpQueryDebug;
                 } else {
                     $matched = true;
                 }
                 if ($matched) {
-                    if (phpQuery::$debug)
+                    if (PhpQuery::$debug)
                         $debug[] = $this->whois($node);
                     $stack[] = $node;
                 }
             }
-            if (phpQuery::$debug) {
+            if (PhpQuery::$debug) {
                 $this->debug("Matched " . count($debug) . ": " . implode(', ', $debug));
             }
             if ($detachAfter)
@@ -845,7 +845,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             // backup last stack /for end()/
             $this->elementsBackup = $this->elements;
         // allow to define context
-        // TODO combine code below with phpQuery::pq() context guessing code
+        // TODO combine code below with PhpQuery::pq() context guessing code
         //   as generic function
         if (isset($context)) {
             if (!is_array($context) && $context instanceof \DOMElement) {
@@ -881,7 +881,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             $delimiterBefore = false;
             foreach ($selector as $s) {
                 // TAG
-                $isTag = extension_loaded('mbstring') && phpQuery::$mbstringSupport ? mb_ereg_match('^[\w|\||-]+$', $s)
+                $isTag = extension_loaded('mbstring') && PhpQuery::$mbstringSupport ? mb_ereg_match('^[\w|\||-]+$', $s)
                     || $s == '*' : preg_match('@^[\w|\||-]+$@', $s) || $s == '*';
                 if ($isTag) {
                     if ($this->isXML()) {
@@ -991,7 +991,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                     $delimiterBefore = 2;
                     // ERRORS
                 } else {
-                    phpQuery::debug("Unrecognized token '$s'");
+                    PhpQuery::debug("Unrecognized token '$s'");
                 }
                 $delimiterBefore = $delimiterBefore === 2;
             }
@@ -1099,7 +1099,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                 break;
             case 'submit':
             case 'reset':
-                $this->elements = phpQuery::merge(
+                $this->elements = PhpQuery::merge(
                     $this->map(
                         array(
                             $this,
@@ -1273,7 +1273,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
 								return ($index-$b)%$a == 0
 									? $node
 									: null;
-								phpQuery::debug($a."*".floor($index/$a)."+$b-1 == ".($a*floor($index/$a)+$b-1)." ?= $prevs");
+								PhpQuery::debug($a."*".floor($index/$a)."+$b-1 == ".($a*floor($index/$a)+$b-1)." ?= $prevs");
 								return $a*floor($index/$a)+$b-1 == $prevs
 										? $node
 										: null;
@@ -1339,7 +1339,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     public function is($selector, $nodes = null)
     {
-        phpQuery::debug(
+        PhpQuery::debug(
             array(
                 "Is:",
                 $selector
@@ -1384,7 +1384,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         }
         $newStack = array();
         foreach ($this->elements as $index => $node) {
-            $result = phpQuery::callbackRun(
+            $result = PhpQuery::callbackRun(
                 $callback,
                 array(
                     $index,
@@ -1473,7 +1473,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                                         $break = true;
                                 } else if ($this->isRegexp($attr)) {
                                     $val = extension_loaded('mbstring')
-                                    && phpQuery::$mbstringSupport ? quotemeta(trim($val, '"\''))
+                                    && PhpQuery::$mbstringSupport ? quotemeta(trim($val, '"\''))
                                         : preg_quote(trim($val, '"\''), '@');
                                     // switch last character
                                     switch (substr($attr, -1)) {
@@ -1492,7 +1492,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                                     // cut last character
                                     $attr    = substr($attr, 0, -1);
                                     $isMatch = extension_loaded('mbstring')
-                                    && phpQuery::$mbstringSupport ? mb_ereg_match($pattern, $node->getAttribute($attr))
+                                    && PhpQuery::$mbstringSupport ? mb_ereg_match($pattern, $node->getAttribute($attr))
                                         : preg_match("@{$pattern}@", $node->getAttribute($attr));
                                     if (!$isMatch)
                                         $break = true;
@@ -1572,7 +1572,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      * @param      $url
      * @param null $data
      * @param null $callback
-     * @return phpQuery|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
+     * @return PhpQuery|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      * @todo Support $selector
      */
     public function load($url, $data = null, $callback = null)
@@ -1583,7 +1583,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         }
         if (mb_strpos($url, ' ') !== false) {
             $matches = null;
-            if (extension_loaded('mbstring') && phpQuery::$mbstringSupport)
+            if (extension_loaded('mbstring') && PhpQuery::$mbstringSupport)
                 mb_ereg('^([^ ]+) (.*)$', $url, $matches);
             else
                 preg_match('@^([^ ]+) (.*)$@', $url, $matches);
@@ -1602,7 +1602,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                 '__loadSuccess'
             )
         );
-        phpQuery::ajax($ajax);
+        PhpQuery::ajax($ajax);
         return $this;
     }
 
@@ -1613,17 +1613,17 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     public function __loadSuccess($html)
     {
         if ($this->_loadSelector) {
-            $html = phpQuery::newDocument($html)->find($this->_loadSelector);
+            $html = PhpQuery::newDocument($html)->find($this->_loadSelector);
             unset($this->_loadSelector);
         }
         foreach ($this->stack(1) as $node) {
-            phpQuery::pq($node, $this->getDocumentID())->markup($html);
+            PhpQuery::pq($node, $this->getDocumentID())->markup($html);
         }
     }
 
     /**
      * Allows users to enter strings of CSS selectors. Useful
-     * when the CSS is loaded via style or @imports that phpQuery can't load
+     * when the CSS is loaded via style or @imports that PhpQuery can't load
      * because it doesn't know the URL context of the request.
      */
     public function addCSS($string)
@@ -1647,11 +1647,11 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     public function css($property_name, $value = false)
     {
         if (!isset($this->cssIsParsed[$this->getDocumentID()])
-        || $this->cssIsParsed[$this->getDocumentID()] = false
+        || $this->cssIsParsed[$this->getDocumentID()] === false
         ) {
             $this->parseCSS();
         }
-        $data = phpQuery::data($this->get(0), 'phpquery_css', null, $this->getDocumentID());
+        $data = PhpQuery::data($this->get(0), 'phpquery_css', null, $this->getDocumentID());
         if (!$value) {
             if (isset($data[$property_name])) {
                 return $data[$property_name]['value'];
@@ -1664,8 +1664,8 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             'specificity' => $specificity,
             'value'       => $value
         );
-        phpQuery::data($this->get(0), 'phpquery_css', $data, $this->getDocumentID());
-        $this->bubbleCSS(phpQuery::pq($this->get(0), $this->getDocumentID()));
+        PhpQuery::data($this->get(0), 'phpquery_css', $data, $this->getDocumentID());
+        $this->bubbleCSS(PhpQuery::pq($this->get(0), $this->getDocumentID()));
 
         if ($specificity >= 1000) {
             $styles = array();
@@ -1677,7 +1677,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             ksort($styles);
             if (empty($styles)) {
                 $this->removeAttr('style');
-            } elseif (phpQuery::$enableCssShorthand) {
+            } elseif (PhpQuery::$enableCssShorthand) {
                 $parser = new \Sabberworm\CSS\Parser('{' . join(';', $styles) . '}');
                 $doc    = $parser->parse();
                 $doc->createShorthands();
@@ -1697,8 +1697,8 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                 . '/Resources/default.css'
             );
         }
-        foreach (phpQuery::pq('style', $this->getDocumentID()) as $style) {
-            $this->cssString[$this->getDocumentID()] .= phpQuery::pq($style)->text();
+        foreach (PhpQuery::pq('style', $this->getDocumentID()) as $style) {
+            $this->cssString[$this->getDocumentID()] .= PhpQuery::pq($style)->text();
         }
 
         $CssParser   = new CssParser($this->cssString[$this->getDocumentID()]);
@@ -1706,9 +1706,9 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         foreach ($CssDocument->getAllRuleSets() as $ruleset) {
             foreach ($ruleset->getSelector() as $selector) {
                 $specificity = $selector->getSpecificity();
-                foreach (phpQuery::pq($selector->getSelector(), $this->getDocumentID()) as $el) {
+                foreach (PhpQuery::pq($selector->getSelector(), $this->getDocumentID()) as $el) {
                     $existing = pq($el)->data('phpquery_css');
-                    if (phpQuery::$enableCssShorthand) {
+                    if (PhpQuery::$enableCssShorthand) {
                         $ruleset->expandShorthands();
                     }
                     foreach ($ruleset->getRules() as $value) {
@@ -1724,12 +1724,12 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                             );
                         }
                     }
-                    phpQuery::pq($el)->data('phpquery_css', $existing);
-                    $this->bubbleCSS(phpQuery::pq($el));
+                    PhpQuery::pq($el)->data('phpquery_css', $existing);
+                    $this->bubbleCSS(PhpQuery::pq($el));
                 }
             }
         }
-        foreach (phpQuery::pq('*', $this->getDocumentID()) as $el) {
+        foreach (PhpQuery::pq('*', $this->getDocumentID()) as $el) {
             $existing = pq($el)->data('phpquery_css');
             $style    = pq($el)->attr('style');
             $style    = strlen($style) ? explode(';', $style) : array();
@@ -1743,7 +1743,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                 $CssDocument = $CssParser->parse();
                 $ruleset     = $CssDocument->getAllRulesets();
                 $ruleset     = reset($ruleset);
-                if (phpQuery::$enableCssShorthand) {
+                if (PhpQuery::$enableCssShorthand) {
                     $ruleset->expandShorthands();
                 }
                 foreach ($ruleset->getRules() as $value) {
@@ -1759,8 +1759,8 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                         );
                     }
                 }
-                phpQuery::pq($el)->data('phpquery_css', $existing);
-                $this->bubbleCSS(phpQuery::pq($el));
+                PhpQuery::pq($el)->data('phpquery_css', $existing);
+                $this->bubbleCSS(PhpQuery::pq($el));
             }
         }
     }
@@ -1769,7 +1769,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     {
         $style = $element->data('phpquery_css');
         foreach ($element->children() as $element_child) {
-            $existing = phpQuery::pq($element_child)->data('phpquery_css');
+            $existing = PhpQuery::pq($element_child)->data('phpquery_css');
             foreach ($style as $rule => $value) {
                 if (!isset($existing[$rule])
                     || $value['specificity'] > $existing[$rule]['specificity']
@@ -1777,9 +1777,9 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                     $existing[$rule] = $value;
                 }
             }
-            phpQuery::pq($element_child)->data('phpquery_css', $existing);
-            if (phpQuery::pq($element_child)->children()->length) {
-                $this->bubbleCSS(phpQuery::pq($element_child));
+            PhpQuery::pq($element_child)->data('phpquery_css', $existing);
+            if (PhpQuery::pq($element_child)->children()->length) {
+                $this->bubbleCSS(PhpQuery::pq($element_child));
             }
         }
     }
@@ -1916,7 +1916,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     /**
      * Enter description here...
      *
-     * @param String|phpQuery
+     * @param String|PhpQuery
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function wrapAllOld($wrapper)
@@ -1936,14 +1936,14 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      * Enter description here...
      *
      * TODO testme...
-     * @param String|phpQuery
+     * @param String|PhpQuery
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function wrapAll($wrapper)
     {
         if (!$this->length())
             return $this;
-        return phpQuery::pq($wrapper, $this->getDocumentID())->clone()->insertBefore($this->get(0))->map(
+        return PhpQuery::pq($wrapper, $this->getDocumentID())->clone()->insertBefore($this->get(0))->map(
             array(
                 $this,
                 '___wrapAllCallback'
@@ -1971,7 +1971,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      *
      * @param $codeBefore
      * @param $codeAfter
-     * @internal param $ String|phpQuery
+     * @internal param $ String|PhpQuery
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function wrapAllPHP($codeBefore, $codeAfter)
@@ -1982,13 +1982,13 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     /**
      * Enter description here...
      *
-     * @param String|phpQuery
+     * @param String|PhpQuery
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function wrap($wrapper)
     {
         foreach ($this->stack() as $node)
-            phpQuery::pq($node, $this->getDocumentID())->wrapAll($wrapper);
+            PhpQuery::pq($node, $this->getDocumentID())->wrapAll($wrapper);
         return $this;
     }
 
@@ -1997,26 +1997,26 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      *
      * @param $codeBefore
      * @param $codeAfter
-     * @internal param $ String|phpQuery
+     * @internal param $ String|PhpQuery
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function wrapPHP($codeBefore, $codeAfter)
     {
         foreach ($this->stack() as $node)
-            phpQuery::pq($node, $this->getDocumentID())->wrapAllPHP($codeBefore, $codeAfter);
+            PhpQuery::pq($node, $this->getDocumentID())->wrapAllPHP($codeBefore, $codeAfter);
         return $this;
     }
 
     /**
      * Enter description here...
      *
-     * @param String|phpQuery
+     * @param String|PhpQuery
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function wrapInner($wrapper)
     {
         foreach ($this->stack() as $node)
-            phpQuery::pq($node, $this->getDocumentID())->contents()->wrapAll($wrapper);
+            PhpQuery::pq($node, $this->getDocumentID())->contents()->wrapAll($wrapper);
         return $this;
     }
 
@@ -2025,13 +2025,13 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      *
      * @param $codeBefore
      * @param $codeAfter
-     * @internal param $ String|phpQuery
+     * @internal param $ String|PhpQuery
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function wrapInnerPHP($codeBefore, $codeAfter)
     {
         foreach ($this->stack(1) as $node)
-            phpQuery::pq($node, $this->getDocumentID())->contents()->wrapAllPHP($codeBefore, $codeAfter);
+            PhpQuery::pq($node, $this->getDocumentID())->contents()->wrapAllPHP($codeBefore, $codeAfter);
         return $this;
     }
 
@@ -2180,13 +2180,13 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     public function replaceWithPHP($code)
     {
-        return $this->replaceWith(phpQuery::php($code));
+        return $this->replaceWith(PhpQuery::php($code));
     }
 
     /**
      * Enter description here...
      *
-     * @param String|phpQuery $content
+     * @param String|PhpQuery $content
      * @link http://docs.jquery.com/Manipulation/replaceWith#content
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
@@ -2204,8 +2204,8 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     public function replaceAll($selector)
     {
-        foreach (phpQuery::pq($selector, $this->getDocumentID()) as $node)
-            phpQuery::pq($node, $this->getDocumentID())->after($this->_clone())->remove();
+        foreach (PhpQuery::pq($selector, $this->getDocumentID()) as $node)
+            PhpQuery::pq($node, $this->getDocumentID())->after($this->_clone())->remove();
         return $this;
     }
 
@@ -2296,7 +2296,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      * @param null $callback2
      * @param null $callback3
      * @internal param $markup
-     * @return unknown_type
+     * @return string
      */
     public function markupOuter($callback1 = null, $callback2 = null, $callback3 = null)
     {
@@ -2326,7 +2326,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      * @param null         $callback1
      * @param null         $callback2
      * @param null         $callback3
-     * @return string|phpQuery|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
+     * @return string|PhpQuery|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      * @TODO force html result
      */
     public function html($html = null, $callback1 = null, $callback2 = null, $callback3 = null)
@@ -2359,7 +2359,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             $return = $this->documentWrapper->markup($this->elements, true);
             $args   = func_get_args();
             foreach (array_slice($args, 1) as $callback) {
-                $return = phpQuery::callbackRun(
+                $return = PhpQuery::callbackRun(
                     $callback,
                     array(
                         $return
@@ -2400,7 +2400,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         // pass thou callbacks
         $args = func_get_args();
         foreach ($args as $callback) {
-            $markup = phpQuery::callbackRun(
+            $markup = PhpQuery::callbackRun(
                 $callback,
                 array(
                     $markup
@@ -2450,19 +2450,19 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     public function markupPHP($code = null)
     {
-        return isset($code) ? $this->markup(phpQuery::php($code))
-            : phpQuery::markupToPHP($this->markup());
+        return isset($code) ? $this->markup(PhpQuery::php($code))
+            : PhpQuery::markupToPHP($this->markup());
     }
 
     /**
      * Enter description here...
      *
      * @internal param $code
-     * @return unknown_type
+     * @return string PHP code
      */
     public function markupOuterPHP()
     {
-        return phpQuery::markupToPHP($this->markupOuter());
+        return PhpQuery::markupToPHP($this->markupOuter());
     }
 
     /**
@@ -2594,7 +2594,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     /**
      * Enter description here...
      *
-     * @param String|phpQuery
+     * @param String|PhpQuery
      * @return PhpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */
     public function insertBefore($seletor)
@@ -2661,7 +2661,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                 if ($to) {
                     // INSERT TO
                     $insertFrom = $this->elements;
-                    if (phpQuery::isMarkup($target)) {
+                    if (PhpQuery::isMarkup($target)) {
                         // $target is new markup, import it
                         $insertTo = $this->documentWrapper->import($target);
                         // insert into selected element
@@ -2680,7 +2680,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                 break;
             case 'object':
                 $insertFrom = $insertTo = array();
-                // phpQuery
+                // PhpQuery
                 if ($target instanceof self) {
                     if ($to) {
                         $insertTo = $target->elements;
@@ -2738,7 +2738,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                 }
                 break;
         }
-        phpQuery::debug(
+        PhpQuery::debug(
             "From " . count($insertFrom) . "; To " . count($insertTo)
             . " nodes"
         );
@@ -2878,7 +2878,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             if (count($this->elements) > 1 && $text)
                 $text .= "\n";
             foreach ($args as $callback) {
-                $text = phpQuery::callbackRun(
+                $text = PhpQuery::callbackRun(
                     $callback,
                     array(
                         $text
@@ -2914,7 +2914,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     public function plugin($class, $file = null)
     {
-        phpQuery::plugin($class, $file);
+        PhpQuery::plugin($class, $file);
         return $this;
     }
 
@@ -2945,12 +2945,12 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             'clone',
             'empty'
         );
-        if (isset(phpQuery::$extendMethods[$method])) {
+        if (isset(PhpQuery::$extendMethods[$method])) {
             array_unshift($args, $this);
-            return phpQuery::callbackRun(phpQuery::$extendMethods[$method], $args);
-        } else if (isset(phpQuery::$pluginsMethods[$method])) {
+            return PhpQuery::callbackRun(PhpQuery::$extendMethods[$method], $args);
+        } else if (isset(PhpQuery::$pluginsMethods[$method])) {
             array_unshift($args, $this);
-            $class     = phpQuery::$pluginsMethods[$method];
+            $class     = PhpQuery::$pluginsMethods[$method];
             $realClass = "\\PhpQuery\\Plugin\\$class";
             $return    = call_user_func_array(
                 array(
@@ -3088,14 +3088,14 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     public function not($selector = null)
     {
         if (is_string($selector))
-            phpQuery::debug(
+            PhpQuery::debug(
                 array(
                     'not',
                     $selector
                 )
             );
         else
-            phpQuery::debug('not');
+            PhpQuery::debug('not');
         $stack = array();
         if ($selector instanceof self || $selector instanceof \DOMNODE) {
             foreach ($this->stack() as $node) {
@@ -3144,7 +3144,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             return $this;
         $stack                = array();
         $this->elementsBackup = $this->elements;
-        $found                = phpQuery::pq($selector, $this->getDocumentID());
+        $found                = PhpQuery::pq($selector, $this->getDocumentID());
         $this->merge($found->elements);
         return $this->newInstance();
     }
@@ -3658,7 +3658,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
             $paramStructure = array_slice($paramStructure, 1);
         }
         foreach ($this->elements as $v)
-            phpQuery::callbackRun(
+            PhpQuery::callbackRun(
                 $callback,
                 array(
                     $v
@@ -3681,7 +3681,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     {
         $params    = func_get_args();
         $params[0] = $this;
-        phpQuery::callbackRun($callback, $params);
+        PhpQuery::callbackRun($callback, $params);
         return $this;
     }
 
@@ -3709,12 +3709,12 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         return $this->newInstance(
             call_user_func_array(
                 array(
-                    'phpQuery',
+                    'PhpQuery',
                     'map'
                 ),
                 $params
             )
-        //			phpQuery::map($this->elements, $callback)
+        //			PhpQuery::map($this->elements, $callback)
         );
     }
 
@@ -3730,10 +3730,10 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         if (!isset($value)) {
             // TODO? implement specific jQuery behavior od returning parent values
             // is child which we look up doesn't exist
-            return phpQuery::data($this->get(0), $key, $value, $this->getDocumentID());
+            return PhpQuery::data($this->get(0), $key, $value, $this->getDocumentID());
         } else {
             foreach ($this as $node)
-                phpQuery::data($node, $key, $value, $this->getDocumentID());
+                PhpQuery::data($node, $key, $value, $this->getDocumentID());
             return $this;
         }
     }
@@ -3747,7 +3747,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     public function removeData($key)
     {
         foreach ($this as $node)
-            phpQuery::removeData($node, $key, $this->getDocumentID());
+            PhpQuery::removeData($node, $key, $this->getDocumentID());
         return $this;
     }
     // INTERFACE IMPLEMENTATIONS
@@ -3759,7 +3759,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     public function rewind()
     {
         $this->debug('iterating foreach');
-        //		phpQuery::selectDocument($this->getDocumentID());
+        //		PhpQuery::selectDocument($this->getDocumentID());
         $this->elementsBackup    = $this->elements;
         $this->elementsInterator = $this->elements;
         $this->valid             = isset($this->elements[0]) ? 1 : 0;
@@ -3946,8 +3946,8 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
      */
     public function dump()
     {
-        print 'DUMP #' . (phpQuery::$dumpCount++) . ' ';
-        phpQuery::$debug = false;
+        print 'DUMP #' . (PhpQuery::$dumpCount++) . ' ';
+        PhpQuery::$debug = false;
         //		print __FILE__.':'.__LINE__."\n";
         var_dump($this->htmlOuter());
         return $this;
@@ -3955,34 +3955,34 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
 
     public function dumpWhois()
     {
-        print 'DUMP #' . (phpQuery::$dumpCount++) . ' ';
-        $debug           = phpQuery::$debug;
-        phpQuery::$debug = false;
+        print 'DUMP #' . (PhpQuery::$dumpCount++) . ' ';
+        $debug           = PhpQuery::$debug;
+        PhpQuery::$debug = false;
         //		print __FILE__.':'.__LINE__."\n";
         var_dump('whois', $this->whois());
-        phpQuery::$debug = $debug;
+        PhpQuery::$debug = $debug;
         return $this;
     }
 
     public function dumpLength()
     {
-        print 'DUMP #' . (phpQuery::$dumpCount++) . ' ';
-        $debug           = phpQuery::$debug;
-        phpQuery::$debug = false;
+        print 'DUMP #' . (PhpQuery::$dumpCount++) . ' ';
+        $debug           = PhpQuery::$debug;
+        PhpQuery::$debug = false;
         //		print __FILE__.':'.__LINE__."\n";
         var_dump('length', $this->length());
-        phpQuery::$debug = $debug;
+        PhpQuery::$debug = $debug;
         return $this;
     }
 
     public function dumpTree($html = true, $title = true)
     {
-        $output          = $title ? 'DUMP #' . (phpQuery::$dumpCount++) . " \n" : '';
-        $debug           = phpQuery::$debug;
-        phpQuery::$debug = false;
+        $output          = $title ? 'DUMP #' . (PhpQuery::$dumpCount++) . " \n" : '';
+        $debug           = PhpQuery::$debug;
+        PhpQuery::$debug = false;
         foreach ($this->stack() as $node)
             $output .= $this->__dumpTree($node);
-        phpQuery::$debug = $debug;
+        PhpQuery::$debug = $debug;
         print $html ? nl2br(str_replace(' ', '&nbsp;', $output)) : $output;
         return $this;
     }

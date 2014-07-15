@@ -1,12 +1,12 @@
 <?php
-require_once('../phpQuery/phpQuery.php');
-phpQuery::$debug = true;
+require_once('../PhpQuery/PhpQuery.php');
+PhpQuery::$debug = true;
 
 // SLICE1
 $testResult = array(
 	'li#testID',
 );
-$result = phpQuery::newDocumentFile('test.html')
+$result = PhpQuery::newDocumentFile('test.html')
 	->find('li')
 		->slice(1, 2);
 if ( $result->whois() == $testResult )
@@ -26,7 +26,7 @@ $testResult = array(
 	'li#i_have_nested_list',
 	'li.nested',
 );
-$result = phpQuery::newDocumentFile('test.html')
+$result = PhpQuery::newDocumentFile('test.html')
 	->find('li')
 		->slice(1, -1);
 if ( $result->whois() == $testResult )
@@ -40,7 +40,7 @@ else {
 print "\n";
 
 // Multi-insert
-$result = phpQuery::newDocument('<li><span class="field1"></span><span class="field1"></span></li>')
+$result = PhpQuery::newDocument('<li><span class="field1"></span><span class="field1"></span></li>')
 	->find('.field1')
 		->php('longlongtest');
 $validResult = '<li><span class="field1"><php>longlongtest</php></span><span class="field1"><php>longlongtest</php></span></li>';
@@ -57,7 +57,7 @@ print "\n";
 
 // INDEX
 $testResult = 1;
-$result = phpQuery::newDocumentFile('test.html')
+$result = PhpQuery::newDocumentFile('test.html')
 	->find('p')
 		->index(pq('p.title:first'));
 if ( $result == $testResult )
@@ -71,7 +71,7 @@ print "\n";
 $testName = 'Clone';
 $testResult = 3;
 $document;
-$p = phpQuery::newDocumentFile('test.html')
+$p = PhpQuery::newDocumentFile('test.html')
 	->toReference($document)
 	->find('p:first');
 foreach(array(0,1,2) as $i) {
@@ -91,7 +91,7 @@ print "\n";
 $testName = 'Next';
 $testResult = 3;
 $document;
-$result = phpQuery::newDocumentFile('test.html')
+$result = PhpQuery::newDocumentFile('test.html')
 	->find('li:first')
 	->next()
 	->next()
