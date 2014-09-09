@@ -3709,7 +3709,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
         return $this->newInstance(
             call_user_func_array(
                 array(
-                    'PhpQuery',
+                    '\\PhpQuery\\PhpQuery',
                     'map'
                 ),
                 $params
