@@ -2224,7 +2224,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
                 $this->debug("Removing '{$node->tagName}'");
             $node->parentNode->removeChild($node);
             // Mutation event
-            $event = new DOMEvent(array(
+            $event = new Dom\DOMEvent(array(
                                       'target' => $node,
                                       'type'   => 'DOMNodeRemoved'
                                   ));
@@ -2243,7 +2243,7 @@ class PhpQueryObject implements \Iterator, \Countable, \ArrayAccess
     protected function markupEvents($newMarkup, $oldMarkup, $node)
     {
         if ($node->tagName == 'textarea' && $newMarkup != $oldMarkup) {
-            $event = new DOMEvent(array(
+            $event = new Dom\DOMEvent(array(
                                       'target' => $node,
                                       'type'   => 'change'
                                   ));
