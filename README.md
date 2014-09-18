@@ -1,6 +1,6 @@
 # Revisiting PhpQuery
 
-[![Build Status](https://travis-ci.org/wittiws/phonarc.png?branch=master)](https://travis-ci.org/wittiws/phonarc)
+[![Build Status](https://travis-ci.org/wittiws/phpquery.png?branch=master)](https://travis-ci.org/wittiws/phpquery)
 
 ## Basic usage of this fork
 
