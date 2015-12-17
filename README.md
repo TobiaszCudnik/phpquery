@@ -12,7 +12,6 @@ I've gathered some fix and new features here and there, as will keep looking for
 ### github repos i've looked at:
 
 * https://github.com/denis-isaev/phpquery
-* https://github.com/fmorrow/pQuery--PHPQuery- (big project so far)
 * https://github.com/r-sal/phpquery
 * https://github.com/damien-list/phpquery-1
 * https://github.com/nev3rm0re/phpquery
