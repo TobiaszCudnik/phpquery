@@ -18,3 +18,7 @@
   1. [Debugging](Debugging.md)
   1. Bootstrap file
 
+
+This manual is copied from http://code.google.com/p/phpquery/wiki/Manual
+
+The wiki was downloaded from the [Google Code source repository for phpQuery](https://code.google.com/p/phpquery/source/browse/#svn%2Fwiki), which is under the MIT License.
