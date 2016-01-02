@@ -1,0 +1,1 @@
+Renamed to [jQueryPortingState](http://code.google.com/p/phpquery/wiki/jQueryPortingState).
