@@ -1,11 +1,11 @@
-Although **phpQuery** is a [jQuery port](http://code.google.com/p/phpquery/wiki/jQueryPortingState), there is extensive PHP-specific support.
+Although **phpQuery** is a [jQuery port](jQueryPortingState.md), there is extensive PHP-specific support.
 
 # Table of Contents
   * [Class Interfaces](#Class_Interfaces.md)
     * [Iterator Interface](#Iterator.md)
     * [ArrayAccess](#Array_Access.md)
     * [Countable Interface](#Countable.md)
-  * [Callbacks](http://code.google.com/p/phpquery/wiki/Callbacks)
+  * [Callbacks](Callbacks.md)
   * [PHP Code Support](#PHP_Code_Support.md)
     * [Opening PHP files as DOM](#Opening_PHP_files_as_DOM.md)
     * [Inputting PHP code](#Inputting_PHP_code.md)
@@ -42,7 +42,7 @@ If used to do `count($something)` you can still do this that way, instead of eg 
 print count(pq('ul:first > li'));
 ```
 ## Callbacks
-There is a special [Callbacks](http://code.google.com/p/phpquery/wiki/Callbacks) wiki section, to which you should refer to.
+There is a special [Callbacks](Callbacks.md) wiki section, to which you should refer to.
 ## PHP Code Support
 #### Opening PHP files as DOM
 PHP files can be opened using **phpQuery::newDocumentPHP($markup)** or **phpQuery::newDocumentFilePHP($file)**. Such files are visible as DOM, where:

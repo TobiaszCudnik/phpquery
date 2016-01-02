@@ -6,7 +6,7 @@
     * [CallbackReference class](#CallbackReference.md)
   * [Scope Pseudo-Inheritance](#Scope_Pseudo_Inheritance.md)
 ## What are callbacks
-Callbacks are functions _called back_ by other functions in proper moment (eg on [Ajax](http://code.google.com/p/phpquery/wiki/Ajax) request error).
+Callbacks are functions _called back_ by other functions in proper moment (eg on [Ajax](Ajax.md) request error).
 
 In **JavaScript** this pattern can be very flexible due to [Closures](http://en.wikipedia.org/wiki/Closure_(computer_science)) support, which can be inline (no code break) and inherits scope (no need to passing params).
 

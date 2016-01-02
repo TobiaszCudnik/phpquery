@@ -13,7 +13,7 @@ Ajax, standing for _Asynchronous JavaScript and XML_ is combination of HTTP Clie
 
 **phpQuery** also offers such functionality, making use of solid quality [Zend\_Http\_Client](http://framework.zend.com/manual/en/zend.http.html). Unfortunately requests aren't asynchronous, but nothing is impossible. For today, instead of [XMLHttpRequest](http://en.wikipedia.org/wiki/XMLHttpRequest) you always get Zend\_Http\_Client instance. API unification is [planned](http://code.google.com/p/phpquery/issues/detail?id=44).
 ## Cross Domain Ajax
-For security reasons, by default **phpQuery** doesn't allow connections to hosts other than actual `$_SERVER['HTTP_HOST']`. Developer needs to grant rights to other hosts before making an [Ajax](http://code.google.com/p/phpquery/wiki/Ajax) request.
+For security reasons, by default **phpQuery** doesn't allow connections to hosts other than actual `$_SERVER['HTTP_HOST']`. Developer needs to grant rights to other hosts before making an [Ajax](Ajax.md) request.
 
 There are 2 methods for allowing other hosts
   * phpQuery::**ajaxAllowURL**($url)

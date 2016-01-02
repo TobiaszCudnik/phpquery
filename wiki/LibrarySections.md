@@ -1,1 +1,1 @@
-Renamed to [Manual](http://code.google.com/p/phpquery/wiki/Manual).
+Renamed to [Manual](Manual.md).

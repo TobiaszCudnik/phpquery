@@ -1,4 +1,4 @@
-**WebBrowser** is a phpQuery [plugin](http://code.google.com/p/phpquery/wiki/PluginsServerSide) that mimics behaviors of web browser. Thanks to that developer can simulate user's behavior inside a PHP script.
+**WebBrowser** is a phpQuery [plugin](PluginsServerSide.md) that mimics behaviors of web browser. Thanks to that developer can simulate user's behavior inside a PHP script.
 
 ## Supported
   * Link navigation (click event)
