@@ -19,6 +19,10 @@ I've gathered some fix and new features here and there, as will keep looking for
 * https://github.com/kevee/phpquery (include php-css-parser)
 * https://github.com/lucassouza1/phpquery
 
+## Manual
+
+* [Manual](wiki/README.md) imported from http://code.google.com/p/phpquery/wiki
+
 ## Extracts from fmorrow README.md:
 
 ### Whats phpQuery?
