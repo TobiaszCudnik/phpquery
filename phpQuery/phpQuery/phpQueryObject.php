@@ -502,7 +502,7 @@ class phpQueryObject
 	 * @todo maybe other name...
 	 */
 	public function getString($index = null, $callback1 = null, $callback2 = null, $callback3 = null) {
-		if ($index != null && is_int($index))
+		if (!is_null($index) && is_int($index))
 			$return = $this->eq($index)->text();
 		else {
 			$return = array();
@@ -529,7 +529,7 @@ class phpQueryObject
 	 * @todo maybe other name...
 	 */
 	public function getStrings($index = null, $callback1 = null, $callback2 = null, $callback3 = null) {
-		if ($index != null && is_int($index))
+		if (!is_null($index) && is_int($index))
 			$return = $this->eq($index)->text();
 		else {
 			$return = array();
