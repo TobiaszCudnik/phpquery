@@ -998,7 +998,7 @@ abstract class phpQuery {
 	 * @return unknown_type
 	 * @link http://docs.jquery.com/Utilities/jQuery.makeArray
 	 */
-	public static function makeArray($obj) {
+	public static function makeArray($object) {
 		$array = array();
 		if (is_object($object) && $object instanceof DOMNODELIST) {
 			foreach($object as $value)
