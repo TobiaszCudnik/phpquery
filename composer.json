@@ -1,8 +1,8 @@
 {
-    "name":"cagartner/phpquery",
+    "name":"bscheshir/phpquery",
     "type":"library",
     "description":"PHP5.3+ namespaced version of phpQuery with enhanced CSS support",
-    "version":"0.9.8",
+    "version":"0.9.8.1",
     "keywords":[
         
     ]
