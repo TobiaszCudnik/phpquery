@@ -1,6 +1,8 @@
 # Revisiting PhpQuery
 
-[![Build Status](https://travis-ci.org/wittiws/phpquery.png?branch=master)](https://travis-ci.org/wittiws/phpquery)
+[![Build Status](https://travis-ci.org/c-harris/phpquery.svg?branch=master)](https://travis-ci.org/c-harris/phpquery)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/c-harris/phpquery/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/c-harris/phpquery/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/c-harris/phpquery/badge.svg?branch=master)](https://coveralls.io/github/c-harris/phpquery?branch=master)
 
 ## Basic usage of this fork
 
