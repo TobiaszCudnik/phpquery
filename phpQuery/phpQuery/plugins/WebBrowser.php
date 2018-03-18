@@ -84,6 +84,26 @@ class phpQueryObjectPlugin_WebBrowser {
 		}
 		return $return;
 	}
+        
+        
+        public static function download($self, $url = null) {
+            $xhr = isset($self->document->xhr)
+			? $self->document->xhr
+			: null;
+		$xhr = phpQuery::ajax(array(
+			'url' => $url,
+		), $xhr);
+		$return = false;
+		if ($xhr->getLastResponse()->isSuccessful()) {
+			$return = phpQueryPlugin_WebBrowser::browserDownload($xhr);
+			if (isset($self->document->WebBrowserCallback))
+				phpQuery::callbackRun(
+					$self->document->WebBrowserCallback,
+					array($return)
+				);
+		}
+		return $return;
+        }
 }
 class phpQueryPlugin_WebBrowser {
 	/**
@@ -245,6 +265,17 @@ class phpQueryPlugin_WebBrowser {
 			}
 		} else
 			return $pq;
+	}
+        
+        /**
+	 * @param Zend_Http_Client $xhr
+	 */
+	public static function browserDownload($xhr) {
+		phpQuery::debug("[WebBrowser] Received from ".$xhr->getUri(true));
+		// TODO handle meta redirects
+		$body = $xhr->getLastResponse()->getBody();
+
+		return $body;
 	}
 	/**
 	 * 

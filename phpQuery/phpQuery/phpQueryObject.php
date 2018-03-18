@@ -502,7 +502,7 @@ class phpQueryObject
 	 * @todo maybe other name...
 	 */
 	public function getString($index = null, $callback1 = null, $callback2 = null, $callback3 = null) {
-		if ($index)
+		if (!is_null($index) && is_int($index))
 			$return = $this->eq($index)->text();
 		else {
 			$return = array();
@@ -529,7 +529,7 @@ class phpQueryObject
 	 * @todo maybe other name...
 	 */
 	public function getStrings($index = null, $callback1 = null, $callback2 = null, $callback3 = null) {
-		if ($index)
+		if (!is_null($index) && is_int($index))
 			$return = $this->eq($index)->text();
 		else {
 			$return = array();
@@ -587,7 +587,7 @@ class phpQueryObject
 		if ( mb_strpos($class, '.', 1)) {
 			$classes = explode('.', substr($class, 1));
 			$classesCount = count( $classes );
-			$nodeClasses = explode(' ', $node->getAttribute('class') );
+			$nodeClasses = preg_split("/[\s\t\r\n]+/", $node->getAttribute('class'),-1, PREG_SPLIT_NO_EMPTY);
 			$nodeClassesCount = count( $nodeClasses );
 			if ( $classesCount > $nodeClassesCount )
 				return false;
@@ -605,7 +605,7 @@ class phpQueryObject
 				// strip leading dot from class name
 				substr($class, 1),
 				// get classes for element as array
-				explode(' ', $node->getAttribute('class') )
+				preg_split("/[\s\t\r\n]+/", $node->getAttribute('class'),-1, PREG_SPLIT_NO_EMPTY)
 			);
 		}
 	}
@@ -1052,18 +1052,20 @@ class phpQueryObject
 								return null;'),
 						new CallbackParam(), $param
 					);
-				else if (mb_strlen($param) > 1 && $param{1} == 'n')
+				else if (mb_strlen($param) > 1 && preg_match('/^(\d*)n([-+]?)(\d*)/', $param) === 1)
 					// an+b
 					$mapped = $this->map(
 						create_function('$node, $param',
 							'$prevs = pq($node)->prevAll()->size();
 							$index = 1+$prevs;
-							$b = mb_strlen($param) > 3
-								? $param{3}
-								: 0;
-							$a = $param{0};
-							if ($b && $param{2} == "-")
-								$b = -$b;
+
+							preg_match("/^(\d*)n([-+]?)(\d*)/", $param, $matches);
+							$a = intval($matches[1]);
+							$b = intval($matches[3]);
+							if( $matches[2] === "-" ) {
+							    $b = -$b;
+							}
+
 							if ($a > 0) {
 								return ($index-$b)%$a == 0
 									? $node
@@ -2264,6 +2266,20 @@ class phpQueryObject
 		}
 		return $return;
 	}
+	
+	/**
+	 * @return The text content of each matching element, like
+	 * text() but returns an array with one entry per matched element.
+	 * Read only.
+	 */
+	public function texts($attr = null) {
+		$results = array();
+		foreach($this->elements as $node) {
+			$results[] = $node->textContent;
+		}
+		return $results;
+	}
+	
 	/**
 	 * Enter description here...
 	 *
@@ -2631,6 +2647,22 @@ class phpQueryObject
 		return is_null($value)
 			? '' : $this;
 	}
+	
+	/**
+	 * @return The same attribute of each matching element, like
+	 * attr() but returns an array with one entry per matched element.
+	 * Read only.
+	 */
+	public function attrs($attr = null) {
+		$results = array();
+		foreach($this->stack(1) as $node) {
+			$results[] = $node->hasAttribute($attr)
+				? $node->getAttribute($attr)
+				: null;
+		}
+		return $results;
+	}
+
 	/**
 	 * @access private
 	 */
@@ -3069,7 +3101,7 @@ class phpQueryObject
 					: "{$node->tagName}[{$i}]";
 				$node = $node->parentNode;
 			}
-			$xpath = join('/', array_reverse($xpath));
+			$xpath = implode('/', array_reverse($xpath));
 			$return[] = '/'.$xpath;
 		}
 		return $oneNode
@@ -3091,7 +3123,7 @@ class phpQueryObject
 					.($node->getAttribute('id')
 						? '#'.$node->getAttribute('id'):'')
 					.($node->getAttribute('class')
-						? '.'.join('.', split(' ', $node->getAttribute('class'))):'')
+						? '.'.implode('.', explode(' ', $node->getAttribute('class'))):'')
 					.($node->getAttribute('name')
 						? '[name="'.$node->getAttribute('name').'"]':'')
 					.($node->getAttribute('value') && strpos($node->getAttribute('value'), '<'.'?php') === false
