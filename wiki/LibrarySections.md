@@ -1,0 +1,1 @@
+Renamed to [Manual](Manual.md).

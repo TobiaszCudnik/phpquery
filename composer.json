@@ -1,0 +1,39 @@
+{
+    "name":"bscheshir/phpquery",
+    "type":"library",
+    "description":"PHP5.3+ namespaced version of phpQuery with enhanced CSS support",
+    "version":"0.9.8.1",
+    "keywords":[
+        
+    ]
+    ,
+    "homepage":"http://code.google.com/p/phpquery/",
+    "license":"MIT",
+    "authors":[
+        {
+            "name":"Tobiasz Cudnik",
+            "email":"tobiasz.cudnik@gmail.com",
+            "homepage":"https://github.com/TobiaszCudnik",
+            "role":"Developer"
+        }
+        ,
+        {
+            "name":"didier Belot",
+            "role":"Packager"
+        }
+        ,
+        {
+            "name":"Greg Payne",
+            "role":"Packager"
+        }
+    ],
+    "require":{
+        "php":">=5.3.3",
+        "sabberworm/php-css-parser":"5.1.*"
+    },
+    "autoload":{
+        "psr-4":{
+            "PhpQuery\\": "src/"
+        }
+    }
+}
