@@ -164,7 +164,7 @@ class DOMDocumentWrapper {
 			// Document Encoding Conversion
 			// http://code.google.com/p/phpquery/issues/detail?id=86
 			if (function_exists('mb_detect_encoding')) {
-				$possibleCharsets = array($documentCharset, $requestedCharset, 'AUTO');
+				$possibleCharsets = array($requestedCharset, $documentCharset, 'AUTO');
 				$docEncoding = mb_detect_encoding($markup, implode(', ', $possibleCharsets));
 				if (! $docEncoding)
 					$docEncoding = $documentCharset; // ok trust the document
@@ -194,9 +194,25 @@ class DOMDocumentWrapper {
 			}
 			phpQuery::debug("Full markup load (HTML), documentCreate('$charset')");
 			$this->documentCreate($charset);
+			if ($charset === 'utf-8') {
+				// Hack to load HTML as UTF-8
+				$markup = '<?xml encoding="UTF-8">' . $markup;
+			}
 			$return = phpQuery::$debug === 2
 				? $this->document->loadHTML($markup)
 				: @$this->document->loadHTML($markup);
+			if ($charset === 'utf-8') {
+				// Remove hack
+				foreach ($this->document->childNodes as $item) {
+					if ($item->nodeType == XML_PI_NODE) {
+						// remove hack
+						$this->document->removeChild($item);
+					}
+				}
+				// insert proper
+				$this->document->encoding = 'UTF-8';
+				// End hack
+			}
 			if ($return)
 				$this->root = $this->document;
 		}
