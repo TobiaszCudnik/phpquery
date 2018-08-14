@@ -32,8 +32,8 @@ require_once(dirname(__FILE__).'/phpQuery/compat/mbstring.php');
  */
 abstract class phpQuery {
 	/**
-	 * XXX: Workaround for mbstring problems 
-	 * 
+	 * XXX: Workaround for mbstring problems
+	 *
 	 * @var bool
 	 */
 	public static $mbstringSupport = true;
@@ -270,6 +270,7 @@ abstract class phpQuery {
 	public static function newDocument($markup = null, $contentType = null) {
 		if (! $markup)
 			$markup = '';
+		$markup = preg_replace('/[\x00-\x1F\x7F]/', '', $markup);
 		$documentID = phpQuery::createDocumentWrapper($markup, $contentType);
 		return new phpQueryObject($documentID);
 	}
