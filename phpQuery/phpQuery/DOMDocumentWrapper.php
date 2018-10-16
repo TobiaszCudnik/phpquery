@@ -59,6 +59,7 @@ class DOMDocumentWrapper {
 			$this->root = $this->document;
 			$this->charset = $this->document->encoding;
 			// TODO isDocumentFragment
+			$loaded = true;
 		} else {
 			$loaded = $this->loadMarkup($markup);
 		}
