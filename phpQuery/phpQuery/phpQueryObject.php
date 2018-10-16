@@ -75,11 +75,30 @@ class phpQueryObject
 	 * @access private
 	 */
 	protected $current = null;
+	
+	/**
+	 * Indicates whether CSS has been parsed or not. We only parse CSS if needed.
+	 * @access private
+	 */
+  protected $cssIsParsed = array();
+  /**
+   * A collection of complete CSS selector strings.
+   * @access private;
+   */
+  protected $cssString = array();
 	/**
 	 * Enter description here...
 	 *
 	 * @return phpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
 	 */
+  
+  protected $attribute_css_mapping = array(
+    'bgcolor' => 'background-color',
+    'text' => 'color',
+    'width' => 'width',
+    'height' => 'height'
+  );
+  
 	public function __construct($documentID) {
 //		if ($documentID instanceof self)
 //			var_dump($documentID->getDocumentID());
@@ -1360,22 +1379,132 @@ class phpQueryObject
 				->markup($html);
 		}
 	}
+	
 	/**
-	 * Enter description here...
+	 * Allows users to enter strings of CSS selectors. Useful
+	 * when the CSS is loaded via style or @imports that phpQuery can't load
+	 * because it doesn't know the URL context of the request.
+	 */
+	public function addCSS($string) {
+	  if(!isset($this->cssString[$this->getDocumentID()])) {
+	   $this->cssString[$this->getDocumentID()] = '';
+	  }
+	  $this->cssString[$this->getDocumentID()] .= $string;
+	  $this->parseCSS();
+	}
+	/**
+	 * Either sets the CSS property of an object or retrieves the
+	 * CSS property of a proejct.
 	 *
-	 * @return phpQuery|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
+	 * @return string of css property value
 	 * @todo
 	 */
-	public function css() {
-		// TODO
-		return $this;
+	public function css($property_name, $value = FALSE) {
+		if(!isset($this->cssIsParsed[$this->getDocumentID()]) || $this->cssIsParsed[$this->getDocumentID()] = false) {
+		  $this->parseCSS();
+		}
+		$data = phpQuery::data($this->get(0), 'phpquery_css', null, $this->getDocumentID());
+		if(!$value) {
+		  if(isset($data[$property_name])) {
+		    return $data[$property_name]['value'];
+		  }
+		  return null;
+		}
+		$specificity = (isset($data[$property_name]))
+		               ? $data[$property_name]['specificity'] + 1
+		               : 1000;
+		$data[$property_name] = array('specificity' => $specificity, 'value' => $value);
+		phpQuery::data($this->get(0), 'phpquery_css', $data, $this->getDocumentID());
+		$this->bubbleCSS(phpQuery::pq($this->get(0), $this->getDocumentID()));
 	}
+	
+	public function parseCSS() {
+	  if(!isset($this->cssString[$this->getDocumentID()])) {
+	   $this->cssString[$this->getDocumentID()] = file_get_contents(dirname(__FILE__) .'/default.css');
+	  }
+	  foreach(phpQuery::pq('style', $this->getDocumentID()) as $style) {
+	    $this->cssString[$this->getDocumentID()] .= phpQuery::pq($style)->text();
+	  }
+	  
+	  $CssParser = new CSSParser($this->cssString[$this->getDocumentID()]);
+	  $CssDocument = $CssParser->parse();
+		foreach($CssDocument->getAllRuleSets() as $ruleset) {
+		  foreach($ruleset->getSelector() as $selector) {
+		    $specificity = $selector->getSpecificity();
+		    foreach(phpQuery::pq($selector->getSelector(), $this->getDocumentID()) as $el) {
+		      $existing = pq($el)->data('phpquery_css');
+		      $ruleset->expandShorthands();
+		      foreach($ruleset->getRules() as $rule => $value) {
+		        if(!isset($existing[$rule]) || $existing[$rule]['specificity'] <= $specificity) {
+		          $value = $value->getValue();
+		          $value = (is_object($value))
+		                    ? $value->__toString()
+		                    : $value;
+		          $existing[$rule] = array('specificity' => $specificity,
+		                                   'value' => $value);
+		        }
+		      }
+		      phpQuery::pq($el)->data('phpquery_css', $existing);
+          $this->bubbleCSS(phpQuery::pq($el));
+		    }
+		  }
+		}
+		foreach(phpQuery::pq('*', $this->getDocumentID()) as $el) {
+		  $existing = pq($el)->data('phpquery_css');
+		  $style =  pq($el)->attr('style');
+		  $style = strlen($style) ? explode(';', $style) : array();
+		  foreach($this->attribute_css_mapping as $map => $css_equivalent) {
+		    if($el->hasAttribute($map)) {
+		      $style[] = $css_equivalent .':'. pq($el)->attr($map);
+		    }
+		  }
+		  if(count($style)) {
+  		  $CssParser = new CSSParser('#ruleset {'. implode(';', $style) .'}');
+  	    $CssDocument = $CssParser->parse();
+  		  $ruleset = $CssDocument->getAllRulesets();
+  		  $ruleset = reset($ruleset);
+        $ruleset->expandShorthands();
+        foreach($ruleset->getRules() as $rule => $value) {
+          if(!isset($existing[$rule]) || 1000 >= $existing[$rule]['specificity']) {
+            $value = $value->getValue();
+            $value = (is_object($value))
+                      ? $value->__toString()
+                      : $value;
+            $existing[$rule] = array('specificity' => 1000,
+                                     'value' => $value);
+          }
+        }
+        phpQuery::pq($el)->data('phpquery_css', $existing);
+        $this->bubbleCSS(phpQuery::pq($el));
+      }
+		}
+	}
+	
+	protected function bubbleCSS($element) {
+	  $style = $element->data('phpquery_css');
+	  foreach($element->children() as $element_child) {
+	    $existing = phpQuery::pq($element_child)->data('phpquery_css');
+	    foreach($style as $rule => $value) {
+	      if(!isset($existing[$rule]) || $value['specificity'] > $existing[$rule]['specificity']) {
+	       $existing[$rule] = $value;
+	      }
+	    }
+	    phpQuery::pq($element_child)->data('phpquery_css', $existing);
+  	  if(phpQuery::pq($element_child)->children()->length) {
+  	    $this->bubbleCSS(phpQuery::pq($element_child));
+  	  }
+	  }
+	}
+	
 	/**
 	 * @todo
 	 *
 	 */
 	public function show(){
-		// TODO
+	  $display = ($this->data('phpquery_display_state'))
+	             ? $this->data('phpquery_display_state')
+	             : 'block';
+		$this->css('display', $display);
 		return $this;
 	}
 	/**
@@ -1383,7 +1512,8 @@ class phpQueryObject
 	 *
 	 */
 	public function hide(){
-		// TODO
+	  $this->data('phpquery_display_state', $this->css('display'));
+		$this->css('display', 'none');
 		return $this;
 	}
 	/**
