@@ -15,7 +15,7 @@ function whois($nodeList) {
 			.($node->getAttribute('id')
 				? '#'.$node->getAttribute('id'):'')
 			.($node->getAttribute('class')
-				? '.'.join('.', split(' ', $node->getAttribute('class'))):'')
+				? '.'.join('.', explode(' ', $node->getAttribute('class'))):'')
 		);
 	}
 	print "<pre>";
