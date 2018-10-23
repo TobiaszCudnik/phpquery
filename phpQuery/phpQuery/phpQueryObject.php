@@ -3069,7 +3069,7 @@ class phpQueryObject
 					: "{$node->tagName}[{$i}]";
 				$node = $node->parentNode;
 			}
-			$xpath = join('/', array_reverse($xpath));
+			$xpath = implode('/', array_reverse($xpath));
 			$return[] = '/'.$xpath;
 		}
 		return $oneNode
@@ -3091,7 +3091,7 @@ class phpQueryObject
 					.($node->getAttribute('id')
 						? '#'.$node->getAttribute('id'):'')
 					.($node->getAttribute('class')
-						? '.'.join('.', explode(' ', $node->getAttribute('class'))):'')
+						? '.'.implode('.', explode(' ', $node->getAttribute('class'))):'')
 					.($node->getAttribute('name')
 						? '[name="'.$node->getAttribute('name').'"]':'')
 					.($node->getAttribute('value') && strpos($node->getAttribute('value'), '<'.'?php') === false

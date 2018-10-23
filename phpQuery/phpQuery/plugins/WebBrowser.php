@@ -397,7 +397,7 @@ function resolve_url($base, $url) {
                         $path[] = $end;
                 }
                 // Step 6h
-                $base['path'] = join('/', $path);
+                $base['path'] = implode('/', $path);
 
         }
         // Step 7
